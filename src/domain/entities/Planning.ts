@@ -38,17 +38,17 @@ export class Planning {
     const availableDays = this.getAvailableDays()
     let planningDaysIndex = 0
     this.subjects.forEach(subject => {
-      const subjectDuration = subject.getDuration()
-      for(let i = 0; i < subjectDuration; i++) {
+      const modules = subject.getModules()
+      modules.forEach((module) => {
         const availableDay = availableDays[planningDaysIndex]
         if(!availableDay) {
           throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
         }
         const studyDay = new StudyDay(availableDay)
-        studyDay.addSubject(subject.getName())
+        studyDay.addStudyObject(module.getId())
         studyDays.push(studyDay)
         planningDaysIndex++
-      }
+      })
     })
 
     return studyDays 

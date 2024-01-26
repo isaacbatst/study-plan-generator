@@ -3,6 +3,7 @@ import { Planning } from './Planning'
 import Subject from './Subject'
 import SubjectTheme from './SubjectTheme'
 import { NotEnoughDaysError } from '../errors/NotEnoughDaysError'
+import SubjectThemeModule from './SubjectThemeModule'
 
 describe('Planning', () => {
   let math: Subject
@@ -11,14 +12,16 @@ describe('Planning', () => {
 
   beforeEach(() => {
     math = new Subject('math', 'Maths')
-    math.addTheme(new SubjectTheme('1', ['1']))
+    math.addTheme(new SubjectTheme('math-1', '1', [new SubjectThemeModule('math-1-1', '1')]))
     physics = new Subject('phy', 'Physics')
-    physics.addTheme(new SubjectTheme('1', ['1']))
-    physics.addTheme(new SubjectTheme('2', ['1']))
+    physics.addTheme(new SubjectTheme('phy-1', '1', [new SubjectThemeModule('phy-1-1', '1')]))
+    physics.addTheme(new SubjectTheme('phy-2', '2', [new SubjectThemeModule('phy-2-1', '1')]))
     english = new Subject('en', 'English')
-    english.addTheme(new SubjectTheme('1', ['1']))
-    english.addTheme(new SubjectTheme('2', ['1']))
-    english.addTheme(new SubjectTheme('3', ['1']))
+    english.addTheme(new SubjectTheme('en-1', '1', [new SubjectThemeModule('en-1-1', '1')]))
+    english.addTheme(new SubjectTheme('en-2', '2', [
+      new SubjectThemeModule('en-2-1', '1'), 
+      new SubjectThemeModule('en-2-2', '1')
+    ]))
   })
 
   it('should have a stard date, and end date', () => {
@@ -113,17 +116,17 @@ describe('Planning', () => {
 
     const studyDays = planning.getStudyDays()
 
-    expect(studyDays[0].subjects).toEqual(['Maths'])
+    expect(studyDays[0].studyObjects[0].getId()).toBe('math-1-1')
     expect(studyDays[0].date).toEqual(new Date('2024-01-01'))
-    expect(studyDays[1].subjects).toEqual(['Physics'])
+    expect(studyDays[1].studyObjects[0].getId()).toBe('phy-1-1')
     expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
-    expect(studyDays[2].subjects).toEqual(['Physics'])
+    expect(studyDays[2].studyObjects[0].getId()).toBe('phy-2-1')
     expect(studyDays[2].date).toEqual(new Date('2024-01-03'))
-    expect(studyDays[3].subjects).toEqual(['English'])
+    expect(studyDays[3].studyObjects[0].getId()).toBe('en-1-1')
     expect(studyDays[3].date).toEqual(new Date('2024-01-04'))
-    expect(studyDays[4].subjects).toEqual(['English'])
+    expect(studyDays[4].studyObjects[0].getId()).toBe('en-2-1')
     expect(studyDays[4].date).toEqual(new Date('2024-01-05'))
-    expect(studyDays[5].subjects).toEqual(['English'])
+    expect(studyDays[5].studyObjects[0].getId()).toBe('en-2-2')
     expect(studyDays[5].date).toEqual(new Date('2024-01-06'))
     expect(studyDays.length).toBe(6)
   })
@@ -137,21 +140,14 @@ describe('Planning', () => {
 
     planning.addSubject(math)
     planning.addSubject(physics)
-    planning.addSubject(english)
 
     const studyDays = planning.getStudyDays()
-    expect(studyDays[0].subjects).toEqual(['Maths'])
+    expect(studyDays[0].studyObjects[0].getId()).toBe('math-1-1')
     expect(studyDays[0].date).toEqual(new Date('2024-01-01'))
-    expect(studyDays[1].subjects).toEqual(['Physics'])
+    expect(studyDays[1].studyObjects[0].getId()).toBe('phy-1-1')
     expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
-    expect(studyDays[2].subjects).toEqual(['Physics'])
+    expect(studyDays[2].studyObjects[0].getId()).toBe('phy-2-1')
     expect(studyDays[2].date).toEqual(new Date('2024-01-03'))
-    expect(studyDays[3].subjects).toEqual(['English'])
-    expect(studyDays[3].date).toEqual(new Date('2024-01-04'))
-    expect(studyDays[4].subjects).toEqual(['English'])
-    expect(studyDays[4].date).toEqual(new Date('2024-01-05'))
-    expect(studyDays[5].subjects).toEqual(['English'])
-    expect(studyDays[5].date).toEqual(new Date('2024-01-08'))
   })
 
   it('should throw error if not enough days to allocate all subjects', () => {

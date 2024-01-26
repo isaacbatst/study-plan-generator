@@ -1,5 +1,6 @@
 import StudyDay from "./StudyDay"
 import SubjectTheme, { SubjectThemeJSON } from "./SubjectTheme"
+import SubjectThemeModule from "./SubjectThemeModule"
 
 export type SubjectJSON = {
   id: string,
@@ -33,17 +34,8 @@ export default class Subject {
     return this.themes.reduce((acc, theme) => acc + theme.getDuration(), 0)
   }
 
-  getStudyDays(availableDays: Date[], index: number): StudyDay[] {
-    const subjectDuration = this.getDuration()
-    const studyDays: StudyDay[] = []
-    for(let i = 0; i < subjectDuration; i++) {
-      const availableDay = availableDays[index]
-      const studyDay = new StudyDay(availableDay)
-      studyDay.addSubject(this.getName())
-      studyDays.push(studyDay)
-      index++
-    }
-    return studyDays
+  getModules(): SubjectThemeModule[] {
+    return this.themes.reduce<SubjectThemeModule[]>((acc, theme) => acc.concat(theme.getModules()), [])
   }
 
   toJSON(): SubjectJSON {
