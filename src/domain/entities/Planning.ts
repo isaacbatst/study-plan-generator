@@ -1,3 +1,4 @@
+import { NotEnoughDaysError } from "../errors/NotEnoughDaysError"
 import StudyDay from "./StudyDay"
 import Subject from "./Subject"
 
@@ -28,8 +29,8 @@ export class Planning {
     this.endDate = params.endDate
   }
 
-  addSubject(name: string, duration: number): void {
-    this.subjects.push(new Subject(name, duration))
+  addSubject(subject: Subject): void {
+    this.subjects.push(subject)
   }
 
   getStudyDays(): StudyDay[] {
@@ -40,6 +41,9 @@ export class Planning {
       const subjectDuration = subject.getDuration()
       for(let i = 0; i < subjectDuration; i++) {
         const availableDay = availableDays[planningDaysIndex]
+        if(!availableDay) {
+          throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
+        }
         const studyDay = new StudyDay(availableDay)
         studyDay.addSubject(subject.getName())
         studyDays.push(studyDay)
@@ -63,7 +67,7 @@ export class Planning {
     return availableDays
   }
 
-  getSubjectsDays(): number {
+  getNecessaryDays(): number {
     return this.subjects.reduce((total, subject) => total + subject.getDuration(), 0)
   }
   

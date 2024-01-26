@@ -8,4 +8,11 @@ export default class StudyDay {
   addSubject(subject: string): void {
     this.subjects.push(subject)
   }
+
+  toJSON() {
+    return {
+      date: this.date.toISOString(),
+      subjects: this.subjects
+    }
+  }
 }
