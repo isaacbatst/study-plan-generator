@@ -1,11 +1,14 @@
 import { NotEnoughDaysError } from "../errors/NotEnoughDaysError"
 import StudyDay from "./StudyDay"
+import StudyPlan from "./StudyPlan"
 import Subject from "./Subject"
+import SubjectThemeModule from "./SubjectThemeModule"
 
 type PlanningParams = {
   startDate: Date
   endDate: Date
   availableWeekDays?: boolean[]
+  availableHoursPerDay?: number
 }
 
 export class Planning {
@@ -13,9 +16,11 @@ export class Planning {
   private endDate: Date
   private subjects: Subject[] = []
   private availableWeekDays: boolean[]
+  private hoursPerDay: number;
 
   constructor(params: PlanningParams) {
     this.availableWeekDays = params.availableWeekDays || [true, true, true, true, true, true, true]
+    this.hoursPerDay = params.availableHoursPerDay || 2
 
     if (params.startDate > params.endDate) {
       throw new Error('START_DATE_AFTER_END_DATE')
@@ -34,24 +39,36 @@ export class Planning {
   }
 
   getStudyDays(): StudyDay[] {
-    const studyDays: StudyDay[] = []
+    const studyDays = new Map<string, StudyDay>()
     const availableDays = this.getAvailableDays()
     let planningDaysIndex = 0
-    this.subjects.forEach(subject => {
-      const modules = subject.getModules()
-      modules.forEach((module) => {
-        const availableDay = availableDays[planningDaysIndex]
-        if(!availableDay) {
-          throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
-        }
-        const studyDay = new StudyDay(availableDay)
-        studyDay.addStudyObject(module.getId())
-        studyDays.push(studyDay)
+    let remainingHours = this.hoursPerDay;
+    const modules = this.subjects.reduce<SubjectThemeModule[]>((acc, subject) => acc.concat(subject.getModules()), [])
+    modules.forEach(module => {
+      if(remainingHours < module.getNecessaryHours()) {
         planningDaysIndex++
-      })
-    })
+        remainingHours = this.hoursPerDay
+      }
+      const availableDay = availableDays[planningDaysIndex]
+      if(!availableDay) {
+        throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
+      }
 
-    return studyDays 
+      const studyDay = studyDays.get(availableDay.toISOString()) ?? new StudyDay(availableDay)
+      const studyObjectName = `${module.getSubjectName()} ${module.getName()}`
+      studyDay.addStudyObject(module.getId(), studyObjectName, module.getNecessaryHours())
+
+      if(!studyDays.has(availableDay.toISOString())) {
+        studyDays.set(availableDay.toISOString(), studyDay)
+      }
+
+      remainingHours -= module.getNecessaryHours()
+    })
+    return Array.from(studyDays.values())
+  }
+
+  getHoursPerDay(): number {
+    return this.hoursPerDay
   }
   
   getAvailableDays(): Date[] {
@@ -59,7 +76,8 @@ export class Planning {
     const numberOfDays = this.getNumberOfDays()
     for (let i = 0; i < numberOfDays; i++) {
       const date = new Date(this.startDate)
-      date.setDate(date.getDate() + i)
+      const nextDay = date.getDate() + i
+      date.setDate(nextDay)
       if (this.isAvailable(date)) {
         availableDays.push(date)
       }
@@ -68,7 +86,10 @@ export class Planning {
   }
 
   getNecessaryDays(): number {
-    return this.subjects.reduce((total, subject) => total + subject.getDuration(), 0)
+    const necessaryHours = this.subjects
+      .reduce((total, subject) => total + subject.getNecessaryHours(), 0)
+
+    return Math.ceil(necessaryHours / this.hoursPerDay)
   }
   
   getNumberOfDays(): number {

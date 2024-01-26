@@ -30,8 +30,8 @@ export default class Subject {
     return this.name
   }
 
-  getDuration(): number {
-    return this.themes.reduce((acc, theme) => acc + theme.getDuration(), 0)
+  getNecessaryHours() {
+    return this.themes.reduce((acc, theme) => acc + theme.getNecessaryHours(), 0)
   }
 
   getModules(): SubjectThemeModule[] {

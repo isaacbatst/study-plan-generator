@@ -1,4 +1,9 @@
-import StudyObject from "./StudyObject"
+import StudyObject, { StudyObjectJSON } from "./StudyObject"
+
+export type StudyDayJSON = {
+  date: string,
+  studyObjects: StudyObjectJSON[],
+}
 
 export default class StudyDay {
   readonly studyObjects: StudyObject[] = []
@@ -7,14 +12,18 @@ export default class StudyDay {
     readonly date: Date,
   ) {}
 
-  addStudyObject(moduleId: string): void {
-    this.studyObjects.push(new StudyObject(moduleId))
+  addStudyObject(id: string, name: string, necessaryHours: number): void {
+    this.studyObjects.push(new StudyObject(id, name, necessaryHours))
   }
 
-  toJSON() {
+  toString() {
+    return `${this.date.toLocaleDateString('pt-BR')}: ${this.studyObjects.map(studyObject => studyObject.toString()).join(', ')}`
+  }
+
+  toJSON(): StudyDayJSON {
     return {
       date: this.date.toISOString(),
-      subjects: this.studyObjects.map(studyObject => studyObject.toJSON()),
+      studyObjects: this.studyObjects.map(studyObject => studyObject.toJSON()),
     }
   }
 }

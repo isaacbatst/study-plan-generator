@@ -5,6 +5,6 @@ export class NotEnoughDaysError extends Error {
     public necessaryDays: number, 
     public availableDays: number
   ) {
-    super('São necessários ' + necessaryDays + ' dias, mas só há ' + availableDays + ' dias disponíveis.');
+    super('São necessários ' + necessaryDays + ' dias, mas só foram disponibilizados ' + availableDays + ' dias.');
   }
 }

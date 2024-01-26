@@ -12,15 +12,15 @@ describe('Planning', () => {
 
   beforeEach(() => {
     math = new Subject('math', 'Maths')
-    math.addTheme(new SubjectTheme('math-1', '1', [new SubjectThemeModule('math-1-1', '1')]))
+    math.addTheme(new SubjectTheme('math-1', '1', [new SubjectThemeModule('math-1-1', '1', 'Maths')]))
     physics = new Subject('phy', 'Physics')
-    physics.addTheme(new SubjectTheme('phy-1', '1', [new SubjectThemeModule('phy-1-1', '1')]))
-    physics.addTheme(new SubjectTheme('phy-2', '2', [new SubjectThemeModule('phy-2-1', '1')]))
+    physics.addTheme(new SubjectTheme('phy-1', '1', [new SubjectThemeModule('phy-1-1', '1', 'Physics')]))
+    physics.addTheme(new SubjectTheme('phy-2', '2', [new SubjectThemeModule('phy-2-1', '1', 'Physics')]))
     english = new Subject('en', 'English')
-    english.addTheme(new SubjectTheme('en-1', '1', [new SubjectThemeModule('en-1-1', '1')]))
+    english.addTheme(new SubjectTheme('en-1', '1', [new SubjectThemeModule('en-1-1', '1', 'English')]))
     english.addTheme(new SubjectTheme('en-2', '2', [
-      new SubjectThemeModule('en-2-1', '1'), 
-      new SubjectThemeModule('en-2-2', '1')
+      new SubjectThemeModule('en-2-1', '1', 'English'), 
+      new SubjectThemeModule('en-2-2', '2', 'English')
     ]))
   })
 
@@ -80,7 +80,7 @@ describe('Planning', () => {
     expect(subjects.length).toBe(1)
   })
 
-  it('should calculate subjects total duration', () => {
+  it('should calculate necessary days', () => {
     const planning = new Planning({
       startDate: new Date('2024-01-01'),
       endDate: new Date('2024-01-31'),
@@ -148,6 +148,25 @@ describe('Planning', () => {
     expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
     expect(studyDays[2].studyObjects[0].getId()).toBe('phy-2-1')
     expect(studyDays[2].date).toEqual(new Date('2024-01-03'))
+  })
+
+  it('should allocate subjects to study days considering custom available hours per day', () => {
+    const planning = new Planning({
+      startDate: new Date('2024-01-01'),
+      endDate: new Date('2024-01-08'),
+      availableWeekDays: [false, true, true, true, true, true, false],
+      availableHoursPerDay: 4
+    })
+
+    planning.addSubject(math)
+    planning.addSubject(physics)
+
+    const studyDays = planning.getStudyDays()
+    expect(studyDays[0].studyObjects[0].getId()).toBe('math-1-1')
+    expect(studyDays[0].studyObjects[1].getId()).toBe('phy-1-1')
+    expect(studyDays[0].date).toEqual(new Date('2024-01-01'))
+    expect(studyDays[1].studyObjects[0].getId()).toBe('phy-2-1')
+    expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
   })
 
   it('should throw error if not enough days to allocate all subjects', () => {

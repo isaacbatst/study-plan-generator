@@ -12,9 +12,9 @@ export default class SubjectTheme {
     readonly name: string,
     readonly modules: SubjectThemeModule[],
   ){}
-
-  getDuration(): number {
-    return this.modules.length
+  
+  getNecessaryHours(): number {
+    return this.modules.reduce((acc, module) => acc + module.getNecessaryHours(), 0)
   }
 
   getModules(): SubjectThemeModule[] {
