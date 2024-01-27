@@ -237,9 +237,9 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
                   onValueChange={field.onChange}
                   type="single"
                 >
-                  <ToggleGroupItem value="alternate-daily">Alternar matéria todo dia</ToggleGroupItem>
-                  <ToggleGroupItem value="alternate">Alternar matéria sempre</ToggleGroupItem>
-                  <ToggleGroupItem value="default">Manter matéria até finalizá-la</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10" value="alternate-daily">Alternar matéria todo dia</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10" value="alternate">Alternar matéria sempre</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10" value="default">Manter matéria até finalizá-la</ToggleGroupItem>
                 </ToggleGroup>
                 <FormMessage />
               </FormItem>
