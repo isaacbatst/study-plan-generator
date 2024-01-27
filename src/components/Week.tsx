@@ -41,12 +41,13 @@ const Week = ({week, index}: Props) => {
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate)
           date.setDate(date.getDate()+dayIndex)
+          const dayName = dayNamesPtBr[dayIndex]
           const header = (<div className='flex items-center xl:flex-col gap-2 xl:gap-1 xl:items-start'>
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl 2xl:text-4xl flex lg:block items-center">
               <span>{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</span>
             </h2>
             <p className="text-sm font-light text-gray-500 tracking-normal">
-              {dayNamesPtBr[date.getDay()]}
+              {dayName}
             </p>
           </div>
           )
@@ -56,7 +57,7 @@ const Week = ({week, index}: Props) => {
             <div key={key} className="space-y-2 lg:space-y-4">
               {header}
               <div className="space-y-4">
-                <div className="space-y-2">
+                <div className="space-y-1 xl:space-y-0">
                   <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">Dia livre</h3>
                   <p className="max-w-[900px] font-light text-gray-500 md:text-base dark:text-gray-400">
                     Nenhum estudo programado para este dia
@@ -71,7 +72,7 @@ const Week = ({week, index}: Props) => {
               {header}
               <div className="space-y-2 lg:space-y-6">
                 {weekDay.studyObjects.map(studyObject => (
-                  <div key={studyObject.id} className="space-y-2">
+                  <div key={studyObject.id} className="space-y-1 xl:space-y-0">
                     <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">
                       {studyObject.name}
                     </h3>
