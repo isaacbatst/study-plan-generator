@@ -24,15 +24,14 @@ import {
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { useId } from 'react'
+import { toast } from "sonner"
 import { WeekDay } from '../domain/WeekDay'
 import { Planning } from "../domain/entities/Planning"
 import StudyPlan from "../domain/entities/StudyPlan"
 import { SubjectJSON } from "../domain/entities/Subject"
 import { SubjectRepositoryMemorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton"
-import { Option } from '../lib/Option'
 import { Input } from "./ui/input"
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
-import { toast } from "sonner"
 
 const FormSchema = z.object({
   period: z.object({
@@ -237,7 +236,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
                   onValueChange={field.onChange}
                   type="single"
                 >
-                  <ToggleGroupItem className="h-auto min-h-10" value="alternate-daily">Alternar matérias por dia</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10 py-2" value="alternate-daily">Alternar matérias por dia</ToggleGroupItem>
                   <ToggleGroupItem className="h-auto min-h-10" value="alternate">Alternar matérias por horário</ToggleGroupItem>
                   <ToggleGroupItem className="h-auto min-h-10" value="default">Manter matéria até finalizá-la</ToggleGroupItem>
                 </ToggleGroup>
