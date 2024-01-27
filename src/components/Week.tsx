@@ -37,24 +37,24 @@ const Week = ({week, index}: Props) => {
     <section className="w-full py-2 lg:py-10">
       <h2 className='text-center mb-5 text-3xl font-extralight'>Semana {index + 1}</h2>
       <hr className='mb-10' />
-      <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-7 lg:gap-12">
+      <div className="container grid gap-12 px-4 md:px-6 xl:grid-cols-7">
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate)
           date.setDate(date.getDate()+dayIndex)
-          const header = (<h2 className="text-2xl font-bold tracking-tighter leading-6 sm:text-3xl xl:text-4xl">
-            <span className=''>{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</span> <br />
-            <span className="text-base font-light text-gray-500 tracking-normal">
+          const header = (<h2 className="text-2xl font-bold tracking-tighter leading-6 sm:text-3xl 2xl:text-4xl flex lg:block items-center gap-2">
+            <span className=''>{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</span> <br className='hidden lg:block' />
+            <span className="text-sm font-light text-gray-500 tracking-normal">
               {dayNamesPtBr[date.getDay()]}
             </span>
           </h2>)
           const key = `${week.startDate}-${day}`
           const weekDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
           if(!weekDay) return (
-            <div key={key} className="space-y-4">
+            <div key={key} className="space-y-2 lg:space-y-4">
               {header}
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold tracking-tighter sm:text-2xl xl:text-3xl">Dia livre</h3>
+                <div className="lg:space-y-2">
+                  <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">Dia livre</h3>
                   <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                     Nenhuma atividade planejada
                   </p>
@@ -64,12 +64,12 @@ const Week = ({week, index}: Props) => {
           )
 
           return (
-            <div key={key} className="space-y-4">
+            <div key={key} className="space-y-2 lg:space-y-4">
               {header}
-              <div className="space-y-4 lg:space-y-6">
+              <div className="space-y-2 lg:space-y-6">
                 {weekDay.studyObjects.map(studyObject => (
-                  <div key={studyObject.id} className="space-y-2">
-                    <h3 className="text-xl font-bold tracking-tighter sm:text-2xl xl:text-3xl">
+                  <div key={studyObject.id} className="lg:space-y-2">
+                    <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">
                       {studyObject.name}
                     </h3>
                     <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
