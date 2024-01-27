@@ -26,8 +26,7 @@ import { cn } from "@/lib/utils"
 import { useId } from 'react'
 import { toast } from "sonner"
 import { WeekDay } from '../domain/WeekDay'
-import { Planning } from "../domain/entities/Planning"
-import StudyPlan from "../domain/entities/StudyPlan"
+import { Planning, PlanningDistributionType } from "../domain/entities/Planning"
 import { SubjectJSON } from "../domain/entities/Subject"
 import { SubjectRepositoryMemorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton"
 import { Input } from "./ui/input"
@@ -44,7 +43,7 @@ const FormSchema = z.object({
   })),
   availableDays: z.array(z.boolean()),
   hoursPerDay: z.coerce.number().min(1).max(24),
-  distribution: z.string()
+  distribution: z.nativeEnum(PlanningDistributionType)
 }).transform((data) => ({
   ...data,
   period: {
@@ -63,21 +62,27 @@ const weekDayLabels: Record<WeekDay, string> = {
   [WeekDay.Saturday]: 'S',
 }
 
+const distributions: Record<PlanningDistributionType, string> = {
+  [PlanningDistributionType.ALTERNATE_DAILY]: 'Alternar matérias por dia',
+  [PlanningDistributionType.ALTERNATE]: 'Alternar matérias por horário',
+  [PlanningDistributionType.UNTIL_FINISH]: 'Manter matéria até finalizá-la',
+}
+
 type Props = {
   subjects: SubjectJSON[]
-  addStudyPlan: (studyPlan: StudyPlan) => void
+  savePlanning: (studyPlan: Planning) => void
 }
 
 const subjectsRepository = SubjectRepositoryMemorySingleton.getInstance()
 
-export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
+export default function CreatePlanningForm({subjects, savePlanning}: Props) {
   const subjectsSelectId = useId()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       availableDays: [false, true, true, true, true, true, false],
       hoursPerDay: 2,
-      distribution: 'alternate-daily'
+      distribution: PlanningDistributionType.ALTERNATE_DAILY
     }
   })
 
@@ -102,16 +107,15 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
       endDate: data.period.to,
       availableWeekDays: data.availableDays,
       availableHoursPerDay: data.hoursPerDay,
+      distribution: data.distribution
     })
     subjects.forEach(subject => planning.addSubject(subject))
     
     try {
-      const studyDays = planning.getStudyDays(data.distribution)
-      const studyPlan = new StudyPlan(crypto.randomUUID(), new Date(), studyDays)
-      addStudyPlan(studyPlan)
-      navigator.clipboard.writeText(studyPlan.toString());
+      savePlanning(planning)
+      navigator.clipboard.writeText(planning.toString());
       toast('Copiado para a área de transferência', {
-        description: 'Pode colar seu plano de estudos em qualquer lugar',
+        description: 'Agora você pode colar seu plano de estudos em qualquer lugar!',
         position: 'bottom-center',
         duration: 10000,
       })
@@ -235,10 +239,13 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
                   value={field.value}
                   onValueChange={field.onChange}
                   type="single"
+                  className="flex items-stretch"
                 >
-                  <ToggleGroupItem className="h-auto min-h-10 py-2" value="alternate-daily">Alternar matérias por dia</ToggleGroupItem>
-                  <ToggleGroupItem className="h-auto min-h-10" value="alternate">Alternar matérias por horário</ToggleGroupItem>
-                  <ToggleGroupItem className="h-auto min-h-10" value="default">Manter matéria até finalizá-la</ToggleGroupItem>
+                  {
+                    Object.entries(distributions).map(([value, label]) => (
+                      <ToggleGroupItem className="h-auto min-h-10 py-2" key={value} value={value}>{label}</ToggleGroupItem>
+                    ))
+                  }
                 </ToggleGroup>
                 <FormMessage />
               </FormItem>

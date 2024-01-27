@@ -1,18 +1,18 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import StudyPlan, { StudyPlanJSON } from '../domain/entities/StudyPlan'
+import { Planning, PlanningJSON } from '../domain/entities/Planning'
 import { SubjectJSON } from '../domain/entities/Subject'
+import { useStoredState } from '../hooks/useStoredState'
 import CreatePlanningForm from './CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningFormDialog'
 import StudyPlanView from './StudyPlan'
-import { useStoredState } from '../hooks/useStoredState'
 
 type Props = {
   subjects: SubjectJSON[]
 }
 
 const Plannings = ({subjects}: Props) => {
-  const [studyPlans, setStudyPlans] = useStoredState<StudyPlanJSON[]>('study-plans', [])
+  const [studyPlans, setStudyPlans] = useStoredState<PlanningJSON[]>('study-plans', [])
   const [showInitialForm, setShowInitialForm] = useState<boolean>(studyPlans.length === 0)
   
   useEffect(() => {
@@ -25,7 +25,7 @@ const Plannings = ({subjects}: Props) => {
     }
   }, [studyPlans.length])
 
-  const addStudyPlan = (studyPlan: StudyPlan) => {
+  const addStudyPlan = (studyPlan: Planning) => {
     const newPlans = [...studyPlans, studyPlan.toJSON()]
     setStudyPlans(newPlans)
   }
@@ -43,10 +43,10 @@ const Plannings = ({subjects}: Props) => {
   }, [studyPlans])
   return (
     <div>
-      {!showInitialForm && <CreatePlanningFormDialog addStudyPlan={addStudyPlan} subjects={subjects}  />}
+      {!showInitialForm && <CreatePlanningFormDialog savePlanning={addStudyPlan} subjects={subjects}  />}
       <div className="flex flex-col gap-5 py-5">
         {showInitialForm && <CreatePlanningForm 
-          addStudyPlan={(studyPlan) => {
+          savePlanning={(studyPlan) => {
             addStudyPlan(studyPlan)
             setShowInitialForm(false)
           }} 

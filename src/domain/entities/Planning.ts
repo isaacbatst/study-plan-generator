@@ -1,26 +1,53 @@
-import { a } from "vitest/dist/suite-MFRDkZcV.js"
 import { NotEnoughDaysError } from "../errors/NotEnoughDaysError"
-import StudyDay from "./StudyDay"
+import StudyDay, { StudyDayJSON } from "./StudyDay"
 import Subject from "./Subject"
 import SubjectThemeModule from "./SubjectThemeModule"
+
+export enum PlanningDistributionType {
+  UNTIL_FINISH = 'until-finish',
+  ALTERNATE = 'alternate',
+  ALTERNATE_DAILY = 'alternate-daily'
+} 
 
 type PlanningParams = {
   startDate: Date
   endDate: Date
   availableWeekDays?: boolean[]
   availableHoursPerDay?: number
+  distribution?: PlanningDistributionType
+  id?: string
+  createdAt?: Date
+}
+
+export type PlanningJSON = {
+  id: string
+  createdAt: string
+  startDate: string
+  endDate: string
+  availableWeekDays: boolean[]
+  availableHoursPerDay: number
+  distribution: PlanningDistributionType
+  studyDays: StudyDayJSON[]
+  availableDays: string[]
+  necessaryDays: number
 }
 
 export class Planning {
+  private id: string
+  private createdAt: Date
   private startDate: Date
   private endDate: Date
   private subjects: Subject[] = []
   private availableWeekDays: boolean[]
   private hoursPerDay: number;
+  private distribution: PlanningDistributionType
 
   constructor(params: PlanningParams) {
+    this.id = params.id || crypto.randomUUID()
+    this.createdAt = params.createdAt || new Date()
     this.availableWeekDays = params.availableWeekDays || [true, true, true, true, true, true, true]
     this.hoursPerDay = params.availableHoursPerDay || 2
+    this.distribution = params.distribution || PlanningDistributionType.UNTIL_FINISH
 
     if (params.startDate > params.endDate) {
       throw new Error('START_DATE_AFTER_END_DATE')
@@ -38,7 +65,7 @@ export class Planning {
     this.subjects.push(subject)
   }
 
-  getStudyDays(strategy = 'default'): StudyDay[] {
+  getStudyDays(): StudyDay[] {
     const studyDays = new Map<string, StudyDay>()
     const availableDays = this.getAvailableDays()
     let planningDaysIndex = 0
@@ -49,12 +76,12 @@ export class Planning {
       throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
     }
 
-    if(strategy === 'default') {
+    if(this.distribution === 'until-finish') {
       modules = this.subjects
         .reduce<SubjectThemeModule[]>((acc, subject) => acc.concat(subject.getModules()), [])
     }
 
-    if(strategy === 'alternate') {
+    if(this.distribution === 'alternate') {
       const [biggestSubject] = this.subjects
         .slice().sort((a, b) => b.getModules().length - a.getModules().length)
       for(let i = 0; i < biggestSubject.getModules().length; i++) {
@@ -67,7 +94,7 @@ export class Planning {
       }
     }
 
-    if(strategy === 'alternate-daily') {
+    if(this.distribution === 'alternate-daily') {
       const modulesIndexes = this.subjects.map(() => 0)
       let subjectIndex = 0
       for(let i = 0; i < availableDays.length; i++) {
@@ -171,6 +198,35 @@ export class Planning {
 
   getEndDate(): Date {
     return this.endDate
+  }
+  
+  getId(): string {
+    return this.id
+  }
+
+  getCreatedAt(): Date {
+    return this.createdAt
+  }
+
+  toJSON(): PlanningJSON {
+    return {
+      id: this.id,
+      createdAt: this.createdAt.toISOString(),
+      startDate: this.startDate.toISOString(),
+      endDate: this.endDate.toISOString(),
+      availableWeekDays: this.availableWeekDays,
+      availableHoursPerDay: this.hoursPerDay,
+      distribution: this.distribution,
+      studyDays: this.getStudyDays().map(studyDay => studyDay.toJSON()),
+      availableDays: this.getAvailableDays().map(date => date.toISOString()),
+      necessaryDays: this.getNecessaryDays()
+    }
+  }
+
+  toString(): string {
+    const title = `Planejamento de ${this.startDate.toLocaleDateString('pt-BR')} até ${this.endDate.toLocaleDateString('pt-BR')}\n`
+    const body = this.getStudyDays().map(studyDay => studyDay.toString()).join('\n')
+    return title + body
   }
 
   private isAvailable(date: Date): boolean {

@@ -3,22 +3,21 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog"
 import { useState } from "react"
+import { Planning } from "../domain/entities/Planning"
 import { SubjectJSON } from "../domain/entities/Subject"
 import CreatePlanningForm from "./CreatePlanningForm"
-import StudyPlan from "../domain/entities/StudyPlan"
 
 type Props = {
   subjects: SubjectJSON[]
-  addStudyPlan: (studyPlan: StudyPlan) => void
+  savePlanning: (studyPlan: Planning) => void
 }
 
-export function CreatePlanningFormDialog({subjects, addStudyPlan}: Props) {
+export function CreatePlanningFormDialog({subjects, savePlanning}: Props) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -35,8 +34,8 @@ export function CreatePlanningFormDialog({subjects, addStudyPlan}: Props) {
             Não se preocupe, o plano antigo ficará salvo.
           </DialogDescription>
         </DialogHeader>
-        {<CreatePlanningForm addStudyPlan={(studyPlan) => {
-          addStudyPlan(studyPlan)
+        {<CreatePlanningForm savePlanning={(studyPlan) => {
+          savePlanning(studyPlan)
           setOpen(false)
         }} subjects={subjects} />}
       </DialogContent>

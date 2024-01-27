@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { Planning } from './Planning'
+import { Planning, PlanningDistributionType as PlanningDistributionType } from './Planning'
 import Subject from './Subject'
 import SubjectTheme from './SubjectTheme'
 import { NotEnoughDaysError } from '../errors/NotEnoughDaysError'
@@ -173,12 +173,13 @@ describe('Planning', () => {
     const planning = new Planning({
       startDate: new Date('2024-01-01'),
       endDate: new Date('2024-01-08'),
+      distribution: PlanningDistributionType.ALTERNATE
     })
 
     planning.addSubject(math)
     planning.addSubject(physics)
 
-    const studyDays = planning.getStudyDays('alternate')
+    const studyDays = planning.getStudyDays()
     expect(studyDays[0].studyObjects[0].getId()).toBe('math-1-1')
     expect(studyDays[1].studyObjects[0].getId()).toBe('phy-1-1')
     expect(studyDays[2].studyObjects[0].getId()).toBe('phy-2-1')
@@ -188,14 +189,15 @@ describe('Planning', () => {
     const planning = new Planning({
       startDate: new Date('2024-01-01'),
       endDate: new Date('2024-01-08'),
-      availableHoursPerDay: 4
+      availableHoursPerDay: 4,
+      distribution: PlanningDistributionType.ALTERNATE_DAILY
     })
 
     planning.addSubject(physics)
     planning.addSubject(math)
     planning.addSubject(english)
 
-    const studyDays = planning.getStudyDays('alternate-daily')
+    const studyDays = planning.getStudyDays()
     console.log(studyDays)
     expect(studyDays[0].date).toEqual(new Date('2024-01-01'))
     expect(studyDays[0].studyObjects[0].getId()).toBe('phy-1-1')

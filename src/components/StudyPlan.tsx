@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
 import { WeekGroup } from '../domain/WeekGroup';
 import { StudyDayJSON } from '../domain/entities/StudyDay';
-import { StudyPlanJSON } from '../domain/entities/StudyPlan';
 import Week from './Week';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import { Button } from './ui/button';
 import { Trash } from 'lucide-react';
+import { PlanningJSON } from '../domain/entities/Planning';
 
 type Props = {
-  studyPlan: StudyPlanJSON
+  studyPlan: PlanningJSON
   removeStudyPlan: (id: string) => void
 }
 
