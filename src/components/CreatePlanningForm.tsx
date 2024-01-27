@@ -124,7 +124,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
   }
 
   return (
-    <div className="p-5">
+    <div className="p-5 sm:p-0">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
           <FormField
