@@ -5,7 +5,7 @@ import { SubjectJSON } from '../domain/entities/Subject'
 import { useStoredState } from '../hooks/useStoredState'
 import CreatePlanningForm from './CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningFormDialog'
-import StudyPlanView from './StudyPlan'
+import PlanningView from './StudyPlan'
 
 type Props = {
   subjects: SubjectJSON[]
@@ -53,7 +53,7 @@ const Plannings = ({subjects}: Props) => {
           subjects={subjects} 
         />}
         {sortedPlans.map((studyPlan) => (
-          <StudyPlanView key={studyPlan.id} removeStudyPlan={removeStudyPlan} studyPlan={studyPlan} />
+          <PlanningView key={studyPlan.id} removeStudyPlan={removeStudyPlan} studyPlan={studyPlan} />
         ))}
       </div>
     </div>

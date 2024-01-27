@@ -63,8 +63,7 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
   return weekGroups;
 }
 
-const StudyPlanView = ({studyPlan, removeStudyPlan}: Props) => {
-
+const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
   const weekGroups = useMemo(() => {
     return groupStudyDaysByWeek(studyPlan.studyDays)
   }, [studyPlan.studyDays])
@@ -99,4 +98,4 @@ const StudyPlanView = ({studyPlan, removeStudyPlan}: Props) => {
   )
 }
 
-export default StudyPlanView
+export default PlanningView
