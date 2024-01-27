@@ -117,7 +117,8 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
       navigator.clipboard.writeText(studyPlan.toString());
       toast('Copiado para a área de transferência', {
         description: 'Pode colar seu plano de estudos em qualquer lugar',
-        position: 'bottom-center'
+        position: 'bottom-center',
+        duration: 10000,
       })
     } catch (err) {
       console.log('catching')
