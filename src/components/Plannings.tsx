@@ -5,18 +5,23 @@ import { SubjectJSON } from '../domain/entities/Subject'
 import CreatePlanningForm from './CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningFormDialog'
 import StudyPlanView from './StudyPlan'
+import { useStoredState } from '../hooks/useStoredState'
 
 type Props = {
   subjects: SubjectJSON[]
 }
 
 const Plannings = ({subjects}: Props) => {
-  const [studyPlans, setStudyPlans] = useState<StudyPlanJSON[]>([])
+  const [studyPlans, setStudyPlans] = useStoredState<StudyPlanJSON[]>('study-plans', [])
   const [showInitialForm, setShowInitialForm] = useState<boolean>(studyPlans.length === 0)
   
   useEffect(() => {
     if(studyPlans.length === 0) {
       setShowInitialForm(true)
+    }
+
+    if(studyPlans.length > 0) {
+      setShowInitialForm(false)
     }
   }, [studyPlans.length])
 
