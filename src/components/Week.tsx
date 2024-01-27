@@ -22,6 +22,16 @@ const monthNamesPtBr: string[] = [
   "Dezembro"
 ];
 
+const dayNamesPtBr: string[] = [
+  "Domingo",
+  "Segunda-feira",
+  "Terça-feira",
+  "Quarta-feira",
+  "Quinta-feira",
+  "Sexta-feira",
+  "Sábado"
+];
+
 const Week = ({week, index}: Props) => {
   return (
     <section className="w-full py-2 lg:py-10">
@@ -31,13 +41,18 @@ const Week = ({week, index}: Props) => {
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate)
           date.setDate(date.getDate()+dayIndex)
-          const header = <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl xl:text-4xl">{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</h2>
+          const header = (<h2 className="text-2xl font-bold tracking-tighter leading-6 sm:text-3xl xl:text-4xl">
+            <span className=''>{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</span> <br />
+            <span className="text-base font-light text-gray-500 tracking-normal">
+              {dayNamesPtBr[date.getDay()]}
+            </span>
+          </h2>)
           const key = `${week.startDate}-${day}`
           const weekDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
           if(!weekDay) return (
-            <div key={key} className="space-y-8 xl:space-y-10">
+            <div key={key} className="space-y-4">
               {header}
-              <div className="space-y-4 lg:space-y-6">
+              <div className="space-y-4">
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold tracking-tighter sm:text-2xl xl:text-3xl">Dia livre</h3>
                   <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
@@ -49,7 +64,7 @@ const Week = ({week, index}: Props) => {
           )
 
           return (
-            <div key={key} className="space-y-8 xl:space-y-10">
+            <div key={key} className="space-y-4">
               {header}
               <div className="space-y-4 lg:space-y-6">
                 {weekDay.studyObjects.map(studyObject => (
