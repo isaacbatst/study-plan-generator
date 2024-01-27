@@ -190,7 +190,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
             name="period"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Período que vou estudar:</FormLabel>
+                <FormLabel className="mb-2">Período que vou estudar:</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -231,14 +231,14 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
             name="distribution"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Distribuição das matérias:</FormLabel>
+                <FormLabel className="mb-2">Distribuição das matérias:</FormLabel>
                 <ToggleGroup
                   value={field.value}
                   onValueChange={field.onChange}
                   type="single"
                 >
-                  <ToggleGroupItem className="h-auto min-h-10" value="alternate-daily">Alternar matéria por dia</ToggleGroupItem>
-                  <ToggleGroupItem className="h-auto min-h-10" value="alternate">Alternar matéria por horário</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10" value="alternate-daily">Alternar matérias por dia</ToggleGroupItem>
+                  <ToggleGroupItem className="h-auto min-h-10" value="alternate">Alternar matérias por horário</ToggleGroupItem>
                   <ToggleGroupItem className="h-auto min-h-10" value="default">Manter matéria até finalizá-la</ToggleGroupItem>
                 </ToggleGroup>
                 <FormMessage />
