@@ -5,7 +5,7 @@ import { SubjectJSON } from '../domain/entities/Subject'
 import { useStoredState } from '../hooks/useStoredState'
 import CreatePlanningForm from './CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningFormDialog'
-import PlanningView from './StudyPlan'
+import PlanningView from './PlanningView'
 
 type Props = {
   subjects: SubjectJSON[]
