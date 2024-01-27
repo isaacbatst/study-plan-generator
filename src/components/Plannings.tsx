@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Planning, PlanningJSON } from '../domain/entities/Planning'
 import { SubjectJSON } from '../domain/entities/Subject'
 import { useStoredState } from '../hooks/useStoredState'
-import CreatePlanningForm from './CreatePlanningForm'
-import { CreatePlanningFormDialog } from './CreatePlanningFormDialog'
+import CreatePlanningForm from './CreatePlanningForm/CreatePlanningForm'
+import { CreatePlanningFormDialog } from './CreatePlanningForm/CreatePlanningFormDialog'
 import PlanningView from './PlanningView'
 
 type Props = {

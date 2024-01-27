@@ -8,8 +8,8 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { useState } from "react"
-import { Planning } from "../domain/entities/Planning"
-import { SubjectJSON } from "../domain/entities/Subject"
+import { Planning } from "../../domain/entities/Planning"
+import { SubjectJSON } from "../../domain/entities/Subject"
 import CreatePlanningForm from "./CreatePlanningForm"
 
 type Props = {
