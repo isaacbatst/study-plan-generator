@@ -10,7 +10,6 @@ export default class StudyObject {
     private name: string,
     private necessaryHours: number,
   ){
-    console.log(this.name)
   }
 
   getId(): string {

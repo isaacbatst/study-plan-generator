@@ -37,12 +37,63 @@ export class Planning {
     this.subjects.push(subject)
   }
 
-  getStudyDays(): StudyDay[] {
+  getStudyDays(strategy = 'default'): StudyDay[] {
     const studyDays = new Map<string, StudyDay>()
     const availableDays = this.getAvailableDays()
     let planningDaysIndex = 0
     let remainingHours = this.hoursPerDay;
-    const modules = this.subjects.reduce<SubjectThemeModule[]>((acc, subject) => acc.concat(subject.getModules()), [])
+    let modules: SubjectThemeModule[] = []
+
+    if(strategy === 'default') {
+      modules = this.subjects
+        .reduce<SubjectThemeModule[]>((acc, subject) => acc.concat(subject.getModules()), [])
+    }
+
+    if(strategy === 'alternate') {
+      const [biggestSubject] = this.subjects
+        .slice().sort((a, b) => b.getModules().length - a.getModules().length)
+      for(let i = 0; i < biggestSubject.getModules().length; i++) {
+        this.subjects.forEach(subject => {
+          const subjectModule = subject.getModules()[i]
+          if(subjectModule) {
+            modules.push(subjectModule)
+          }
+        })
+      }
+    }
+
+    if(strategy === 'alternate-daily') {
+      const modulesIndexes = this.subjects.map(() => 0)
+      let subjectIndex = 0
+      for(let i = 0; i < availableDays.length; i++) {
+        const availableDay = availableDays[i]
+        const subject = this.subjects[subjectIndex]
+        const subjectModuleIndex = modulesIndexes[subjectIndex]
+        const subjectModules = subject.getModules()
+        for(let j = subjectModuleIndex; j < subjectModules.length; j++) {
+          const subjectModule = subjectModules[j]
+          if(subjectModule && subjectModule.getNecessaryHours() <= remainingHours) {
+            const studyDay = studyDays.get(availableDay.toISOString()) ?? new StudyDay(availableDay)
+            const studyObjectName = `${subjectModule.getSubjectName()} ${subjectModule.getName()}`
+            studyDay.addStudyObject(subjectModule.getId(), studyObjectName, subjectModule.getNecessaryHours())
+            if(!studyDays.has(availableDay.toISOString())) {
+              studyDays.set(availableDay.toISOString(), studyDay)
+            }
+      
+            modulesIndexes[subjectIndex]++
+            remainingHours -= subjectModule.getNecessaryHours()
+          }
+        }
+        const subjectsLastIndex = this.subjects.length - 1
+        remainingHours = this.hoursPerDay
+        if(subjectIndex === subjectsLastIndex) {
+          subjectIndex = 0
+        } else {
+          subjectIndex++
+        }
+      }
+    }
+
     modules.forEach(module => {
       if(remainingHours < module.getNecessaryHours()) {
         planningDaysIndex++
@@ -54,6 +105,7 @@ export class Planning {
       }
 
       const studyDay = studyDays.get(availableDay.toISOString()) ?? new StudyDay(availableDay)
+
       const studyObjectName = `${module.getSubjectName()} ${module.getName()}`
       studyDay.addStudyObject(module.getId(), studyObjectName, module.getNecessaryHours())
 

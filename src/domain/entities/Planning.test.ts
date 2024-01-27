@@ -169,6 +169,40 @@ describe('Planning', () => {
     expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
   })
 
+  it('should allocate subjects to study days alternating subjects', () => {
+    const planning = new Planning({
+      startDate: new Date('2024-01-01'),
+      endDate: new Date('2024-01-08'),
+    })
+
+    planning.addSubject(math)
+    planning.addSubject(physics)
+
+    const studyDays = planning.getStudyDays('alternate')
+    expect(studyDays[0].studyObjects[0].getId()).toBe('math-1-1')
+    expect(studyDays[1].studyObjects[0].getId()).toBe('phy-1-1')
+    expect(studyDays[2].studyObjects[0].getId()).toBe('phy-2-1')
+  })
+
+  it('should allocate subjects to study days alternating daily', () => {
+    const planning = new Planning({
+      startDate: new Date('2024-01-01'),
+      endDate: new Date('2024-01-08'),
+      availableHoursPerDay: 4
+    })
+
+    planning.addSubject(physics)
+    planning.addSubject(math)
+    planning.addSubject(english)
+
+    const studyDays = planning.getStudyDays('alternate-daily')
+    expect(studyDays[0].studyObjects[0].getId()).toBe('phy-1-1')
+    expect(studyDays[0].studyObjects[1].getId()).toBe('phy-2-1')
+    expect(studyDays[1].studyObjects[0].getId()).toBe('math-1-1')
+    expect(studyDays[2].studyObjects[0].getId()).toBe('en-1-1')
+    expect(studyDays[2].studyObjects[1].getId()).toBe('en-2-1')
+  })
+
   it('should throw error if not enough days to allocate all subjects', () => {
     const planning = new Planning({
       startDate: new Date('2024-01-01'),

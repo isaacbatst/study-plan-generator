@@ -34,12 +34,6 @@ import { Input } from "./ui/input"
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
 import { toast } from "sonner"
 
-const subjects: Option[] = [
-  {label: 'Matemática', value: 'matematica'},
-  {label: 'Estrutura de dados', value: 'estrutura-de-dados'},
-  {label: 'Computação em Nuvem', value: 'computacao-em-nuvem'},
-]
-
 const FormSchema = z.object({
   period: z.object({
     from: z.date().optional(),
@@ -51,6 +45,7 @@ const FormSchema = z.object({
   })),
   availableDays: z.array(z.boolean()),
   hoursPerDay: z.coerce.number().min(1).max(24),
+  distribution: z.string()
 }).transform((data) => ({
   ...data,
   period: {
@@ -83,6 +78,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
     defaultValues: {
       availableDays: [false, true, true, true, true, true, false],
       hoursPerDay: 2,
+      distribution: 'alternate-daily'
     }
   })
 
@@ -111,7 +107,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
     subjects.forEach(subject => planning.addSubject(subject))
     
     try {
-      const studyDays = planning.getStudyDays()
+      const studyDays = planning.getStudyDays(data.distribution)
       const studyPlan = new StudyPlan(crypto.randomUUID(), new Date(), studyDays)
       addStudyPlan(studyPlan)
       navigator.clipboard.writeText(studyPlan.toString());
@@ -121,7 +117,6 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
         duration: 10000,
       })
     } catch (err) {
-      console.log('catching')
       form.setError('period', {
         message: (err as Error).message
       })
@@ -227,6 +222,25 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="distribution"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Distribuição das matérias:</FormLabel>
+                <ToggleGroup
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  type="single"
+                >
+                  <ToggleGroupItem value="alternate-daily">Alternar matéria todo dia</ToggleGroupItem>
+                  <ToggleGroupItem value="alternate">Alternar matéria sempre</ToggleGroupItem>
+                  <ToggleGroupItem value="default">Manter matéria até finalizá-la</ToggleGroupItem>
+                </ToggleGroup>
                 <FormMessage />
               </FormItem>
             )}
