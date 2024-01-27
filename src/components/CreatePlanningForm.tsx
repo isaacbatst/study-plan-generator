@@ -23,18 +23,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { useId, useState } from 'react'
+import { useId } from 'react'
 import { WeekDay } from '../domain/WeekDay'
-import { Option } from '../lib/Option'
-import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
-import { SubjectRepositoryMemorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton"
-import Subject, { SubjectJSON } from "../domain/entities/Subject"
 import { Planning } from "../domain/entities/Planning"
-import { Input } from "./ui/input"
-import { StudyDayJSON } from "../domain/entities/StudyDay"
-import StudyDays from "./StudyDays"
-import { useToast } from "./ui/use-toast"
 import StudyPlan from "../domain/entities/StudyPlan"
+import { SubjectJSON } from "../domain/entities/Subject"
+import { SubjectRepositoryMemorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton"
+import { Option } from '../lib/Option'
+import { Input } from "./ui/input"
+import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
+import { toast } from "sonner"
 
 const subjects: Option[] = [
   {label: 'Matemática', value: 'matematica'},
@@ -80,7 +78,6 @@ const subjectsRepository = SubjectRepositoryMemorySingleton.getInstance()
 
 export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
   const subjectsSelectId = useId()
-  const {toast} = useToast()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -115,12 +112,12 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
     
     try {
       const studyDays = planning.getStudyDays()
-      const studyPlan = new StudyPlan(crypto.randomUUID(), studyDays)
+      const studyPlan = new StudyPlan(crypto.randomUUID(), new Date(), studyDays)
       addStudyPlan(studyPlan)
       navigator.clipboard.writeText(studyPlan.toString());
-      toast({
-        title: 'Copiado para a área de transferência',
+      toast('Copiado para a área de transferência', {
         description: 'Pode colar seu plano de estudos em qualquer lugar',
+        position: 'bottom-center'
       })
     } catch (err) {
       console.log('catching')
@@ -131,7 +128,7 @@ export default function CreatePlanningForm({subjects, addStudyPlan}: Props) {
   }
 
   return (
-    <div>
+    <div className="p-5">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
           <FormField

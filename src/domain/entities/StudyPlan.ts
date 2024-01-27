@@ -2,13 +2,14 @@ import StudyDay, { StudyDayJSON } from "./StudyDay";
 
 export type StudyPlanJSON = {
   id: string,
+  createdAt: string,
   studyDays: StudyDayJSON[]
 }
 
 export default class StudyPlan {
   private studyDays: StudyDay[] = []
 
-  constructor(readonly id: string, studyDays: StudyDay[]) {
+  constructor(readonly id: string, readonly createdAt: Date, studyDays: StudyDay[]) {
     this.studyDays = studyDays
   }
 
@@ -19,6 +20,7 @@ export default class StudyPlan {
   toJSON(): StudyPlanJSON {
     return {
       id: this.id,
+      createdAt: this.createdAt.toISOString(),
       studyDays: this.studyDays.map(studyDay => studyDay.toJSON())
     }
   }

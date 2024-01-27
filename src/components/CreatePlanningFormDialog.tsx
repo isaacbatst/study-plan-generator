@@ -24,8 +24,8 @@ export function CreatePlanningFormDialog({subjects, addStudyPlan}: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex justify-end">
-          <Button>Criar mais um plano</Button>
+        <div className="flex bg-black">
+          <Button variant='link' className="text-white flex-1">+ Criar outro plano</Button>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

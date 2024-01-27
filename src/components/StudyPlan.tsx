@@ -1,11 +1,15 @@
-import React from 'react'
-import StudyDay, { StudyDayJSON } from '../domain/entities/StudyDay'
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './ui/carousel';
-import Week from './Week';
+import { useMemo } from 'react';
 import { WeekGroup } from '../domain/WeekGroup';
+import { StudyDayJSON } from '../domain/entities/StudyDay';
+import { StudyPlanJSON } from '../domain/entities/StudyPlan';
+import Week from './Week';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
+import { Button } from './ui/button';
+import { Trash } from 'lucide-react';
 
 type Props = {
-  studyDays: StudyDayJSON[]
+  studyPlan: StudyPlanJSON
+  removeStudyPlan: (id: string) => void
 }
 
 function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
@@ -59,11 +63,26 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
   return weekGroups;
 }
 
-const StudyDays = ({studyDays}: Props) => {
-  const weekGroups = groupStudyDaysByWeek(studyDays);
+const StudyPlanView = ({studyPlan, removeStudyPlan}: Props) => {
 
+  const weekGroups = useMemo(() => {
+    return groupStudyDaysByWeek(studyPlan.studyDays)
+  }, [studyPlan.studyDays])
+
+  const createdAt = new Date(studyPlan.createdAt)
+  const createdAtText = `Criado em ${createdAt.toLocaleDateString('pt-BR')} às ${createdAt.toLocaleTimeString('pt-BR')}`
   return (
-    <div className='my-5 flex flex-col items-center'>
+    <div className='flex flex-col items-center'>
+      <div className="flex gap-2">
+        <p className='text-sm font-light p-3 border rounded-full mb-4'>
+          <span className='mr-2'>{createdAtText}</span>
+        </p>
+        <Button 
+          onClick={() => removeStudyPlan(studyPlan.id)} 
+          variant='destructive' size='icon' className='rounded-full'>
+          <Trash size={16} />
+        </Button>
+      </div>
       <Carousel className="max-w-[75vw] lg:max-w-[90vw] ">
         <CarouselContent>
           {weekGroups.map((week, index) => (
@@ -75,8 +94,9 @@ const StudyDays = ({studyDays}: Props) => {
         <CarouselPrevious className='-left-[2.1rem]'  />
         <CarouselNext className='-right-[2.1rem]' />
       </Carousel>
+      <hr className='mt-5 self-stretch border-slate-300' />
     </div>
   )
 }
 
-export default StudyDays
+export default StudyPlanView

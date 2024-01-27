@@ -23,9 +23,8 @@ const monthNamesPtBr: string[] = [
 ];
 
 const Week = ({week, index}: Props) => {
-  console.log(week)
   return (
-    <section className="w-full py-5 lg:py-10">
+    <section className="w-full py-2 lg:py-10">
       <h2 className='text-center mb-5 text-3xl font-extralight'>Semana {index + 1}</h2>
       <hr className='mb-10' />
       <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-7 lg:gap-12">

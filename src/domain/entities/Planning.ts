@@ -1,6 +1,5 @@
 import { NotEnoughDaysError } from "../errors/NotEnoughDaysError"
 import StudyDay from "./StudyDay"
-import StudyPlan from "./StudyPlan"
 import Subject from "./Subject"
 import SubjectThemeModule from "./SubjectThemeModule"
 
