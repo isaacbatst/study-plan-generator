@@ -1,3 +1,4 @@
+import { a } from "vitest/dist/suite-MFRDkZcV.js"
 import { NotEnoughDaysError } from "../errors/NotEnoughDaysError"
 import StudyDay from "./StudyDay"
 import Subject from "./Subject"
@@ -44,6 +45,10 @@ export class Planning {
     let remainingHours = this.hoursPerDay;
     let modules: SubjectThemeModule[] = []
 
+    if(availableDays.length < this.getNecessaryDays()) {
+      throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
+    }
+
     if(strategy === 'default') {
       modules = this.subjects
         .reduce<SubjectThemeModule[]>((acc, subject) => acc.concat(subject.getModules()), [])
@@ -67,9 +72,13 @@ export class Planning {
       let subjectIndex = 0
       for(let i = 0; i < availableDays.length; i++) {
         const availableDay = availableDays[i]
+     
+
         const subject = this.subjects[subjectIndex]
         const subjectModuleIndex = modulesIndexes[subjectIndex]
         const subjectModules = subject.getModules()
+        // 
+
         for(let j = subjectModuleIndex; j < subjectModules.length; j++) {
           const subjectModule = subjectModules[j]
           if(subjectModule && subjectModule.getNecessaryHours() <= remainingHours) {
@@ -84,13 +93,13 @@ export class Planning {
             remainingHours -= subjectModule.getNecessaryHours()
           }
         }
-        const subjectsLastIndex = this.subjects.length - 1
         remainingHours = this.hoursPerDay
-        if(subjectIndex === subjectsLastIndex) {
-          subjectIndex = 0
-        } else {
-          subjectIndex++
-        }
+        for(let j = 0; j < this.subjects.length; j++) {
+          subjectIndex = this.getNextIndex(subjectIndex, this.subjects)
+          if(this.subjects[subjectIndex].getModules()[modulesIndexes[subjectIndex]]) {
+            break
+          }
+        }     
       }
     }
 
@@ -100,10 +109,6 @@ export class Planning {
         remainingHours = this.hoursPerDay
       }
       const availableDay = availableDays[planningDaysIndex]
-      if(!availableDay) {
-        throw new NotEnoughDaysError(this.getNecessaryDays(), availableDays.length)
-      }
-
       const studyDay = studyDays.get(availableDay.toISOString()) ?? new StudyDay(availableDay)
 
       const studyObjectName = `${module.getSubjectName()} ${module.getName()}`
@@ -116,6 +121,13 @@ export class Planning {
       remainingHours -= module.getNecessaryHours()
     })
     return Array.from(studyDays.values())
+  }
+
+  getNextIndex<T>(index: number, array: T[]) {
+    if(index === array.length - 1) {
+      return 0
+    }
+    return index + 1
   }
 
   getHoursPerDay(): number {

@@ -196,11 +196,17 @@ describe('Planning', () => {
     planning.addSubject(english)
 
     const studyDays = planning.getStudyDays('alternate-daily')
+    console.log(studyDays)
+    expect(studyDays[0].date).toEqual(new Date('2024-01-01'))
     expect(studyDays[0].studyObjects[0].getId()).toBe('phy-1-1')
     expect(studyDays[0].studyObjects[1].getId()).toBe('phy-2-1')
+    expect(studyDays[1].date).toEqual(new Date('2024-01-02'))
     expect(studyDays[1].studyObjects[0].getId()).toBe('math-1-1')
+    expect(studyDays[2].date).toEqual(new Date('2024-01-03'))
     expect(studyDays[2].studyObjects[0].getId()).toBe('en-1-1')
     expect(studyDays[2].studyObjects[1].getId()).toBe('en-2-1')
+    expect(studyDays[3].date).toEqual(new Date('2024-01-04'))
+    expect(studyDays[3].studyObjects[0].getId()).toBe('en-2-2')
   })
 
   it('should throw error if not enough days to allocate all subjects', () => {
