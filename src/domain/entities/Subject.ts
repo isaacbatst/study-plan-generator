@@ -1,3 +1,4 @@
+import { CoursePeriod, CoursePeriodJSON } from "./CoursePeriod"
 import SubjectTheme, { SubjectThemeJSON } from "./SubjectTheme"
 import SubjectThemeModule from "./SubjectThemeModule"
 
@@ -6,6 +7,7 @@ export type SubjectJSON = {
   name: string,
   themes: SubjectThemeJSON[],
   necessaryHours: number,
+  coursePeriods: CoursePeriodJSON[]
 }
 
 export default class Subject {
@@ -18,10 +20,12 @@ export default class Subject {
   private id: string
   private name: string
   private themes: SubjectTheme[] = []
+  private coursePeriods: CoursePeriod[]
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, coursePeriods: CoursePeriod[] = []) {
     this.id = id
     this.name = name
+    this.coursePeriods = coursePeriods
   }
 
   addTheme(theme: SubjectTheme): void {
@@ -50,6 +54,7 @@ export default class Subject {
       name: this.name,
       themes: this.themes.map(theme => theme.toJSON()),
       necessaryHours: this.getNecessaryHours(),
+      coursePeriods: this.coursePeriods.map(coursePeriod => coursePeriod.toJSON()),
     }
   }
 }

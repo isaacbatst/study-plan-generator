@@ -34,12 +34,14 @@ export function CreatePlanningFormDialog({subjects, savePlanning}: Props) {
             Não se preocupe, o plano antigo ficará salvo.
           </DialogDescription>
         </DialogHeader>
-        <div className="px-5">
-          {<CreatePlanningForm savePlanning={(studyPlan) => {
+        {<CreatePlanningForm 
+          insideModal
+          subjects={subjects} 
+          savePlanning={(studyPlan) => {
             savePlanning(studyPlan)
             setOpen(false)
-          }} subjects={subjects} />}
-        </div>
+          }} 
+        />}
       </DialogContent>
     </Dialog>
   )

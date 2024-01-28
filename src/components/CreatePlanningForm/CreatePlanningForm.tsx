@@ -24,15 +24,17 @@ import { useMemo } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import React from "react"
 import { ChevronsUpDown } from "lucide-react"
+import { Option } from "../../lib/Option"
 
 type Props = {
   subjects: SubjectJSON[]
   savePlanning: (studyPlan: Planning) => void
+  insideModal?: boolean
 }
 
 const subjectsRepository = SubjectRepositoryMemorySingleton.getInstance()
 
-export default function CreatePlanningForm({subjects, savePlanning}: Props) {
+export default function CreatePlanningForm({subjects, savePlanning, insideModal = false}: Props) {
   const form = useForm<CreatePlanningFormSchemaType>({
     resolver: zodResolver(CreatePlanningFormSchema),
     defaultValues: {
@@ -42,6 +44,9 @@ export default function CreatePlanningForm({subjects, savePlanning}: Props) {
       subjects: []
     }
   })
+
+  const setSubjects = React.useCallback((subjects: Option[]) => form.setValue('subjects', subjects), [form])
+
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false)
 
   const watchFields = form.watch()
@@ -93,15 +98,17 @@ export default function CreatePlanningForm({subjects, savePlanning}: Props) {
     })
   }
 
+  const dynamicClasses = insideModal ? '' : 'lg:w-[80vw]'
+
   return (
-    <div className="p-5 sm:p-0 text-center xl:text-left">
+    <div className={`sm:p-0 text-center xl:text-left flex justify-center ${dynamicClasses}`}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col flex-1">
           <FormField
             control={form.control}
             name='subjects'
             render={({ field }) => (
-              <CreatePlanningFormSubjectSelect field={field} subjects={subjects} />
+              <CreatePlanningFormSubjectSelect field={field} setSubjects={setSubjects} subjects={subjects} />
             )}
           />        
           <div className="flex flex-col gap-4">

@@ -1,22 +1,52 @@
 import { useId } from 'react'
 import Select from 'react-select'
 import { SubjectJSON } from '../../domain/entities/Subject'
-import { CreatePlanningFormField } from './CreatePlanningFormSchema'
 import { FormDescription, FormItem, FormLabel, FormMessage } from '../ui/form'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
-import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { CreatePlanningFormField } from './CreatePlanningFormSchema'
+import { Option } from '../../lib/Option'
 
 type Props = {
   subjects: SubjectJSON[] 
   field: CreatePlanningFormField<'subjects'>
+  setSubjects: (subjects: Option[]) => void
 }
 
-const CreatePlanningFormSubjectSelect = ({subjects, field}: Props) => {
+const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) => {
   const subjectsSelectId = useId()
+  const coursesSelectId = useId()
+  const coursePeriods = subjects
+    .flatMap(subject => subject.coursePeriods)
+    .filter((coursePeriod, index, self) => self.findIndex(cp => cp.id === coursePeriod.id) === index)
+
+  const setCourseSubjects = (coursePeriodId?: string) => {
+    if(coursePeriodId){
+      const selectedSubjects = subjects.filter(subject => subject.coursePeriods.some(coursePeriod => coursePeriod.id === coursePeriodId))
+      setSubjects(selectedSubjects.map(subject => ({label: subject.name, value: subject.id})))
+    }
+
+  }
+
   return (
     <FormItem className="flex flex-col">
-      <FormLabel>Quais matérias vou estudar</FormLabel>
+      <FormLabel>Quais matérias vou estudar:</FormLabel>
+      <Select 
+        isClearable
+        options={coursePeriods.map(subject => ({label: subject.name, value: subject.id}))}
+        instanceId={coursesSelectId}
+        onChange={(course) => setCourseSubjects(course?.value)}
+        placeholder="Preencha automaticamente escolhendo o curso..."
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            borderColor: state.isFocused ? 'blue' : 'neutral5',
+          }),
+          placeholder: (baseStyles) => ({
+            ...baseStyles,
+            color: 'rgb(100, 116, 139)',
+          }),
+        }}
+      />
       <Select 
         options={subjects.map(subject => ({label: subject.name, value: subject.id}))}
         isMulti
