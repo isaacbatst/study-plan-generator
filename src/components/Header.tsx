@@ -1,4 +1,4 @@
-import { SheetDemo } from './SheetContact'
+import { SheetContact } from './SheetContact'
 
 type Props = {}
 
@@ -11,7 +11,7 @@ const Header = (props: Props) => {
           <p className='text-gray-500 hidden lg:block'>Crie seu plano de estudos e organize melhor seu tempo.</p>
         </div>
         <div className='flex items-center'>
-          <SheetDemo />
+          <SheetContact />
         </div>
       </div>
       <hr className='lg:hidden' />

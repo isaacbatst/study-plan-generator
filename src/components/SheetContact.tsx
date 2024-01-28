@@ -31,7 +31,7 @@ const links = [
   }
 ]
 
-export function SheetDemo() {
+export function SheetContact() {
   return (
     <Sheet>
       <SheetTrigger asChild>
