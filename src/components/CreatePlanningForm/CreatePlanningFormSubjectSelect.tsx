@@ -5,6 +5,7 @@ import { CreatePlanningFormField } from './CreatePlanningFormSchema'
 import { FormDescription, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 import { Button } from '../ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 type Props = {
   subjects: SubjectJSON[] 
@@ -34,20 +35,18 @@ const CreatePlanningFormSubjectSelect = ({subjects, field}: Props) => {
           }),
         }}
       />
-      <TooltipProvider>
-        <Tooltip >
-          <TooltipTrigger asChild>
-            <FormDescription>
-              Não encontrou suas matérias?
-            </FormDescription>
-          </TooltipTrigger>
-          <TooltipContent>
-            <a className='underline' href="mailto:isaacbatst@gmail.com">
-              Me mande um email
-            </a>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Popover>
+        <PopoverTrigger>
+          <FormDescription>
+            Não encontrou suas matérias?
+          </FormDescription>
+        </PopoverTrigger>
+        <PopoverContent className='flex p-0'>
+          <a className='text-center hover:underline flex-1 py-3' href="mailto:isaacbatst@gmail.com">
+            Me mande um email
+          </a>
+        </PopoverContent>
+      </Popover>
       <FormMessage />
     </FormItem>
   )
