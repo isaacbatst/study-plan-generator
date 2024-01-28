@@ -12,7 +12,7 @@ export class PlanningDistributorUntilFinish extends PlanningDistributorBase {
       const hasSufficientHours = studyDay.hasSufficientHours(subjectModule.getNecessaryHours())
       if(!hasSufficientHours) break;
       modules.splice(0, 1)
-      studyDay.addStudyObject(subjectModule.getId(), subjectModule.getName(), subjectModule.getNecessaryHours())
+      studyDay.addStudyObject(subjectModule.getId(), subjectModule.getFullName(), subjectModule.getNecessaryHours())
     }
 
     return subjectIndex
