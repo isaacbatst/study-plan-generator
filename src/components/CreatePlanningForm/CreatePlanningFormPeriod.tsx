@@ -14,7 +14,7 @@ type Props = {
 
 const CreatePlanningFormPeriod = ({field}: Props) => {
   return (
-    <FormItem className="flex flex-col items-center">
+    <FormItem className="flex flex-col">
       <FormLabel className="mb-2">Quando vou começar:</FormLabel>
       <Popover>
         <PopoverTrigger asChild>
@@ -22,7 +22,7 @@ const CreatePlanningFormPeriod = ({field}: Props) => {
             <Button
               variant="outline"
               className={cn(
-                "w-[240px] pl-3 text-left font-normal",
+                "pl-3 text-left font-normal",
                 !field.value && "text-muted-foreground"
               )}
             >
