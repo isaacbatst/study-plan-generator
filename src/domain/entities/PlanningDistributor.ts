@@ -1,4 +1,4 @@
-import StudyDay from "./StudyDay";
+import StudyDay from "./StudyDay"
 
 export enum PlanningDistributionType {
   UNTIL_FINISH = 'until-finish',
@@ -9,5 +9,5 @@ export enum PlanningDistributionType {
 
 export interface PlanningDistributor {
   readonly type: PlanningDistributionType
-  getStudyDays(): StudyDay[]
+  fillStudyDay(studyDay: StudyDay, subjectIndex: number): number
 }

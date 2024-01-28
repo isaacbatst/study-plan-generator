@@ -198,4 +198,35 @@ describe('Planning', () => {
     expect(studyDays[3].date).toEqual(new Date('2024-01-04'))
     expect(studyDays[3].studyObjects[0].getId()).toBe('en-2-2')
   })
+
+  it('should throw trying to add module needed hours greater than available hours per day', () => {
+    const planning = new Planning({
+      startDate: new Date('2024-01-01'),
+      availableHoursPerDay: 1,
+      distribution: PlanningDistributionType.ALTERNATE_DAILY
+    })
+    
+    expect(() => {
+      planning.addSubject(physics)
+    }).toThrow('O mínimo de horas por dia é 2')
+  })
+
+
+  it('should throw with no available day', () => {
+    expect(() => {
+      new Planning({
+        startDate: new Date('2024-01-01'),
+        availableWeekDays: [false, false, false, false, false, false, false]
+      })
+    }).toThrow('É necessário informar pelo menos um dia da semana disponível')
+  })
+
+  it('should throw with 0 available hours per day', () => {
+    expect(() => {
+      new Planning({
+        startDate: new Date('2024-01-01'),
+        availableHoursPerDay: 0
+      })
+    }).toThrow('Não há horas disponíveis')
+  })
 })

@@ -53,12 +53,29 @@ export class Planning {
 
 
   constructor(params: PlanningParams) {
+    console.log(params)
     this.id = params.id || crypto.randomUUID()
-    this.createdAt = params.createdAt || new Date()
     this.availableWeekDays = params.availableWeekDays || [true, true, true, true, true, true, true]
-    this.hoursPerDay = params.availableHoursPerDay || 2
+    this.createdAt = params.createdAt || new Date()
+    this.hoursPerDay = typeof params.availableHoursPerDay === 'number' ? params.availableHoursPerDay : 2
     this.startDate = params.startDate
     this.distribution = params.distribution || PlanningDistributionType.UNTIL_FINISH
+
+    this.validateAvailableWeekDays()
+    this.validateAvailableHoursPerDay()
+  }
+
+  private validateAvailableWeekDays(): void {
+    const isSomeWeekDayAvailable = this.availableWeekDays.some(weekDay => weekDay === true)
+    if(!isSomeWeekDayAvailable) {
+      throw new Error('É necessário informar pelo menos um dia da semana disponível')
+    }
+  }
+
+  private validateAvailableHoursPerDay(): void {
+    if(this.hoursPerDay <= 0) {
+      throw new Error('Não há horas disponíveis')
+    }
   }
 
   get endDate(): Date {
@@ -73,12 +90,47 @@ export class Planning {
   }
 
   addSubject(subject: Subject): void {
+    const modules = subject.getModules()
+    const greatestNecessaryHours = modules.reduce((greatest, module) => {
+      return module.getNecessaryHours() > greatest 
+        ? module.getNecessaryHours() 
+        : greatest
+    }, 0)
+
+    if(greatestNecessaryHours > this.hoursPerDay) {
+      throw new Error(`O mínimo de horas por dia é ${greatestNecessaryHours}`)
+    }
+
     this.subjects.push(subject)
   }
 
   getStudyDays(): StudyDay[] {
-    const distribution = this.makeDistributor(this.distribution)
-    return distribution.getStudyDays()
+    const modules = this.getModules()
+    const startDate = this.getStartDate()
+    const studyDays = new Map<string, StudyDay>()
+    const distributor = this.makeDistributor(this.distribution, modules)
+    let studyDayIndex = 0
+    let subjectIndex = 0
+
+    while(modules.length > 0) {
+      const oneDay = 1000 * 60 * 60 * 24
+      const passedDays = studyDayIndex * oneDay
+      const studyDayDate = new Date(startDate.getTime() + passedDays)      
+      if(!this.isAvailableDate(studyDayDate)) {
+        studyDayIndex++
+        continue;
+      }
+      
+      const studyDay = new StudyDay(studyDayDate, this.getHoursPerDay())
+      const nextSubjectIndex = distributor.fillStudyDay(studyDay, subjectIndex)
+
+      studyDayIndex++
+      subjectIndex = nextSubjectIndex
+
+      studyDays.set(studyDayDate.toISOString(), studyDay)
+    }
+
+    return Array.from(studyDays.values())
   }
 
   
@@ -148,14 +200,14 @@ export class Planning {
     return title + body
   }
 
-  private makeDistributor(type: PlanningDistributionType): PlanningDistributor {
+  private makeDistributor(type: PlanningDistributionType, modules: SubjectThemeModule[]): PlanningDistributor {
     switch(type) {
     case PlanningDistributionType.UNTIL_FINISH:
-      return new PlanningDistributorUntilFinish(this)
+      return new PlanningDistributorUntilFinish(modules)
     case PlanningDistributionType.ALTERNATE:
-      return new PlanningDistributorAlternate(this)
+      return new PlanningDistributorAlternate(this.subjects, modules)
     case PlanningDistributionType.ALTERNATE_DAILY:
-      return new PlanningDistributorAlternateDaily(this)
+      return new PlanningDistributorAlternateDaily(this.subjects, modules)
     default:
       throw new Error('Invalid distribution type')
     }
