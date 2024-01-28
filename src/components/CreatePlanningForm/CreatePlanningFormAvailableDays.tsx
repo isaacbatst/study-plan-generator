@@ -20,10 +20,10 @@ const weekDayLabels: Record<WeekDay, string> = {
 
 const CreatePlanningFormAvailableDays = ({field}: Props) => {
   return (
-    <FormItem className="flex flex-col">
-      <FormLabel>Dias que poderei me dedicar:</FormLabel>
+    <FormItem className="flex flex-col ">
+      <FormLabel className='mb-2'>Dias que poderei me dedicar:</FormLabel>
       <ToggleGroup type="multiple" className='flex-wrap'
-        value={Object.values(WeekDay).filter((day, index) => field.value[index])}
+        value={Object.values(WeekDay).filter((_, index) => field.value[index])}
         onValueChange={(value) => {
           const selectedDays = value as WeekDay[]
           field.onChange(Object.values(WeekDay).map(day => selectedDays.includes(day)))

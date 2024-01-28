@@ -4,9 +4,14 @@ export type SubjectThemeJSON = {
   id: string,
   name: string,
   modules: SubjectThemeModuleJSON[],
+  necessaryHours: number,
 }
 
 export default class SubjectTheme {
+  static fromJSON(json: SubjectThemeJSON): SubjectTheme {
+    return new SubjectTheme(json.id, json.name, json.modules.map(module => SubjectThemeModule.fromJSON(module)))
+  }
+
   constructor(
     readonly id: string,
     readonly name: string,
@@ -26,6 +31,7 @@ export default class SubjectTheme {
       id: this.id,
       name: this.name,
       modules: this.modules.map(module => module.toJSON()),
+      necessaryHours: this.getNecessaryHours(),
     }
   }
 }

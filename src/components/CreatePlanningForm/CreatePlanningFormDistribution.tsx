@@ -2,7 +2,7 @@ import React from 'react'
 import { FormItem, FormLabel, FormMessage } from '../ui/form'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { CreatePlanningFormField } from './CreatePlanningFormSchema'
-import { PlanningDistributionType } from '../../domain/entities/Planning'
+import { PlanningDistributionType } from '../../domain/entities/PlanningDistributor'
 
 type Props = {
   field: CreatePlanningFormField<'distribution'>

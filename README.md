@@ -6,4 +6,5 @@
 - [x] Gerar plano de estudos com base nos inputs.
 - [x] Mostrar plano de estudos gerado no frontend 
 - [x] Gerar com estratégias diferentes
-- [ ] Salvar no localstorage
+- [x] Salvar no localstorage
+- [ ] Pedir apenas data de início, a partir daí calcular qual seria a data final.

@@ -1,12 +1,9 @@
+import { ControllerRenderProps, FieldPath } from "react-hook-form";
 import { z } from "zod";
-import { PlanningDistributionType } from "../../domain/entities/Planning";
-import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
+import { PlanningDistributionType } from "../../domain/entities/PlanningDistributor";
 
 export const CreatePlanningFormSchema = z.object({
-  period: z.object({
-    from: z.date().optional(),
-    to: z.date().optional(),
-  }),
+  startDate: z.date(),
   subjects: z.array(z.object({
     label: z.string(),
     value: z.string()
@@ -14,13 +11,7 @@ export const CreatePlanningFormSchema = z.object({
   availableDays: z.array(z.boolean()),
   hoursPerDay: z.coerce.number().min(1).max(24),
   distribution: z.nativeEnum(PlanningDistributionType)
-}).transform((data) => ({
-  ...data,
-  period: {
-    from: data.period.from,
-    to: data.period.to,
-  },
-}))
+})
 
 export type CreatePlanningFormSchemaType = z.infer<typeof CreatePlanningFormSchema>
 export type CreatePlanningFormField<
