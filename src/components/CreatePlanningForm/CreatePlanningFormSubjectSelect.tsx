@@ -21,7 +21,6 @@ const CreatePlanningFormSubjectSelect = ({subjects, field}: Props) => {
         value={field.value}
         onChange={field.onChange}
         placeholder="Selecione as matérias"
-        // placeholder color
         styles={{
           control: (baseStyles, state) => ({
             ...baseStyles,

@@ -27,7 +27,7 @@ export function CreatePlanningFormDialog({subjects, savePlanning}: Props) {
           <Button variant='link' className="text-white flex-1">+ Criar outro plano</Button>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[100vh] overflow-y-scroll">
+      <DialogContent className="sm:max-w-[425px] max-h-[100dvh] overflow-y-scroll">
         <DialogHeader className="mb-5">
           <DialogTitle>Novo plano de estudos</DialogTitle>
           <DialogDescription>
