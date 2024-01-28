@@ -2,7 +2,9 @@ import { useId } from 'react'
 import Select from 'react-select'
 import { SubjectJSON } from '../../domain/entities/Subject'
 import { CreatePlanningFormField } from './CreatePlanningFormSchema'
-import { FormItem, FormLabel, FormMessage } from '../ui/form'
+import { FormDescription, FormItem, FormLabel, FormMessage } from '../ui/form'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
+import { Button } from '../ui/button'
 
 type Props = {
   subjects: SubjectJSON[] 
@@ -32,6 +34,20 @@ const CreatePlanningFormSubjectSelect = ({subjects, field}: Props) => {
           }),
         }}
       />
+      <TooltipProvider>
+        <Tooltip >
+          <TooltipTrigger asChild>
+            <FormDescription>
+              Não encontrou suas matérias?
+            </FormDescription>
+          </TooltipTrigger>
+          <TooltipContent>
+            <a className='underline' href="mailto:isaacbatst@gmail.com">
+              Me mande um email
+            </a>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <FormMessage />
     </FormItem>
   )
