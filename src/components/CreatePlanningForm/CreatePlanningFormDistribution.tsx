@@ -9,9 +9,9 @@ type Props = {
 }
 
 const distributions: Record<PlanningDistributionType, string> = {
-  [PlanningDistributionType.ALTERNATE_DAILY]: 'Alternar matérias por dia',
-  [PlanningDistributionType.ALTERNATE]: 'Alternar matérias por horário',
-  [PlanningDistributionType.UNTIL_FINISH]: 'Manter matéria até finalizá-la',
+  [PlanningDistributionType.ALTERNATE_DAILY]: 'Trocar matéria todo dia',
+  [PlanningDistributionType.ALTERNATE]: 'Trocar matéria sempre que concluir um módulo',
+  [PlanningDistributionType.UNTIL_FINISH]: 'Só trocar matéria quando concluir todos seus módulos',
 }
 
 const CreatePlanningFormDistribution = ({field}: Props) => {
@@ -22,7 +22,7 @@ const CreatePlanningFormDistribution = ({field}: Props) => {
         value={field.value}
         onValueChange={field.onChange}
         type="single"
-        className="flex items-stretch"
+        className="flex flex-col sm:flex-row items-stretch"
       >
         {
           Object.entries(distributions).map(([value, label]) => (

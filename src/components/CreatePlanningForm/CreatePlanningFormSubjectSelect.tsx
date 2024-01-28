@@ -53,7 +53,7 @@ const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) 
         instanceId={subjectsSelectId}
         value={field.value}
         onChange={field.onChange}
-        placeholder="Selecione as matérias"
+        placeholder="Ou selecione manualmente..."
         styles={{
           control: (baseStyles, state) => ({
             ...baseStyles,
