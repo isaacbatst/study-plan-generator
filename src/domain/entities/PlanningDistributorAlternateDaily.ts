@@ -22,7 +22,7 @@ export class PlanningDistributorAlternateDaily extends PlanningDistributorBase i
       }
         
       if(!subjectModule) {
-        subjectIndex++
+        subjectIndex = this.nextIndex(this.subjects, subjectIndex)
         continue;
       }
         

@@ -38,7 +38,8 @@ export default function CreatePlanningForm({subjects, savePlanning}: Props) {
     defaultValues: {
       availableDays: [false, true, true, true, true, true, false],
       hoursPerDay: 2,
-      distribution: PlanningDistributionType.ALTERNATE_DAILY
+      distribution: PlanningDistributionType.ALTERNATE_DAILY,
+      subjects: []
     }
   })
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false)

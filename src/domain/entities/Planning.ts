@@ -53,7 +53,6 @@ export class Planning {
 
 
   constructor(params: PlanningParams) {
-    console.log(params)
     this.id = params.id || crypto.randomUUID()
     this.availableWeekDays = params.availableWeekDays || [true, true, true, true, true, true, true]
     this.createdAt = params.createdAt || new Date()

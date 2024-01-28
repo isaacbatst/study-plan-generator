@@ -43,36 +43,36 @@ export default class SubjectRepositoryMemory {
     ]))
 
     const cloud = new Subject('cloud', 'Computação em Nuvem')
-    cloud.addTheme(new SubjectTheme('2', '2', [
+    cloud.addTheme(new SubjectTheme('cloud-2', '2', [
       new SubjectThemeModule('cloud-2-1', '2.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-2-2', '2.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-2-3', '2.3', 'Computação em Nuvem'),
     ]))
-    cloud.addTheme(new SubjectTheme('3', '3', [
+    cloud.addTheme(new SubjectTheme('cloud-3', '3', [
       new SubjectThemeModule('cloud-3-1', '3.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-3-2', '3.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-3-3', '3.3', 'Computação em Nuvem'),
 
     ]))
-    cloud.addTheme(new SubjectTheme('4', '4', [
+    cloud.addTheme(new SubjectTheme('cloud-4', '4', [
       new SubjectThemeModule('cloud-4-1', '4.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-4-2', '4.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-4-3', '4.3', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-4-4', '4.4', 'Computação em Nuvem')
     ]))
-    cloud.addTheme(new SubjectTheme('5', '5', [
+    cloud.addTheme(new SubjectTheme('cloud-5', '5', [
       new SubjectThemeModule('cloud-5-1', '5.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-5-2', '5.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-5-3', '5.3', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-5-4', '5.4', 'Computação em Nuvem')
     ]))
-    cloud.addTheme(new SubjectTheme('6', '6', [
+    cloud.addTheme(new SubjectTheme('cloud-6', '6', [
       new SubjectThemeModule('cloud-6-1', '6.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-6-2', '6.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-6-3', '6.3', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-6-4', '6.4', 'Computação em Nuvem')
     ]))
-    cloud.addTheme(new SubjectTheme('7', '7', [
+    cloud.addTheme(new SubjectTheme('cloud-7', '7', [
       new SubjectThemeModule('cloud-7-1', '7.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-7-2', '7.2', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-7-3', '7.3', 'Computação em Nuvem'),
@@ -80,25 +80,25 @@ export default class SubjectRepositoryMemory {
     ]))
 
     const dataStructure = new Subject('data-structure', 'Estrutura de dados')
-    dataStructure.addTheme(new SubjectTheme('1', '1', [
+    dataStructure.addTheme(new SubjectTheme('data-structure-1', '1', [
       new SubjectThemeModule('data-structure-1-1', '1.1', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-1-2', '1.2', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-1-3', '1.3', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-1-4', '1.4', 'Estrutura de dados')
     ]))
-    dataStructure.addTheme(new SubjectTheme('2', '2', [
+    dataStructure.addTheme(new SubjectTheme('data-structure-2', '2', [
       new SubjectThemeModule('data-structure-2-1', '2.1', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-2-2', '2.2', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-2-3', '2.3', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-2-4', '2.4', 'Estrutura de dados')
     ]))
-    dataStructure.addTheme(new SubjectTheme('3', '3', [
+    dataStructure.addTheme(new SubjectTheme('data-structure-3', '3', [
       new SubjectThemeModule('data-structure-3-1', '3.1', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-3-2', '3.2', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-3-3', '3.3', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-3-4', '3.4', 'Estrutura de dados')
     ]))
-    dataStructure.addTheme(new SubjectTheme('4', '4', [
+    dataStructure.addTheme(new SubjectTheme('data-structure-4', '4', [
       new SubjectThemeModule('data-structure-4-1', '4.1', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-4-2', '4.2', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-4-3', '4.3', 'Estrutura de dados'),
@@ -106,36 +106,36 @@ export default class SubjectRepositoryMemory {
     ]))
 
     const database = new Subject('database', 'Banco de dados')
-    database.addTheme(new SubjectTheme('2', '2', [
+    database.addTheme(new SubjectTheme('database-2', '2', [
       new SubjectThemeModule('database-2-1', '2.1', 'Banco de dados'),
       new SubjectThemeModule('database-2-2', '2.2', 'Banco de dados'),
       new SubjectThemeModule('database-2-3', '2.3', 'Banco de dados'),
     ]))
-    database.addTheme(new SubjectTheme('3', '3', [
+    database.addTheme(new SubjectTheme('database-3', '3', [
       new SubjectThemeModule('database-3-1', '3.1', 'Banco de dados'),
       new SubjectThemeModule('database-3-2', '3.2', 'Banco de dados'),
       new SubjectThemeModule('database-3-3', '3.3', 'Banco de dados'),
       new SubjectThemeModule('database-3-4', '3.4', 'Banco de dados')
     ]))
-    database.addTheme(new SubjectTheme('4', '4', [
+    database.addTheme(new SubjectTheme('database-4', '4', [
       new SubjectThemeModule('database-4-1', '4.1', 'Banco de dados'),
       new SubjectThemeModule('database-4-2', '4.2', 'Banco de dados'),
       new SubjectThemeModule('database-4-3', '4.3', 'Banco de dados'),
       new SubjectThemeModule('database-4-4', '4.4', 'Banco de dados')
     ]))
-    database.addTheme(new SubjectTheme('5', '5', [
+    database.addTheme(new SubjectTheme('database-5', '5', [
       new SubjectThemeModule('database-5-1', '5.1', 'Banco de dados'),
       new SubjectThemeModule('database-5-2', '5.2', 'Banco de dados'),
       new SubjectThemeModule('database-5-3', '5.3', 'Banco de dados'),
       new SubjectThemeModule('database-5-4', '5.4', 'Banco de dados')
     ]))
-    database.addTheme(new SubjectTheme('6', '6', [
+    database.addTheme(new SubjectTheme('database-6', '6', [
       new SubjectThemeModule('database-6-1', '6.1', 'Banco de dados'),
       new SubjectThemeModule('database-6-2', '6.2', 'Banco de dados'),
       new SubjectThemeModule('database-6-3', '6.3', 'Banco de dados'),
       new SubjectThemeModule('database-6-4', '6.4', 'Banco de dados')
     ]))
-    database.addTheme(new SubjectTheme('7', '7', [
+    database.addTheme(new SubjectTheme('database-7', '7', [
       new SubjectThemeModule('database-7-1', '7.1', 'Banco de dados'),
       new SubjectThemeModule('database-7-2', '7.2', 'Banco de dados'),
       new SubjectThemeModule('database-7-3', '7.3', 'Banco de dados'),
@@ -143,30 +143,30 @@ export default class SubjectRepositoryMemory {
     ]))
 
     const uml = new Subject('uml', 'Modelagem UML')
-    uml.addTheme(new SubjectTheme('1', '1', [
+    uml.addTheme(new SubjectTheme('uml-1', '1', [
       new SubjectThemeModule('uml-1-1', '1.1', 'Modelagem UML'),
       new SubjectThemeModule('uml-1-2', '1.2', 'Modelagem UML'),
       new SubjectThemeModule('uml-1-3', '1.3', 'Modelagem UML'),
     ]))
-    uml.addTheme(new SubjectTheme('2', '2', [
+    uml.addTheme(new SubjectTheme('uml-2', '2', [
       new SubjectThemeModule('uml-2-1', '2.1', 'Modelagem UML'),
       new SubjectThemeModule('uml-2-2', '2.2', 'Modelagem UML'),
       new SubjectThemeModule('uml-2-3', '2.3', 'Modelagem UML'),
       new SubjectThemeModule('uml-2-4', '2.4', 'Modelagem UML')
     ]))
-    uml.addTheme(new SubjectTheme('3', '3', [
+    uml.addTheme(new SubjectTheme('uml-3', '3', [
       new SubjectThemeModule('uml-3-1', '3.1', 'Modelagem UML'),
       new SubjectThemeModule('uml-3-2', '3.2', 'Modelagem UML'),
       new SubjectThemeModule('uml-3-3', '3.3', 'Modelagem UML'),
       new SubjectThemeModule('uml-3-4', '3.4', 'Modelagem UML')
     ]))
-    uml.addTheme(new SubjectTheme('4', '4', [
+    uml.addTheme(new SubjectTheme('uml-4', '4', [
       new SubjectThemeModule('uml-4-1', '4.1', 'Modelagem UML'),
       new SubjectThemeModule('uml-4-2', '4.2', 'Modelagem UML'),
       new SubjectThemeModule('uml-4-3', '4.3', 'Modelagem UML'),
       new SubjectThemeModule('uml-4-4', '4.4', 'Modelagem UML')
     ]))
-    uml.addTheme(new SubjectTheme('5', '5', [
+    uml.addTheme(new SubjectTheme('uml-5', '5', [
       new SubjectThemeModule('uml-5-1', '5.1', 'Modelagem UML'),
       new SubjectThemeModule('uml-5-2', '5.2', 'Modelagem UML'),
       new SubjectThemeModule('uml-5-3', '5.3', 'Modelagem UML'),
