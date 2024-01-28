@@ -346,16 +346,16 @@ export default class SubjectRepositoryMemory {
     ]))
 
 
-    this.add(math)
-    this.add(cloud)
-    this.add(dataStructure)
-    this.add(database)
-    this.add(uml)
     this.add(security)
     this.add(programmingParadigms)
     this.add(architecture)
     this.add(webDevelopment)
     this.add(computingThinking)
+    this.add(math)
+    this.add(cloud)
+    this.add(dataStructure)
+    this.add(database)
+    this.add(uml)
   }
 
   public async add(subject: Subject): Promise<void> {
