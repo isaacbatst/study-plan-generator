@@ -29,3 +29,4 @@ Essa estrutura é baseada no conteúdo da Estácio e a matérias hoje cadastrada
 - [x] Pedir apenas data de início, a partir daí calcular qual seria a data final.
 - [ ] Salvar planos em um banco
 - [ ] Login Social
+- [ ] Integrar com google calendar
