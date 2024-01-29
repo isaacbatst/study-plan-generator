@@ -7,4 +7,4 @@
 - [x] Mostrar plano de estudos gerado no frontend 
 - [x] Gerar com estratégias diferentes
 - [x] Salvar no localstorage
-- [ ] Pedir apenas data de início, a partir daí calcular qual seria a data final.
+- [x] Pedir apenas data de início, a partir daí calcular qual seria a data final.
