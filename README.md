@@ -1,5 +1,9 @@
 # Gerador de plano de estudos
 
+add print.png image
+
+![Demonstração em gif](./study-demo.gif)
+
 ## Quer adicionar alguma matéria?
 
 Crie uma issue com:
