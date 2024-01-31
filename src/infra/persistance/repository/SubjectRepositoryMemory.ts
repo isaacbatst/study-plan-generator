@@ -1,3 +1,4 @@
+import Course from "../../../domain/entities/Course"
 import { CoursePeriod } from "../../../domain/entities/CoursePeriod"
 import Subject from "../../../domain/entities/Subject"
 import SubjectTheme from "../../../domain/entities/SubjectTheme"
@@ -7,8 +8,11 @@ export default class SubjectRepositoryMemory {
   private subjects: Subject[] = []
 
   constructor(){
-    const csFirstPeriod = new CoursePeriod('cs-first-period', '1º Período de Ciência da Computação')
-    const csSecondPeriod = new CoursePeriod('cs-second-period', '2º Período de Ciência da Computação')
+    const computerScience = new Course('computer-science', 'Ciência da Computação')
+    const csFirstPeriod = new CoursePeriod('cs-first-period', '1º Período de Ciência da Computação', computerScience.getId())
+    const csSecondPeriod = new CoursePeriod('cs-second-period', '2º Período de Ciência da Computação', computerScience.getId())
+    const systemsDevelopmentAndAnalysis = new Course('systems-development-and-analysis', 'Análise e Desenvolvimento de Sistemas')
+    const sdSecondPeriod = new CoursePeriod('sd-first-period', '2º Período de Análise e Desenvolvimento de Sistemas', systemsDevelopmentAndAnalysis.getId())
 
     const security = new Subject('security', 'Introdução à Segurança da Informação', [csFirstPeriod])
     security.addTheme(new SubjectTheme('security-2', '2', [
@@ -214,7 +218,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('math-7-4', "7.4", 'Matemática e Lógica'),
     ]))
 
-    const cloud = new Subject('cloud', 'Computação em Nuvem', [csSecondPeriod])
+    const cloud = new Subject('cloud', 'Computação em Nuvem', [csSecondPeriod, sdSecondPeriod])
     cloud.addTheme(new SubjectTheme('cloud-2', '2', [
       new SubjectThemeModule('cloud-2-1', '2.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-2-2', '2.2', 'Computação em Nuvem'),
@@ -251,7 +255,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('cloud-7-4', '7.4', 'Computação em Nuvem')
     ]))
 
-    const dataStructure = new Subject('data-structure', 'Estrutura de dados', [csSecondPeriod])
+    const dataStructure = new Subject('data-structure', 'Estrutura de dados', [csSecondPeriod, sdSecondPeriod])
     dataStructure.addTheme(new SubjectTheme('data-structure-1', '1', [
       new SubjectThemeModule('data-structure-1-1', '1.1', 'Estrutura de dados'),
       new SubjectThemeModule('data-structure-1-2', '1.2', 'Estrutura de dados'),
@@ -314,7 +318,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('database-7-4', '7.4', 'Banco de dados')
     ]))
 
-    const uml = new Subject('uml', 'Modelagem de Sistemas UML', [csSecondPeriod])
+    const uml = new Subject('uml', 'Modelagem de Sistemas UML', [csSecondPeriod, sdSecondPeriod])
     uml.addTheme(new SubjectTheme('uml-1', '1', [
       new SubjectThemeModule('uml-1-1', '1.1', 'Modelagem de Sistemas UML'),
       new SubjectThemeModule('uml-1-2', '1.2', 'Modelagem de Sistemas UML'),
@@ -345,7 +349,63 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('uml-5-4', '5.4', 'Modelagem de Sistemas UML')
     ]))
 
-
+    const communication = new Subject('communication', 'Comunicação entre Aplicações', [sdSecondPeriod])
+    communication.addTheme(new SubjectTheme('communication-1', '1', [
+      new SubjectThemeModule('communication-1-1', '1.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-1-2', '1.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-1-3', '1.3', 'Comunicação entre Aplicações'),
+    ]))
+    communication.addTheme(new SubjectTheme('communication-2', '2', [
+      new SubjectThemeModule('communication-2-1', '2.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-2-2', '2.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-2-3', '2.3', 'Comunicação entre Aplicações'),
+    ]))
+    communication.addTheme(new SubjectTheme('communication-3', '3', [
+      new SubjectThemeModule('communication-3-1', '3.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-3-2', '3.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-3-3', '3.3', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-3-4', '3.4', 'Comunicação entre Aplicações'),
+    ]))
+    communication.addTheme(new SubjectTheme('communication-4', '4', [
+      new SubjectThemeModule('communication-4-1', '4.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-4-2', '4.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-4-3', '4.3', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-4-4', '4.4', 'Comunicação entre Aplicações'),
+    ]))
+    communication.addTheme(new SubjectTheme('communication-5', '5', [
+      new SubjectThemeModule('communication-5-1', '5.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-5-2', '5.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-5-3', '5.3', 'Comunicação entre Aplicações'),
+    ]))
+    communication.addTheme(new SubjectTheme('communication-6', '6', [
+      new SubjectThemeModule('communication-6-1', '6.1', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-6-2', '6.2', 'Comunicação entre Aplicações'),
+      new SubjectThemeModule('communication-6-3', '6.3', 'Comunicação entre Aplicações'),
+    ]))
+    const usability = new Subject('usability', 'Engenharia de Usabilidade', [sdSecondPeriod])
+    usability.addTheme(new SubjectTheme('usability-2', '2', [
+      new SubjectThemeModule('usability-2-1', '2.1', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-2-2', '2.2', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-2-3', '2.3', 'Engenharia de Usabilidade'),
+    ]))
+    usability.addTheme(new SubjectTheme('usability-3', '3', [
+      new SubjectThemeModule('usability-3-1', '3.1', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-3-2', '3.2', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-3-3', '3.3', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-3-4', '3.4', 'Engenharia de Usabilidade'),
+    ]))
+    usability.addTheme(new SubjectTheme('usability-4', '4', [
+      new SubjectThemeModule('usability-4-1', '4.1', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-4-2', '4.2', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-4-3', '4.3', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-4-4', '4.4', 'Engenharia de Usabilidade'),
+    ]))
+    usability.addTheme(new SubjectTheme('usability-5', '5', [
+      new SubjectThemeModule('usability-5-1', '5.1', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-5-2', '5.2', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-5-3', '5.3', 'Engenharia de Usabilidade'),
+      new SubjectThemeModule('usability-5-4', '5.4', 'Engenharia de Usabilidade'),
+    ]))
     this.add(security)
     this.add(programmingParadigms)
     this.add(architecture)
@@ -356,6 +416,8 @@ export default class SubjectRepositoryMemory {
     this.add(dataStructure)
     this.add(database)
     this.add(uml)
+    this.add(communication)
+    this.add(usability)
   }
 
   public async add(subject: Subject): Promise<void> {
