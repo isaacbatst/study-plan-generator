@@ -13,7 +13,9 @@ export const CreatePlanningFormSchema = z.object({
     message: 'É necessário pelo menos uma matéria'
   }),
   availableDays: z.array(z.boolean()),
-  hoursPerDay: z.coerce.number().min(1).max(24),
+  hoursPerDay: z.coerce.number().min(1, {
+    message: 'É necessário pelo menos 1 hora disponível'
+  }).max(24),
   distribution: z.nativeEnum(PlanningDistributionType)
 })
 

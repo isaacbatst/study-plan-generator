@@ -1,4 +1,5 @@
-import { PlanningDistributor, PlanningDistributionType } from "./PlanningDistributor"
+import { PlanningInvalidParamsError } from "../errors/InvalidParamsError"
+import { PlanningDistributionType, PlanningDistributor } from "./PlanningDistributor"
 import { PlanningDistributorAlternate } from "./PlanningDistributorAlternate"
 import { PlanningDistributorAlternateDaily } from "./PlanningDistributorAlternateDaily"
 import { PlanningDistributorUntilFinish } from "./PlanningDistributorUntilFinish"
@@ -67,13 +68,13 @@ export class Planning {
   private validateAvailableWeekDays(): void {
     const isSomeWeekDayAvailable = this.availableWeekDays.some(weekDay => weekDay === true)
     if(!isSomeWeekDayAvailable) {
-      throw new Error('É necessário informar pelo menos um dia da semana disponível')
+      throw new PlanningInvalidParamsError('É necessário informar pelo menos um dia da semana disponível', 'availableDays')
     }
   }
 
   private validateAvailableHoursPerDay(): void {
     if(this.hoursPerDay <= 0) {
-      throw new Error('Não há horas disponíveis')
+      throw new PlanningInvalidParamsError('Não há horas disponíveis', 'hoursPerDay')
     }
   }
 
@@ -97,7 +98,7 @@ export class Planning {
     }, 0)
 
     if(greatestNecessaryHours > this.hoursPerDay) {
-      throw new Error(`O mínimo de horas por dia é ${greatestNecessaryHours}`)
+      throw new PlanningInvalidParamsError(`O mínimo de horas por dia é ${greatestNecessaryHours}`, 'hoursPerDay')
     }
 
     this.subjects.push(subject)
@@ -208,7 +209,7 @@ export class Planning {
     case PlanningDistributionType.ALTERNATE_DAILY:
       return new PlanningDistributorAlternateDaily(this.subjects, modules)
     default:
-      throw new Error('Invalid distribution type')
+      throw new PlanningInvalidParamsError('Distribuição de matérias inválida', 'distribution')
     }
   }
 

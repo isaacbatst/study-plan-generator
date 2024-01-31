@@ -6,25 +6,24 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormDescription,
-  FormField,
-  FormLabel
+  FormField
 } from "@/components/ui/form"
+import { ChevronsUpDown } from "lucide-react"
+import React, { useMemo } from "react"
 import { toast } from "sonner"
 import { Planning } from "../../domain/entities/Planning"
 import { PlanningDistributionType } from "../../domain/entities/PlanningDistributor"
 import Subject, { SubjectJSON } from "../../domain/entities/Subject"
+import { PlanningInvalidParamsError } from "../../domain/errors/InvalidParamsError"
 import { SubjectRepositoryMemorySingleton } from "../../infra/persistance/repository/SubjectRepositoryMemorySingleton"
+import { Option } from "../../lib/Option"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import CreatePlanningFormAvailableDays from "./CreatePlanningFormAvailableDays"
 import CreatePlanningFormDistribution from "./CreatePlanningFormDistribution"
 import CreatePlanningFormHoursPerDay from "./CreatePlanningFormHoursPerDay"
 import CreatePlanningFormPeriod from "./CreatePlanningFormPeriod"
 import { CreatePlanningFormSchema, CreatePlanningFormSchemaType } from "./CreatePlanningFormSchema"
 import CreatePlanningFormSubjectSelect from "./CreatePlanningFormSubjectSelect"
-import { useMemo } from "react"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
-import React from "react"
-import { ChevronsUpDown } from "lucide-react"
-import { Option } from "../../lib/Option"
 
 type Props = {
   subjects: SubjectJSON[]
@@ -45,57 +44,71 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     }
   })
 
+  const {setError} = form
+
   const setSubjects = React.useCallback((subjects: Option[]) => form.setValue('subjects', subjects), [form])
 
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false)
 
-  const watchFields = form.watch()
+  const { availableDays, distribution, hoursPerDay, startDate, subjects: selectedSubjects } = form.watch()
   const endDate = useMemo(() => {
-    const startDate = watchFields.startDate
-    const hoursPerDay = watchFields.hoursPerDay
-    const availableDays = watchFields.availableDays
-    const distribution = watchFields.distribution
-    const selectedSubjects = watchFields.subjects
-
-    if (!startDate || !hoursPerDay || !availableDays || !distribution || selectedSubjects.length === 0) {
-      return null
+    try {
+      const parsed = CreatePlanningFormSchema.parse({
+        availableDays,
+        distribution,
+        hoursPerDay,
+        startDate,
+        subjects: selectedSubjects
+      })
+      const planning = new Planning({
+        startDate: parsed.startDate,
+        availableWeekDays: parsed.availableDays,
+        availableHoursPerDay: parsed.hoursPerDay,
+        distribution: parsed.distribution
+      })
+  
+      selectedSubjects.forEach(selected => {
+        const json = subjects.find(subject => subject.id === selected.value)
+        if(json) {
+          const subject = Subject.fromJSON(json)
+          planning.addSubject(subject)
+        }
+      })
+      
+      return planning.endDate
+    } catch (err) {
+      console.log(err)
     }
-
-    const planning = new Planning({
-      startDate,
-      availableWeekDays: availableDays,
-      availableHoursPerDay: hoursPerDay,
-      distribution
-    })
-
-    selectedSubjects.forEach(selected => {
-      const json = subjects.find(subject => subject.id === selected.value)
-      if(json) {
-        const subject = Subject.fromJSON(json)
-        planning.addSubject(subject)
-      }
-    })
-
-    return planning.endDate
-  }, [watchFields, subjects])
+  }, [availableDays, distribution, hoursPerDay, startDate, selectedSubjects, subjects])
 
   async function onSubmit(data: CreatePlanningFormSchemaType) {
-    const subjects = await subjectsRepository.findAllByIds(data.subjects.map(subject => subject.value))
-    const planning = new Planning({
-      startDate: data.startDate,
-      availableWeekDays: data.availableDays,
-      availableHoursPerDay: data.hoursPerDay,
-      distribution: data.distribution
-    })
-    subjects.forEach(subject => planning.addSubject(subject))
-    
-    savePlanning(planning)
-    navigator.clipboard.writeText(planning.toString());
-    toast('Copiado para a área de transferência', {
-      description: 'Agora você pode colar seu plano de estudos em qualquer lugar!',
-      position: 'bottom-center',
-      duration: 10000,
-    })
+    try {
+      const subjects = await subjectsRepository.findAllByIds(data.subjects.map(subject => subject.value))
+      const planning = new Planning({
+        startDate: data.startDate,
+        availableWeekDays: data.availableDays,
+        availableHoursPerDay: data.hoursPerDay,
+        distribution: data.distribution
+      })
+      subjects.forEach(subject => planning.addSubject(subject))
+      
+      savePlanning(planning)
+      navigator.clipboard.writeText(planning.toString());
+      toast('Copiado para a área de transferência', {
+        description: 'Agora você pode colar seu plano de estudos em qualquer lugar!',
+        position: 'bottom-center',
+        duration: 10000,
+      })
+    } catch (err) {
+
+      if(err instanceof PlanningInvalidParamsError){
+        form.setError(err.field, { message: err.message })
+
+        return
+      }
+
+      form.setError('root.error', { message: 'Ocorreu um erro inesperado. Tente novamente mais tarde.' })
+    }
   }
 
   const dynamicClasses = insideModal ? '' : 'lg:w-[80vw]'
@@ -104,6 +117,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     <div className={`sm:p-0 text-center xl:text-left flex justify-center ${dynamicClasses}`}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col flex-1">
+          {form.formState.errors.root?.error && <p>{form.formState.errors.root.error.message}</p>}
           <FormField
             control={form.control}
             name='subjects'
