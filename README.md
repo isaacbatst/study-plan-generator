@@ -29,7 +29,7 @@ Essa estrutura é baseada no conteúdo da Estácio e a matérias hoje cadastrada
 - [x] Gerar com estratégias diferentes
 - [x] Salvar no localstorage
 - [x] Pedir apenas data de início, a partir daí calcular qual seria a data final.
-- [ ] Capturar erros ao instanciar `new Planning` e ao `planning.addSubject`
-- [ ] Salvar planos em um banco
+- [x] Capturar erros ao instanciar `new Planning` e ao `planning.addSubject`
+- [ ] Persistir planos no servidor
 - [ ] Login Social
 - [ ] Integrar com google calendar
