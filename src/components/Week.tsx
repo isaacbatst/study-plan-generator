@@ -58,7 +58,7 @@ const Week = ({week, index}: Props) => {
               {header}
               <div className="space-y-4">
                 <div className="space-y-1 xl:space-y-0">
-                  <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">Dia livre</h3>
+                  <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-xl">Dia livre</h3>
                   <p className="max-w-[900px] font-light text-gray-500 md:text-base dark:text-gray-400">
                     Nenhum estudo programado para este dia
                   </p>
@@ -73,7 +73,7 @@ const Week = ({week, index}: Props) => {
               <div className="space-y-2 lg:space-y-6">
                 {weekDay.studyObjects.map(studyObject => (
                   <div key={studyObject.id} className="space-y-1 xl:space-y-0">
-                    <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-3xl">
+                    <h3 className="text-xl font-bold tracking-tighter sm:text-2xl 2xl:text-xl">
                       {studyObject.name}
                     </h3>
                     <p className="max-w-[900px] text-gray-500 font-light md:text-base/relaxed dark:text-gray-400">
