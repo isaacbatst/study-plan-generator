@@ -24,15 +24,17 @@ const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) 
       const selectedSubjects = subjects.filter(subject => subject.coursePeriods.some(coursePeriod => coursePeriod.id === coursePeriodId))
       setSubjects(selectedSubjects.map(subject => ({label: subject.name, value: subject.id})))
     }
-
   }
+
+  const sortedSubjects = subjects.slice().sort((a, b) => a.name.localeCompare(b.name))
+  const sortedCoursePeriods = coursePeriods.slice().sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <FormItem className="flex flex-col">
       <FormLabel>Quais matérias vou estudar:</FormLabel>
       <Select 
         isClearable
-        options={coursePeriods.map(subject => ({label: subject.name, value: subject.id}))}
+        options={sortedCoursePeriods.map(subject => ({label: subject.name, value: subject.id}))}
         instanceId={coursesSelectId}
         onChange={(course) => setCourseSubjects(course?.value)}
         placeholder="Preencha automaticamente escolhendo o curso..."
@@ -48,7 +50,7 @@ const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) 
         }}
       />
       <Select 
-        options={subjects.map(subject => ({label: subject.name, value: subject.id}))}
+        options={sortedSubjects.map(subject => ({label: subject.name, value: subject.id}))}
         isMulti
         instanceId={subjectsSelectId}
         value={field.value}

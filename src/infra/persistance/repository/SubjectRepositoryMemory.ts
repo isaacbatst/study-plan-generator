@@ -9,40 +9,76 @@ export default class SubjectRepositoryMemory {
 
   constructor(){
     const computerScience = new Course('computer-science', 'Ciência da Computação')
+    const systemsDevelopmentAndAnalysis = new Course('systems-development-and-analysis', 'Análise e Desenvolvimento de Sistemas')
+    const cyberSecurity = new Course('cyber-security', 'Cybersegurança')
+
     const csFirstPeriod = new CoursePeriod('cs-first-period', '1º Período de Ciência da Computação', computerScience.getId())
     const csSecondPeriod = new CoursePeriod('cs-second-period', '2º Período de Ciência da Computação', computerScience.getId())
-    const systemsDevelopmentAndAnalysis = new Course('systems-development-and-analysis', 'Análise e Desenvolvimento de Sistemas')
+    
     const sdSecondPeriod = new CoursePeriod('sd-first-period', '2º Período de Análise e Desenvolvimento de Sistemas', systemsDevelopmentAndAnalysis.getId())
 
-    const security = new Subject('security', 'Introdução à Segurança da Informação', [csFirstPeriod])
-    security.addTheme(new SubjectTheme('security-2', '2', [
+    const cyberSecurityFirstPeriod = new CoursePeriod('cyber-security-first-period', '1º Período de Cybersegurança', cyberSecurity.getId())
+    const cyberSecuritySecondPeriod = new CoursePeriod('cyber-security-second-period', '2º Período de Cybersegurança', cyberSecurity.getId())
+
+    const networkFundamentals = new Subject('network-fundamentals', 'Fundamentos de Redes de Computadores', [cyberSecurityFirstPeriod])
+    networkFundamentals.addTheme(new SubjectTheme('network-fundamentals-1', '1', [
+      new SubjectThemeModule('network-fundamentals-1-1', '1.1', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-1-2', '1.2', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-1-3', '1.3', 'Fundamentos de Redes de Computadores'),
+    ]))
+    networkFundamentals.addTheme(new SubjectTheme('network-fundamentals-2', '2', [
+      new SubjectThemeModule('network-fundamentals-2-1', '2.1', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-2-2', '2.2', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-2-3', '2.3', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-2-4', '2.4', 'Fundamentos de Redes de Computadores'),
+    ]))
+    networkFundamentals.addTheme(new SubjectTheme('network-fundamentals-3', '3', [
+      new SubjectThemeModule('network-fundamentals-3-1', '3.1', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-3-2', '3.2', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-3-3', '3.3', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-3-4', '3.4', 'Fundamentos de Redes de Computadores'),
+    ]))
+    networkFundamentals.addTheme(new SubjectTheme('network-fundamentals-4', '4', [
+      new SubjectThemeModule('network-fundamentals-4-1', '4.1', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-4-2', '4.2', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-4-3', '4.3', 'Fundamentos de Redes de Computadores'),
+    ]))
+    networkFundamentals.addTheme(new SubjectTheme('network-fundamentals-5', '5', [
+      new SubjectThemeModule('network-fundamentals-5-1', '5.1', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-5-2', '5.2', 'Fundamentos de Redes de Computadores'),
+      new SubjectThemeModule('network-fundamentals-5-3', '5.3', 'Fundamentos de Redes de Computadores'),
+    ]))
+
+
+    const securityIntroduction = new Subject('security', 'Introdução à Segurança da Informação', [csFirstPeriod, cyberSecurityFirstPeriod])
+    securityIntroduction.addTheme(new SubjectTheme('security-2', '2', [
       new SubjectThemeModule('security-3-1', '2.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-3-2', '2.2', 'Introdução à Segurança da Informação'),
     ])) 
-    security.addTheme(new SubjectTheme('security-3', '3', [
+    securityIntroduction.addTheme(new SubjectTheme('security-3', '3', [
       new SubjectThemeModule('security-3-1', '3.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-3-2', '3.2', 'Introdução à Segurança da Informação'),
     ])) 
-    security.addTheme(new SubjectTheme('security-4', '4', [
+    securityIntroduction.addTheme(new SubjectTheme('security-4', '4', [
       new SubjectThemeModule('security-4-1', '4.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-4-2', '4.2', 'Introdução à Segurança da Informação'),
     ]))
-    security.addTheme(new SubjectTheme('security-5', '5', [
+    securityIntroduction.addTheme(new SubjectTheme('security-5', '5', [
       new SubjectThemeModule('security-5-1', '5.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-5-2', '5.2', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-5-3', '5.3', 'Introdução à Segurança da Informação'),
     ]))
-    security.addTheme(new SubjectTheme('security-6', '6', [
+    securityIntroduction.addTheme(new SubjectTheme('security-6', '6', [
       new SubjectThemeModule('security-6-1', '6.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-6-2', '6.2', 'Introdução à Segurança da Informação'),
     ]))
-    security.addTheme(new SubjectTheme('security-7', '7', [
+    securityIntroduction.addTheme(new SubjectTheme('security-7', '7', [
       new SubjectThemeModule('security-7-1', '7.1', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-7-2', '7.2', 'Introdução à Segurança da Informação'),
       new SubjectThemeModule('security-7-3', '7.3', 'Introdução à Segurança da Informação'),  
     ])) 
 
-    const programmingParadigms = new Subject('programming-paradigms', 'Paradigmas de Programação', [csFirstPeriod])
+    const programmingParadigms = new Subject('programming-paradigms', 'Paradigmas de Programação', [csFirstPeriod, cyberSecurityFirstPeriod])
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-1', '1', [
       new SubjectThemeModule('programming-paradigms-1-1', '1.1', 'Paradigmas de Programação'),
       new SubjectThemeModule('programming-paradigms-1-2', '1.2', 'Paradigmas de Programação'),
@@ -74,7 +110,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('programming-paradigms-5-4', '5.4', 'Paradigmas de Programação'),
     ]))
 
-    const architecture = new Subject('architecture', 'Arquitetura de Computadores', [csFirstPeriod])
+    const architecture = new Subject('architecture', 'Arquitetura de Computadores', [csFirstPeriod, cyberSecurityFirstPeriod])
     architecture.addTheme(new SubjectTheme('architecture-1', '1', [
       new SubjectThemeModule('architecture-1-1', '1.1', 'Arquitetura de Computadores'),
       new SubjectThemeModule('architecture-1-2', '1.2', 'Arquitetura de Computadores'),
@@ -150,7 +186,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('web-development-7-3', '7.3', 'Desenv. Web em Html5, Css, Javascript e Php'),
     ]))
 
-    const computingThinking = new Subject('computing-thinking', 'Pensamento Computacional', [csFirstPeriod])
+    const computingThinking = new Subject('computing-thinking', 'Pensamento Computacional', [csFirstPeriod, cyberSecurityFirstPeriod])
     computingThinking.addTheme(new SubjectTheme('computing-thinking-1', '1', [
       new SubjectThemeModule('computing-thinking-1-1', '1.1', 'Pensamento Computacional'),
       new SubjectThemeModule('computing-thinking-1-2', '1.2', 'Pensamento Computacional'),
@@ -218,7 +254,7 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('math-7-4', "7.4", 'Matemática e Lógica'),
     ]))
 
-    const cloud = new Subject('cloud', 'Computação em Nuvem', [csSecondPeriod, sdSecondPeriod])
+    const cloud = new Subject('cloud', 'Computação em Nuvem', [csSecondPeriod, sdSecondPeriod, cyberSecuritySecondPeriod])
     cloud.addTheme(new SubjectTheme('cloud-2', '2', [
       new SubjectThemeModule('cloud-2-1', '2.1', 'Computação em Nuvem'),
       new SubjectThemeModule('cloud-2-2', '2.2', 'Computação em Nuvem'),
@@ -406,7 +442,137 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('usability-5-3', '5.3', 'Engenharia de Usabilidade'),
       new SubjectThemeModule('usability-5-4', '5.4', 'Engenharia de Usabilidade'),
     ]))
-    this.add(security)
+
+    const agileDevelopementPython = new Subject('agile-developement-python', 'Desenvolvimento Rápido com Python', [cyberSecuritySecondPeriod])
+    agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-1', '1', [
+      new SubjectThemeModule('agile-developement-python-1-1', '1.1', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-1-2', '1.2', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-1-3', '1.3', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-1-4', '1.4', 'Desenvolvimento Rápido com Python'),
+    ]))
+    agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-2', '2', [
+      new SubjectThemeModule('agile-developement-python-2-1', '2.1', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-2-2', '2.2', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-2-3', '2.3', 'Desenvolvimento Rápido com Python'),
+    ]))
+    agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-3', '3', [
+      new SubjectThemeModule('agile-developement-python-3-1', '3.1', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-3-2', '3.2', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-3-3', '3.3', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-3-4', '3.4', 'Desenvolvimento Rápido com Python'),
+    ]))
+    agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-4', '4', [
+      new SubjectThemeModule('agile-developement-python-4-1', '4.1', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-4-2', '4.2', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-4-3', '4.3', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-4-4', '4.4', 'Desenvolvimento Rápido com Python'),
+    ]))
+    agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-5', '5', [
+      new SubjectThemeModule('agile-developement-python-5-1', '5.1', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-5-2', '5.2', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-5-3', '5.3', 'Desenvolvimento Rápido com Python'),
+      new SubjectThemeModule('agile-developement-python-5-4', '5.4', 'Desenvolvimento Rápido com Python'),
+    ]))
+    // gestão de serviços de ti
+    const itServiceManagement = new Subject('it-service-management', 'Gestão de Serviços de TI', [cyberSecuritySecondPeriod])
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-1', '1', [
+      new SubjectThemeModule('it-service-management-1-1', '1.1', 'Gestão de Serviços de TI'),
+    ]))
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-2', '2', [
+      new SubjectThemeModule('it-service-management-2-1', '2.1', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-2-2', '2.2', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-2-3', '2.3', 'Gestão de Serviços de TI'),
+    ]))
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-3', '3', [
+      new SubjectThemeModule('it-service-management-3-1', '3.1', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-3-2', '3.2', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-3-3', '3.3', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-3-4', '3.4', 'Gestão de Serviços de TI'),
+    ]))
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-4', '4', [
+      new SubjectThemeModule('it-service-management-4-1', '4.1', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-4-2', '4.2', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-4-3', '4.3', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-4-4', '4.4', 'Gestão de Serviços de TI'),
+    ]))
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-5', '5', [
+      new SubjectThemeModule('it-service-management-5-1', '5.1', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-5-2', '5.2', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-5-3', '5.3', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-5-4', '5.4', 'Gestão de Serviços de TI'),
+    ]))
+    itServiceManagement.addTheme(new SubjectTheme('it-service-management-6', '6', [
+      new SubjectThemeModule('it-service-management-6-1', '6.1', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-6-2', '6.2', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-6-3', '6.3', 'Gestão de Serviços de TI'),
+      new SubjectThemeModule('it-service-management-6-4', '6.4', 'Gestão de Serviços de TI'),
+    ]))
+
+    // Inteligência de Ameaças Cibernéticas
+    const cyberSecurityThreatIntelligence = new Subject('cyber-security-threat-intelligence', 'Inteligência de Ameaças Cibernéticas', [cyberSecuritySecondPeriod])
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-1', '1', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-1-1', '1.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-2', '2', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-2-1', '2.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-3', '3', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-3-1', '3.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-4', '4', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-4-1', '4.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-5', '5', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-5-1', '5.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-6', '6', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-6-1', '6.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-7', '7', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-7-1', '7.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-8', '8', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-8-1', '8.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-9', '9', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-9-1', '9.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-10', '10', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-10-1', '10.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+    cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-11', '11', [
+      new SubjectThemeModule('cyber-security-threat-intelligence-11-1', '11.1', 'Inteligência de Ameaças Cibernéticas'),
+    ]))
+
+    // protocolos de redes de computadores
+    const computerNetworkProtocols = new Subject('computer-network-protocols', 'Protocolos de Redes de Computadores', [cyberSecuritySecondPeriod])
+    computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-1', '1', [
+      new SubjectThemeModule('computer-network-protocols-1-1', '1.1', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-1-2', '1.2', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-1-3', '1.3', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-1-4', '1.4', 'Protocolos de Redes de Computadores'),
+    ]))
+    computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-2', '2', [
+      new SubjectThemeModule('computer-network-protocols-2-1', '2.1', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-2-2', '2.2', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-2-3', '2.3', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-2-4', '2.4', 'Protocolos de Redes de Computadores'),
+    ]))
+    computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-3', '3', [
+      new SubjectThemeModule('computer-network-protocols-3-1', '3.1', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-3-2', '3.2', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-3-3', '3.3', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-3-4', '3.4', 'Protocolos de Redes de Computadores'),
+    ]))
+    computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-4', '4', [
+      new SubjectThemeModule('computer-network-protocols-4-1', '4.1', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-4-2', '4.2', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-4-3', '4.3', 'Protocolos de Redes de Computadores'),
+      new SubjectThemeModule('computer-network-protocols-4-4', '4.4', 'Protocolos de Redes de Computadores'),
+    ]))
+
+
+    this.add(securityIntroduction)
     this.add(programmingParadigms)
     this.add(architecture)
     this.add(webDevelopment)
@@ -418,6 +584,11 @@ export default class SubjectRepositoryMemory {
     this.add(uml)
     this.add(communication)
     this.add(usability)
+    this.add(agileDevelopementPython)
+    this.add(networkFundamentals)
+    this.add(itServiceManagement)
+    this.add(cyberSecurityThreatIntelligence)
+    this.add(computerNetworkProtocols)
   }
 
   public async add(subject: Subject): Promise<void> {

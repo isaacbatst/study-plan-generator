@@ -44,8 +44,6 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     }
   })
 
-  const {setError} = form
-
   const setSubjects = React.useCallback((subjects: Option[]) => form.setValue('subjects', subjects), [form])
 
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false)
@@ -53,18 +51,19 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
   const { availableDays, distribution, hoursPerDay, startDate, subjects: selectedSubjects } = form.watch()
   const endDate = useMemo(() => {
     try {
-      const parsed = CreatePlanningFormSchema.parse({
+      const parsing = CreatePlanningFormSchema.safeParse({
         availableDays,
         distribution,
         hoursPerDay,
         startDate,
         subjects: selectedSubjects
       })
+      if(!parsing.success) return
       const planning = new Planning({
-        startDate: parsed.startDate,
-        availableWeekDays: parsed.availableDays,
-        availableHoursPerDay: parsed.hoursPerDay,
-        distribution: parsed.distribution
+        startDate: parsing.data.startDate,
+        availableWeekDays: parsing.data.availableDays,
+        availableHoursPerDay: parsing.data.hoursPerDay,
+        distribution: parsing.data.distribution
       })
   
       selectedSubjects.forEach(selected => {
@@ -100,10 +99,8 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         duration: 10000,
       })
     } catch (err) {
-
       if(err instanceof PlanningInvalidParamsError){
         form.setError(err.field, { message: err.message })
-
         return
       }
 
