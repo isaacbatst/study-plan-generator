@@ -80,7 +80,6 @@ export class Planning {
 
   get endDate(): Date {
     const studyDays = this.getStudyDays()
-
     if(studyDays.length === 0) {
       return this.startDate
     }

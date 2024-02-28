@@ -78,36 +78,36 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('security-7-3', '7.3', 'Introdução à Segurança da Informação'),  
     ])) 
 
-    const programmingParadigms = new Subject('programming-paradigms', 'Paradigmas de Programação', [csFirstPeriod, cyberSecurityFirstPeriod])
+    const programmingParadigms = new Subject('programming-paradigms', 'Paradigmas de Ling. de Programação com Python', [csFirstPeriod, cyberSecurityFirstPeriod])
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-1', '1', [
-      new SubjectThemeModule('programming-paradigms-1-1', '1.1', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-1-2', '1.2', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-1-3', '1.3', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-1-4', '1.4', 'Paradigmas de Programação'),
+      new SubjectThemeModule('programming-paradigms-1-1', '1.1', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-1-2', '1.2', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-1-3', '1.3', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-1-4', '1.4', 'Paradigmas de Ling. de Programação com Python'),
     ]))
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-2', '2', [
-      new SubjectThemeModule('programming-paradigms-2-1', '2.1', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-2-2', '2.2', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-2-3', '2.3', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-2-4', '2.4', 'Paradigmas de Programação'),
+      new SubjectThemeModule('programming-paradigms-2-1', '2.1', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-2-2', '2.2', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-2-3', '2.3', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-2-4', '2.4', 'Paradigmas de Ling. de Programação com Python'),
     ]))
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-3', '3', [
-      new SubjectThemeModule('programming-paradigms-3-1', '3.1', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-3-2', '3.2', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-3-3', '3.3', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-3-4', '3.4', 'Paradigmas de Programação'),
+      new SubjectThemeModule('programming-paradigms-3-1', '3.1', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-3-2', '3.2', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-3-3', '3.3', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-3-4', '3.4', 'Paradigmas de Ling. de Programação com Python'),
     ]))
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-4', '4', [
-      new SubjectThemeModule('programming-paradigms-4-1', '4.1', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-4-2', '4.2', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-4-3', '4.3', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-4-4', '4.4', 'Paradigmas de Programação'),
+      new SubjectThemeModule('programming-paradigms-4-1', '4.1', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-4-2', '4.2', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-4-3', '4.3', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-4-4', '4.4', 'Paradigmas de Ling. de Programação com Python'),
     ]))
     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-5', '5', [
-      new SubjectThemeModule('programming-paradigms-5-1', '5.1', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-5-2', '5.2', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-5-3', '5.3', 'Paradigmas de Programação'),
-      new SubjectThemeModule('programming-paradigms-5-4', '5.4', 'Paradigmas de Programação'),
+      new SubjectThemeModule('programming-paradigms-5-1', '5.1', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-5-2', '5.2', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-5-3', '5.3', 'Paradigmas de Ling. de Programação com Python'),
+      new SubjectThemeModule('programming-paradigms-5-4', '5.4', 'Paradigmas de Ling. de Programação com Python'),
     ]))
 
     const architecture = new Subject('architecture', 'Arquitetura de Computadores', [csFirstPeriod, cyberSecurityFirstPeriod])
@@ -571,6 +571,163 @@ export default class SubjectRepositoryMemory {
       new SubjectThemeModule('computer-network-protocols-4-4', '4.4', 'Protocolos de Redes de Computadores'),
     ]))
 
+    // Padrões de Projetos de Software Com Java
+    const softwareDesignPatternsJava = new Subject('software-design-patterns-java', 'Padrões de Projetos de Software Com Java')
+    // Tema 1 (1 modulo)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-1', '1', [
+      new SubjectThemeModule('software-design-patterns-java-1-1', '1.1', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // tema 2 (4)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-2', '2', [
+      new SubjectThemeModule('software-design-patterns-java-2-1', '2.1', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-2-2', '2.2', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-2-3', '2.3', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-2-4', '2.4', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // tema 3 (4)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-3', '3', [
+      new SubjectThemeModule('software-design-patterns-java-3-1', '3.1', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-3-2', '3.2', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-3-3', '3.3', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-3-4', '3.4', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // tema 4 (4)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-4', '4', [
+      new SubjectThemeModule('software-design-patterns-java-4-1', '4.1', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-4-2', '4.2', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-4-3', '4.3', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-4-4', '4.4', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // tema 5 (4)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-5', '5', [
+      new SubjectThemeModule('software-design-patterns-java-5-1', '5.1', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-5-2', '5.2', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-5-3', '5.3', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-5-4', '5.4', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // tema 6 (4)
+    softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-6', '6', [
+      new SubjectThemeModule('software-design-patterns-java-6-1', '6.1', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-6-2', '6.2', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-6-3', '6.3', 'Padrões de Projetos de Software Com Java'),
+      new SubjectThemeModule('software-design-patterns-java-6-4', '6.4', 'Padrões de Projetos de Software Com Java'),
+    ]))
+    // Programação para dispositivos móveis para Android
+    const mobileProgrammingAndroid = new Subject('mobile-programming-android', 'Programação para Dispositivos Móveis para Android')
+    // Tema 1 (2 modulos)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-1', '1', [
+      new SubjectThemeModule('mobile-programming-android-1-1', '1.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-1-2', '1.2', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // tema 2 (3)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-2', '2', [
+      new SubjectThemeModule('mobile-programming-android-2-1', '2.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-2-2', '2.2', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-2-3', '2.3', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // tema 3 (4)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-3', '3', [
+      new SubjectThemeModule('mobile-programming-android-3-1', '3.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-3-2', '3.2', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-3-3', '3.3', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-3-4', '3.4', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // tema 4 (4)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-4', '4', [
+      new SubjectThemeModule('mobile-programming-android-4-1', '4.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-4-2', '4.2', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-4-3', '4.3', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-4-4', '4.4', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // tema 5 (3)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-5', '5', [
+      new SubjectThemeModule('mobile-programming-android-5-1', '5.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-5-2', '5.2', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-5-3', '5.3', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // tema 6 (4)
+    mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-6', '6', [
+      new SubjectThemeModule('mobile-programming-android-6-1', '6.1', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-6-2', '6.2', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-6-3', '6.3', 'Programação para Dispositivos Móveis para Android'),
+      new SubjectThemeModule('mobile-programming-android-6-4', '6.4', 'Programação para Dispositivos Móveis para Android'),
+    ]))
+    // Tópicos de big data em python
+    const bigDataPython = new Subject('big-data-python', 'Tópicos de Big Data em Python')
+    // Tema 1 (2 modulos)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-1', '1', [
+      new SubjectThemeModule('big-data-python-1-1', '1.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-1-2', '1.2', 'Tópicos de Big Data em Python'),
+    ]))
+    // tema 2 (4)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-2', '2', [
+      new SubjectThemeModule('big-data-python-2-1', '2.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-2-2', '2.2', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-2-3', '2.3', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-2-4', '2.4', 'Tópicos de Big Data em Python'),
+    ]))
+    // tema 3 (3)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-3', '3', [
+      new SubjectThemeModule('big-data-python-3-1', '3.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-3-2', '3.2', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-3-3', '3.3', 'Tópicos de Big Data em Python'),
+    ]))
+    // tema 4 (4)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-4', '4', [
+      new SubjectThemeModule('big-data-python-4-1', '4.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-4-2', '4.2', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-4-3', '4.3', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-4-4', '4.4', 'Tópicos de Big Data em Python'),
+    ]))
+    // tema 5 (4)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-5', '5', [
+      new SubjectThemeModule('big-data-python-5-1', '5.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-5-2', '5.2', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-5-3', '5.3', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-5-4', '5.4', 'Tópicos de Big Data em Python'),
+    ]))
+    // tema 6 (3)
+    bigDataPython.addTheme(new SubjectTheme('big-data-python-6', '6', [
+      new SubjectThemeModule('big-data-python-6-1', '6.1', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-6-2', '6.2', 'Tópicos de Big Data em Python'),
+      new SubjectThemeModule('big-data-python-6-3', '6.3', 'Tópicos de Big Data em Python'),
+    ]))
+
+    // Tópicos de cloud iot e indústria 4.0 em python
+    const cloudIotIndustryPython = new Subject('cloud-iot-industry-python', 'Tópicos de Cloud IoT e Indústria 4.0 em Python')
+    // Tema 1 (1 modulo)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-1', '1', [
+      new SubjectThemeModule('cloud-iot-industry-python-1-1', '1.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
+    // tema 2 (3)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-2', '2', [
+      new SubjectThemeModule('cloud-iot-industry-python-2-1', '2.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-2-2', '2.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-2-3', '2.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
+    // tema 3 (2)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-3', '3', [
+      new SubjectThemeModule('cloud-iot-industry-python-3-1', '3.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-3-2', '3.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
+    // tema 4 (3)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-4', '4', [
+      new SubjectThemeModule('cloud-iot-industry-python-4-1', '4.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-4-2', '4.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-4-3', '4.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
+    // tema 5 (4)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-5', '5', [
+      new SubjectThemeModule('cloud-iot-industry-python-5-1', '5.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-5-2', '5.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-5-3', '5.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-5-4', '5.4', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
+    // tema 6 (2)
+    cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-6', '6', [
+      new SubjectThemeModule('cloud-iot-industry-python-6-1', '6.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+      new SubjectThemeModule('cloud-iot-industry-python-6-2', '6.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
+    ]))
 
     this.add(securityIntroduction)
     this.add(programmingParadigms)
@@ -589,6 +746,10 @@ export default class SubjectRepositoryMemory {
     this.add(itServiceManagement)
     this.add(cyberSecurityThreatIntelligence)
     this.add(computerNetworkProtocols)
+    this.add(softwareDesignPatternsJava)
+    this.add(bigDataPython)
+    this.add(cloudIotIndustryPython)
+    this.add(mobileProgrammingAndroid)
   }
 
   public async add(subject: Subject): Promise<void> {

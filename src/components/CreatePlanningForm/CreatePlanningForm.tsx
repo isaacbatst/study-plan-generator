@@ -73,7 +73,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
           planning.addSubject(subject)
         }
       })
-      
+
       return planning.endDate
     } catch (err) {
       console.log(err)
