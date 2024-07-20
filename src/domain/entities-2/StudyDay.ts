@@ -48,4 +48,8 @@ export class StudyDay {
   getHoursLeft(): number {
     return this.hours - this.studyObjects.reduce((acc, allocated) => acc + allocated.getStudyObject().getHours(), 0);
   }
+
+  getStudyObjects(): PlanningStudyObject[] {
+    return this.studyObjects;
+  }
 }
