@@ -151,7 +151,79 @@ describe("Planning", () => {
     const studyDays = studyDaysOrError.getRight();
     expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
     expect(studyDays[0].getHoursLeft()).toBe(0);    
-    expect(studyDays[0].getStudyObjects().length).toBe(2);
+    expect(studyDays[0].getHoursPerStudyObjects().size).toBe(2);
     expect(studyDays.length).toBe(1);
+  })
+
+  it('should generate study days with splitted study object', () => {
+    const studyObject1 = StudyObject.create({
+      id: "1",
+      name: "Math 101",
+      hours: 3,
+    }).getRight();
+    const math = Subject.create({
+      id: "1",
+      name: "Math",
+      studyObjects: [studyObject1],
+    }).getRight();
+    const planning = Planning.create({
+      id: "1",
+      createdAt: new Date(),
+      startDate: new Date("2021-01-01"),
+      subjects: [math],
+      hoursPerDay: 2,
+    }).getRight();
+
+    const studyDaysOrError = planning.getStudyDays();
+    expect(studyDaysOrError.isRight()).toBe(true);
+    const studyDays = studyDaysOrError.getRight();
+    console.dir(studyDays, { depth: null });
+    expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
+    expect(studyDays[0].getHoursLeft()).toBe(0);
+    expect(studyDays[0].getHoursPerStudyObjects().get(studyObject1)).toBe(2);
+    expect(studyDays[1].getDate()).toEqual(new Date("2021-01-02"));
+    expect(studyDays[1].getHoursLeft()).toBe(1);
+    expect(studyDays[1].getHoursPerStudyObjects().get(studyObject1)).toBe(1);
+  })
+
+  it('should generate study days with splitted study object and other study object after', () => {
+    const studyObject1 = StudyObject.create({
+      id: "1",
+      name: "Math 101",
+      hours: 3,
+    }).getRight();
+    const studyObject2 = StudyObject.create({
+      id: "2",
+      name: "Math 102",
+      hours: 2,
+    }).getRight();
+    const math = Subject.create({
+      id: "1",
+      name: "Math",
+      studyObjects: [studyObject1, studyObject2],
+    }).getRight();
+    const planning = Planning.create({
+      id: "1",
+      createdAt: new Date(),
+      startDate: new Date("2021-01-01"),
+      subjects: [math],
+      hoursPerDay: 2,
+    }).getRight();
+
+    const studyDaysOrError = planning.getStudyDays();
+    expect(studyDaysOrError.isRight()).toBe(true);
+    const studyDays = studyDaysOrError.getRight();
+    console.dir(studyDays, { depth: null });
+    expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
+    expect(studyDays[0].getHoursLeft()).toBe(0);
+    expect(studyDays[0].getHoursPerStudyObjects().get(studyObject1)).toBe(2);
+    expect(studyDays[0].getHoursPerStudyObjects().get(studyObject2)).toBeUndefined();
+    expect(studyDays[1].getDate()).toEqual(new Date("2021-01-02"));
+    expect(studyDays[1].getHoursLeft()).toBe(0);
+    expect(studyDays[1].getHoursPerStudyObjects().get(studyObject1)).toBe(1);
+    expect(studyDays[1].getHoursPerStudyObjects().get(studyObject2)).toBe(1);
+    expect(studyDays[2].getDate()).toEqual(new Date("2021-01-03"));
+    expect(studyDays[2].getHoursPerStudyObjects().get(studyObject2)).toBe(1);
+    expect(studyDays[2].getHoursLeft()).toBe(1);
   })
 })

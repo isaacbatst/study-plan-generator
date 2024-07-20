@@ -16,7 +16,7 @@ export class StudyDay {
   private constructor(
     private date: Date,
     private hours: number,
-    private studyObjects: PlanningStudyObject[] = [],
+    private hoursPerStudyObjects: Map<StudyObject, number> = new Map()
   ) {}
 
   static create(
@@ -24,20 +24,29 @@ export class StudyDay {
   ): Either<string, StudyDay> {
     return Either.right(new StudyDay(props.date, props.hours));
   }
-  allocate(studyObject: PlanningStudyObject): Either<StudyDayError, void> {
+  allocate(planningStudyObject: PlanningStudyObject): Either<StudyDayError, void> {
     const hoursLeft = this.getHoursLeft();
     if(hoursLeft === 0) {
       return Either.left(StudyDayError.ZERO_HOURS_LEFT);
     }
+    const hoursToAllocate = hoursLeft < planningStudyObject.getHoursLeft() 
+      ? hoursLeft 
+      : planningStudyObject.getHoursLeft();
 
-    if (hoursLeft < studyObject.getHoursLeft()) {
-      studyObject.addAllocation(this.date, hoursLeft);
+    planningStudyObject.addAllocation(this.date, hoursToAllocate);
+    
+    const hoursToMap = this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())
+      ? this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())! + hoursToAllocate
+      : hoursToAllocate;
+
+    this.hoursPerStudyObjects.set(planningStudyObject.getStudyObject(), hoursToMap);
+
+    if (hoursLeft < planningStudyObject.getHoursLeft()) {
       return Either.left(StudyDayError.NOT_ENOUGH_HOURS_LEFT);
     } 
-    studyObject.addAllocation(this.date)
-    this.studyObjects.push(studyObject);
     return Either.right(undefined)
   }
+
   getDate(): Date {
     return this.date;
   }
@@ -46,10 +55,11 @@ export class StudyDay {
     return this.hours;
   }
   getHoursLeft(): number {
-    return this.hours - this.studyObjects.reduce((acc, allocated) => acc + allocated.getStudyObject().getHours(), 0);
+    const hours = this.hoursPerStudyObjects.values();
+    return this.hours - Array.from(hours).reduce((acc, allocated) => acc + allocated, 0);
   }
 
-  getStudyObjects(): PlanningStudyObject[] {
-    return this.studyObjects;
+  getHoursPerStudyObjects(): Map<StudyObject, number> {
+    return this.hoursPerStudyObjects;
   }
 }
