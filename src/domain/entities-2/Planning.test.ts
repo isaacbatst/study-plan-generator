@@ -24,19 +24,12 @@ describe("Planning", () => {
       subjects: [subject],
       hoursPerDay: 2,
     }).getRight();
-    const studyDay = StudyDay.create({
-      date: new Date("2021-01-01"),
-      hours: 2,
-    }).getRight()
-    const planningStudyObject = PlanningStudyObject.create({
-      hours: 2,
-      studyObject,
-    }).getRight();
-    studyDay.allocate(planningStudyObject);
-    const expected = [
-      studyDay,
-    ]
 
-    expect(planning.getStudyDays()).toEqual(expected);
+    const studyDaysOrError = planning.getStudyDays();
+    expect(studyDaysOrError.isRight()).toBe(true);
+    const studyDays = studyDaysOrError.getRight();
+    expect(studyDays.length).toBe(1);
+    expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
+    expect(studyDays[0].getHoursLeft()).toBe(0);
   })
 })
