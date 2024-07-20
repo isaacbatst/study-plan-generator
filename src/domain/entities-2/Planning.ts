@@ -1,32 +1,35 @@
-import { D } from "vitest/dist/reporters-rzC174PQ.js";
+import { D, s } from "vitest/dist/reporters-rzC174PQ.js";
 import { Either } from "./either/Either";
 import { Subject } from "./Subject";
+import { StudyDay } from "./StudyDay";
+import { PlanningStudyObject } from "./PlanningStudyObject";
 
 type PlanningProps = {
   id: string;
   createdAt: Date;
   startDate: Date;
   subjects: Subject[];
+  hoursPerDay: number;
 };
 
 export class Planning {
-  private endDate: Date;
-
   private constructor(
     private id: string,
     private createdAt: Date,
     private startDate: Date,
     private subjects: Subject[],
+    private hoursPerDay: number,
   ) {
-    this.endDate = this.calculateEndDate();
   }
 
   static create(props: PlanningProps): Either<string, Planning> {
-    return Either.right(new Planning(props.id, props.createdAt, props.startDate, props.subjects));
-  }
-
-  calculateEndDate(): Date {
-    return new Date(this.startDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+    return Either.right(new Planning(
+      props.id, 
+      props.createdAt, 
+      props.startDate, 
+      props.subjects, 
+      props.hoursPerDay,
+    ));
   }
 
   getId(): string {
@@ -45,7 +48,36 @@ export class Planning {
     return this.subjects;
   }
 
-  getEndDate(): Date {
-    return this.endDate;
+  getStudyDays(): Either<string, StudyDay[]> {
+    const studyDays: StudyDay[] = [];
+    let currentStudyDayOrError = StudyDay.create({
+      date: this.startDate,
+      hours: this.hoursPerDay,
+    });
+    if(currentStudyDayOrError.isLeft()) {
+      return Either.left(currentStudyDayOrError.getLeft())
+    }
+    const currentStudyDay = currentStudyDayOrError.getRight();
+
+    this.subjects.forEach((subject) => {
+      subject.getStudyObjects().forEach((studyObject) => {
+        const planningStudyObjectOrError = PlanningStudyObject.create({
+          hours: studyObject.getHours(),
+          studyObject,
+        })
+        const planningStudyObject = planningStudyObjectOrError.getRight();
+        currentStudyDay.allocate(planningStudyObject)
+
+        if(!studyDays.includes(currentStudyDay)) {
+          studyDays.push(currentStudyDay);
+        }
+      });
+    })
+
+    return Either.right(studyDays);
+  }
+
+  getHoursPerDay(): number {
+    return this.hoursPerDay;
   }
 }

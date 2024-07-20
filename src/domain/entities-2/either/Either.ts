@@ -1,47 +1,36 @@
-export abstract class Either<L, R> {
-  abstract isLeft(): this is Left<L, R>;
-  abstract isRight(): this is Right<L, R>;
-  abstract value: L | R;
+export class Either<L, R> {
+  private constructor(
+    private readonly left?: L,
+    private readonly right?: R
+  ) {}
 
   static left<L, R>(value: L): Either<L, R> {
-    return new Left(value);
+    return new Either<L, R>(value, undefined);
   }
 
   static right<L, R>(value: R): Either<L, R> {
-    return new Right(value);
-  }
-}
-
-export class Left<L, R> extends Either<L, R> {
-  readonly value: L;
-
-  constructor(value: L) {
-    super();
-    this.value = value;
+    return new Either<L, R>(undefined, value);
   }
 
-  isLeft(): this is Left<L, R> {
-    return true;
+  isLeft(): boolean {
+    return this.left !== undefined;
   }
 
-  isRight(): this is Right<L, R> {
-    return false;
-  }
-}
-
-export class Right<L, R> extends Either<L, R> {
-  readonly value: R;
-
-  constructor(value: R) {
-    super();
-    this.value = value;
+  isRight(): boolean {
+    return this.right !== undefined;
   }
 
-  isLeft(): this is Left<L, R> {
-    return false;
+  getLeft(): L {
+    if (this.left === undefined) {
+      throw new Error("Cannot get left value of a Right");
+    }
+    return this.left;
   }
 
-  isRight(): this is Right<L, R> {
-    return true;
+  getRight(): R {
+    if (this.right === undefined) {
+      throw new Error("Cannot get right value of a Left");
+    }
+    return this.right;
   }
 }
