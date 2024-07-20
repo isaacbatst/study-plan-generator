@@ -1,7 +1,7 @@
 import { D, s } from "vitest/dist/reporters-rzC174PQ.js";
 import { Either } from "./either/Either";
 import { Subject } from "./Subject";
-import { StudyDay } from "./StudyDay";
+import { StudyDay, StudyDayError } from "./StudyDay";
 import { PlanningStudyObject } from "./PlanningStudyObject";
 
 type PlanningProps = {
@@ -57,19 +57,28 @@ export class Planning {
     if(currentStudyDayOrError.isLeft()) {
       return Either.left(currentStudyDayOrError.getLeft())
     }
-    const currentStudyDay = currentStudyDayOrError.getRight();
+    let currentStudyDay = currentStudyDayOrError.getRight();
+    studyDays.push(currentStudyDay);
 
     this.subjects.forEach((subject) => {
       subject.getStudyObjects().forEach((studyObject) => {
         const planningStudyObjectOrError = PlanningStudyObject.create({
-          hours: studyObject.getHours(),
           studyObject,
         })
         const planningStudyObject = planningStudyObjectOrError.getRight();
-        currentStudyDay.allocate(planningStudyObject)
-
-        if(!studyDays.includes(currentStudyDay)) {
-          studyDays.push(currentStudyDay);
+        while(planningStudyObject.getHoursLeft() > 0) {
+          const allocationOrError = currentStudyDay.allocate(planningStudyObject);
+          if(allocationOrError.isLeft()) {
+            currentStudyDayOrError = StudyDay.create({
+              date: new Date(currentStudyDay.getDate().getTime() + 24 * 60 * 60 * 1000),
+              hours: this.hoursPerDay,
+            });
+            if(currentStudyDayOrError.isLeft()) {
+              return Either.left(currentStudyDayOrError.getLeft());
+            }
+            currentStudyDay = currentStudyDayOrError.getRight();
+            studyDays.push(currentStudyDay);
+          }
         }
       });
     })

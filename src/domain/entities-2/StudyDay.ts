@@ -7,8 +7,9 @@ type StudyDayProps = {
   hours: number;
 };
 
-enum StudyDayError {
+export enum StudyDayError {
   NOT_ENOUGH_HOURS_LEFT = "Not enough hours left",
+  ZERO_HOURS_LEFT = "Zero hours left",
 }
 
 export class StudyDay {
@@ -23,8 +24,17 @@ export class StudyDay {
   ): Either<string, StudyDay> {
     return Either.right(new StudyDay(props.date, props.hours));
   }
-  allocate(studyObject: PlanningStudyObject): Either<string, void> {
-    studyObject.allocate()
+  allocate(studyObject: PlanningStudyObject): Either<StudyDayError, void> {
+    const hoursLeft = this.getHoursLeft();
+    if(hoursLeft === 0) {
+      return Either.left(StudyDayError.ZERO_HOURS_LEFT);
+    }
+
+    if (hoursLeft < studyObject.getHoursLeft()) {
+      studyObject.addAllocation(this.date, hoursLeft);
+      return Either.left(StudyDayError.NOT_ENOUGH_HOURS_LEFT);
+    } 
+    studyObject.addAllocation(this.date)
     this.studyObjects.push(studyObject);
     return Either.right(undefined)
   }
@@ -36,6 +46,6 @@ export class StudyDay {
     return this.hours;
   }
   getHoursLeft(): number {
-    return this.hours - this.studyObjects.reduce((acc, allocated) => acc + allocated.getHours(), 0);
+    return this.hours - this.studyObjects.reduce((acc, allocated) => acc + allocated.getStudyObject().getHours(), 0);
   }
 }

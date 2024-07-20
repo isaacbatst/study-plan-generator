@@ -3,7 +3,6 @@ import { StudyObject } from "./StudyObject"
 
 type PlanningStudyObjectProps = {
   studyObject: StudyObject
-  hours: number
 }
 
 enum PlanningStudyObjectError {
@@ -13,30 +12,31 @@ enum PlanningStudyObjectError {
 export class PlanningStudyObject {
   private constructor(
     private studyObject: StudyObject,
-    private hours: number,
-    private hoursLeft = hours
+    private allocations: {
+      date: Date
+      hours: number
+    }[] = [],
   ) {}
-
-  static create(props: PlanningStudyObjectProps): Either<string, PlanningStudyObject> {
-    return Either.right(new PlanningStudyObject(props.studyObject, props.hours))
+  
+  get hoursLeft(): number {
+    return this.studyObject.getHours() - this.allocations.reduce((acc, allocation) => acc + allocation.hours, 0)
   }
 
-  allocate(hours: number = this.hoursLeft): Either<string, void> {
+  static create(props: PlanningStudyObjectProps): Either<string, PlanningStudyObject> {
+    return Either.right(new PlanningStudyObject(props.studyObject))
+  }
+
+  addAllocation(date: Date, hours: number = this.hoursLeft): Either<string, void> {
     if (this.hoursLeft < hours) {
       return Either.left(PlanningStudyObjectError.EXCEEDED_HOURS)
     }
 
-    this.hoursLeft -= hours
-
+    this.allocations.push({ date, hours })
     return Either.right(undefined)
   }
 
   getStudyObject(): StudyObject {
     return this.studyObject
-  }
-
-  getHours(): number {
-    return this.hours
   }
 
   getHoursLeft(): number {
