@@ -12,6 +12,7 @@ type PlanningProps = {
   subjects: Subject[];
   hoursPerDay: number;
   distribution?: PlanningDistribution;
+  availableWeekdays?: number[];
 };
 
 
@@ -23,6 +24,7 @@ export class Planning {
     private subjects: Subject[],
     private hoursPerDay: number,
     private distribution: PlanningDistribution = PlanningDistribution.UNTIL_FINISH_SUBJECT,
+    private availableWeekdays: number[],
   ) {
   }
   
@@ -34,6 +36,7 @@ export class Planning {
       props.subjects, 
       props.hoursPerDay,
       props.distribution,
+      props.availableWeekdays ?? [0, 1, 2, 3, 4, 5, 6], // Default to all weekdays
     ));
   }
   
@@ -65,11 +68,19 @@ export class Planning {
       return this.getStudyDaysAlternatingSubjectPerStudyObject();
     case PlanningDistribution.ALTERNATE_SUBJECT_PER_DAY:
       return this.getStudyDaysAlternatingSubjectPerDay();
-    case PlanningDistribution.ALTERNATE_SUBJECT_PER_WEEK:
-      return Either.left('Not implemented');
     default:
       return Either.left('Invalid distribution');
     }
+  }
+
+  private getNextDate(currentDate: Date): Date {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const nextDate = new Date(currentDate.getTime() + oneDay);
+    const nextWeekday = nextDate.getUTCDay();
+    if(this.availableWeekdays.includes(nextWeekday)) {
+      return nextDate;
+    }
+    return this.getNextDate(nextDate);
   }
 
   private getStudyDaysAlternatingSubjectPerDay(): Either<string, StudyDay[]> {
@@ -87,6 +98,7 @@ export class Planning {
     });
     
     let dayIndex = 0;
+    let currentDate = this.startDate;
 
     for(let index = 0; missingStudyObjectsPerSubject.size > 0; index += 1) {
       const subjectIndex = index % this.subjects.length;
@@ -96,9 +108,8 @@ export class Planning {
         missingStudyObjectsPerSubject.delete(subject);
         continue;
       }
-      const date = new Date(this.startDate.getTime() + dayIndex * 24 * 60 * 60 * 1000);
       const studyDayOrError = StudyDay.create({
-        date,
+        date: currentDate,
         hours: this.hoursPerDay,
       });
       if(studyDayOrError.isLeft()) {
@@ -113,6 +124,7 @@ export class Planning {
         }
       } 
       studyDays.push(studyDay);
+      currentDate = this.getNextDate(currentDate);
       dayIndex += 1;
     }
   
@@ -154,8 +166,7 @@ export class Planning {
         while(planningStudyObject.getHoursLeft() > 0) {
           const allocationOrError = currentStudyDay.allocate(planningStudyObject);
           if(allocationOrError.isLeft()) {
-            const oneDay = 24 * 60 * 60 * 1000;
-            const nextDay = new Date(currentStudyDay.getDate().getTime() + oneDay);
+            const nextDay = this.getNextDate(currentStudyDay.getDate());
             currentStudyDayOrError = StudyDay.create({
               date: nextDay,
               hours: this.hoursPerDay,
@@ -196,7 +207,7 @@ export class Planning {
           const allocationOrError = currentStudyDay.allocate(planningStudyObject);
           if(allocationOrError.isLeft()) {
             currentStudyDayOrError = StudyDay.create({
-              date: new Date(currentStudyDay.getDate().getTime() + 24 * 60 * 60 * 1000),
+              date:  this.getNextDate(currentStudyDay.getDate()),
               hours: this.hoursPerDay,
             });
             if(currentStudyDayOrError.isLeft()) {

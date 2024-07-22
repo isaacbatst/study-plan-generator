@@ -473,4 +473,60 @@ describe("Planning", () => {
     expect(studyDays[2].getHoursLeft()).toBe(3);
     expect(studyDays[2].getHoursPerStudyObjects().get(studyObjectMath2)).toBe(1);
   })
+
+  it('should generate study days with custom available weekdays', () => {
+    const studyObjectMath1 = StudyObject.create({
+      id: "1",
+      name: "Math 101",
+      hours: 2,
+    }).getRight();
+    const studyObjectMath2 = StudyObject.create({
+      id: "2",
+      name: "Math 102",
+      hours: 2,
+    }).getRight();
+    const math = Subject.create({
+      id: "1",
+      name: "Math",
+      studyObjects: [studyObjectMath1, studyObjectMath2],
+    }).getRight();
+
+    const studyObjectPhysics1 = StudyObject.create({
+      id: "3",
+      name: "Physics 101",
+      hours: 2,
+    }).getRight();
+    const studyObjectPhysics2 = StudyObject.create({
+      id: "4",
+      name: "Physics 102",
+      hours: 2,
+    }).getRight();
+    const physics = Subject.create({
+      id: "2",
+      name: "Physics",
+      studyObjects: [studyObjectPhysics1, studyObjectPhysics2],
+    }).getRight();
+
+    const planning = Planning.create({
+      id: "1",
+      createdAt: new Date(),
+      startDate: new Date("2021-01-01"),
+      subjects: [math, physics],
+      hoursPerDay: 2,
+      availableWeekdays: [1, 3, 5]
+    }).getRight();
+
+    const studyDaysOrError = planning.getStudyDays();
+    expect(studyDaysOrError.isRight()).toBe(true);
+    const studyDays = studyDaysOrError.getRight();
+    expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01")); // friday
+    expect(studyDays[0].getHoursLeft()).toBe(0);
+    expect(studyDays[1].getDate()).toEqual(new Date("2021-01-04")); // monday
+    expect(studyDays[1].getHoursLeft()).toBe(0);
+    expect(studyDays[2].getDate()).toEqual(new Date("2021-01-06")); // wednesday
+    expect(studyDays[2].getHoursLeft()).toBe(0);
+    expect(studyDays[3].getDate()).toEqual(new Date("2021-01-08")); // friday
+    expect(studyDays[3].getHoursLeft()).toBe(0);
+    expect(studyDays.length).toBe(4);
+  })
 })
