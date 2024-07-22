@@ -24,13 +24,18 @@ export class StudyDay {
   ): Either<string, StudyDay> {
     return Either.right(new StudyDay(props.date, props.hours));
   }
+
+  hasHoursLeft(): boolean {
+    return this.getHoursLeft() > 0;
+  }
+
   allocate(planningStudyObject: PlanningStudyObject): Either<StudyDayError, void> {
-    const hoursLeft = this.getHoursLeft();
-    if(hoursLeft === 0) {
+    const hoursLeftInDay = this.getHoursLeft();
+    if(hoursLeftInDay === 0) {
       return Either.left(StudyDayError.ZERO_HOURS_LEFT);
     }
-    const hoursToAllocate = hoursLeft < planningStudyObject.getHoursLeft() 
-      ? hoursLeft 
+    const hoursToAllocate = hoursLeftInDay < planningStudyObject.getHoursLeft() 
+      ? hoursLeftInDay 
       : planningStudyObject.getHoursLeft();
 
     planningStudyObject.addAllocation(this.date, hoursToAllocate);
@@ -41,7 +46,7 @@ export class StudyDay {
 
     this.hoursPerStudyObjects.set(planningStudyObject.getStudyObject(), hoursToMap);
 
-    if (hoursLeft < planningStudyObject.getHoursLeft()) {
+    if (hoursLeftInDay < planningStudyObject.getHoursLeft()) {
       return Either.left(StudyDayError.NOT_ENOUGH_HOURS_LEFT);
     } 
     return Either.right(undefined)

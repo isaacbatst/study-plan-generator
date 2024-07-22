@@ -42,4 +42,8 @@ export class PlanningStudyObject {
   getHoursLeft(): number {
     return this.hoursLeft
   }
+
+  hasHoursLeft(): boolean {
+    return this.hoursLeft > 0
+  }
 }
