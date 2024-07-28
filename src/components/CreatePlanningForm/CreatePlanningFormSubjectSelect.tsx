@@ -56,6 +56,7 @@ const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) 
         value={field.value}
         onChange={field.onChange}
         placeholder="Ou selecione manualmente..."
+        className='max-w-full'
         styles={{
           control: (baseStyles, state) => ({
             ...baseStyles,

@@ -35,15 +35,14 @@ const Plannings = ({subjects}: Props) => {
       }
       {!isLoading && !showInitialForm && <CreatePlanningFormDialog savePlanning={addStudyPlan} subjects={subjects}  />}
       <div className="flex flex-col items-center gap-5 py-5">
-        {!isLoading && showInitialForm && <div className='px-0'>
+        {!isLoading && showInitialForm && 
           <CreatePlanningForm 
             savePlanning={(studyPlan) => {
               addStudyPlan(studyPlan)
               setShowInitialForm(false)
             }} 
             subjects={subjects} 
-          />
-        </div>}
+          />}
         {plannings.map((studyPlan) => (
           <PlanningView key={studyPlan.id} removeStudyPlan={removeStudyPlan} studyPlan={studyPlan} />
         ))}

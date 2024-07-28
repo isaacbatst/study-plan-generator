@@ -123,10 +123,10 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     }
   }
 
-  const dynamicClasses = insideModal ? '' : 'shadow-lg rounded-lg lg:p-10 bg-white lg:max-w-[50vw]'
+  const dynamicClasses = insideModal ? '' : 'shadow-lg rounded-lg lg:p-10 bg-white max-w-[100vw] lg:max-w-[50vw]'
 
   return (
-    <div className={`text-center xl:text-left flex justify-center items-center p-0 ${dynamicClasses}`}>
+    <div className={`text-center xl:text-left flex justify-center items-center p-3 max-w-full ${dynamicClasses}`}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col flex-1">
           {form.formState.errors.root?.error && <p>{form.formState.errors.root.error.message}</p>}
