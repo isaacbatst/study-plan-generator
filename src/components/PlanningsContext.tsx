@@ -13,7 +13,7 @@ type PlanningsContextType = {
 const PlanningsContext = createContext<PlanningsContextType>(null as any);
 
 export const PlanningsContextProvider = ({ children }: PropsWithChildren) => {
-  const [studyPlans, setStudyPlans] = useStoredState<PlanningJSON[]>('study-plans', [])
+  const [studyPlans, setStudyPlans, isLoading] = useStoredState<PlanningJSON[]>('study-plans', [])
 
   const addStudyPlan = useCallback((studyPlan: Planning) => {
     const newPlans = [...studyPlans, studyPlan.toJSON()]
@@ -34,7 +34,7 @@ export const PlanningsContextProvider = ({ children }: PropsWithChildren) => {
 
   const value = useMemo(() => ({
     plannings: sortedPlans,
-    isLoading: false,
+    isLoading: isLoading,
     addStudyPlan,
     removeStudyPlan,
     toggleStudyObjectDone: (planningId: string, studyDayId: string, studyObjectId: string) => {
@@ -62,7 +62,7 @@ export const PlanningsContextProvider = ({ children }: PropsWithChildren) => {
       })
       setStudyPlans(newPlans)
     }
-  }), [studyPlans, sortedPlans, setStudyPlans, addStudyPlan, removeStudyPlan])
+  }), [studyPlans, sortedPlans, isLoading, setStudyPlans, addStudyPlan, removeStudyPlan])
 
   return <PlanningsContext.Provider value={value}>{children}</PlanningsContext.Provider>;
 } 
