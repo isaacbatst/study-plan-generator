@@ -25,7 +25,7 @@ const Plannings = ({subjects}: Props) => {
   }, [plannings.length])
 
   return (
-    <div className='bg-gray-50 flex-1 flex flex-col items-center justify-center'>
+    <div className='bg-gray-50 flex-1 flex flex-col gap-2 items-center justify-center'>
       {
         isLoading && <div className='flex justify-center items-center flex-1'>
           <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="animate-spin">
