@@ -1,4 +1,4 @@
-import * as crypto from "crypto";
+import {v4} from 'uuid';
 import { Either } from "./either/Either";
 import { StudyObject, StudyObjectJSON } from "./StudyObject";
 import { CoursePeriod, CoursePeriodJSON } from "./CoursePeriod";
@@ -27,7 +27,7 @@ export class Subject {
 
   static create(props: SubjectProps): Either<string, Subject> {
     if (!props.id) {
-      props.id = crypto.randomUUID();
+      props.id = v4();
     }
     return Either.right(new Subject(props.id, props.name, props.studyObjects, props.coursePeriods ?? []));
   }

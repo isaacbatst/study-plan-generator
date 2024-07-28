@@ -87,7 +87,7 @@ const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
         <CarouselContent>
           {weekGroups.map((week, index) => (
             <CarouselItem key={`${week.startDate}-${week.endDate}`}>
-              <Week week={week} index={index} />
+              <Week week={week} index={index} planningId={studyPlan.id} />
             </CarouselItem>
           ))}
         </CarouselContent>

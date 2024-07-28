@@ -1,4 +1,4 @@
-import * as crypto from "crypto";
+import {v4} from 'uuid';
 import { Either } from "./either/Either";
 
 enum StudyObjectError {
@@ -33,7 +33,7 @@ export class StudyObject {
 
   static create(props: StudyObjectProps): Either<StudyObjectError, StudyObject> {
     if(!props.id) {
-      props.id = crypto.randomUUID();
+      props.id = v4();
     }
     if(props.hours < 0) {
       return Either.left(StudyObjectError.NEGATIVE_HOURS);

@@ -1,4 +1,4 @@
-import * as crypto from "crypto";
+import {v4} from 'uuid';
 import { Either } from "./either/Either";
 import { CoursePeriod } from "./CoursePeriod";
 
@@ -25,7 +25,7 @@ export class Course {
     props: CourseProps,
   ): Either<string, Course> {
     if (!props.id) {
-      props.id = crypto.randomUUID();
+      props.id = v4();
     }
 
     return Either.right(new Course(props.id, props.name, props.version));

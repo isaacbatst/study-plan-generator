@@ -1,9 +1,12 @@
 import React from 'react'
 import { WeekGroup } from '../domain/WeekGroup'
 import { WeekDay } from '../domain/WeekDay'
+import CheckboxWithText from './ui/checkbox-with-text'
+import PlanningStudyObjectView from './PlanningStudyObjectView'
 
 type Props = {
   week: WeekGroup
+  planningId: string
   index: number
 }
 
@@ -32,20 +35,12 @@ const dayNamesPtBr: string[] = [
   "Sábado"
 ];
 
-// 1.2 O PROCESSO DE EXPLORAÇÃO DO POTENCIAL DOS COMPUTADORES ATRAVÉS DE CÓDIGOS E ALGORITMOS
-//  to 1.2 O Processo de Exploração do Potencial dos Computadores Através de Códigos e Algoritmos
-const capitalize = (str: string) => {
-  return str.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  }).join(' ')
-}
-
-const Week = ({week, index}: Props) => {
+const Week = ({week, index, planningId}: Props) => {
   return (
     <section className="w-full py-2 lg:py-10">
       <h2 className='text-center mb-5 text-3xl font-extralight'>Semana {index + 1}</h2>
       <hr className='mb-10' />
-      <div className="container grid gap-12 px-4 md:px-6 xl:grid-cols-7">
+      <div className="container grid gap-2 px-2 lg:grid-cols-4 2xl:grid-cols-7">
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate)
           date.setDate(date.getDate()+dayIndex)
@@ -60,11 +55,11 @@ const Week = ({week, index}: Props) => {
           </div>
           )
           const key = `${week.startDate}-${day}`
-          const weekDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
-          if(!weekDay) return (
+          const studyDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
+          if(!studyDay) return (
             <div key={key} className="space-y-2 lg:space-y-4">
               {header}
-              <div className="space-y-4">
+              <div className="space-y-4 bg-opacity-15 p-5 bg-gray-300">
                 <div className="space-y-1 xl:space-y-2">
                   <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
                   <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
@@ -78,19 +73,17 @@ const Week = ({week, index}: Props) => {
           return (
             <div key={key} className="space-y-3 lg:space-y-4">
               {header}
-              <div className="space-y-3 lg:space-y-10">
-                {weekDay.hoursPerStudyObjects.map(({ hours, studyObject }) => (
-                  <div key={studyObject.id} className="space-y-1 xl:space-y-2">
-                    <h3 className="text-xl font-bold tracking-tighter sm:text-xl">
-                      {studyObject.subjectName}
-                    </h3>
-                    <h4 className='  text-gray-500  dark:text-gray-400'>
-                      {capitalize(studyObject.name)}
-                    </h4>
-                    <p className="max-w-[900px] font-semibold text-gray-500 md:text-base dark:text-gray-400">
-                      {hours} horas
-                    </p>
-                  </div>
+              <div className="space-y-2">
+                {studyDay.plannedStudyObjects.map(({ hours, studyObject, done }) => (
+                  <PlanningStudyObjectView 
+                    key={studyObject.id} 
+                    studyObject={studyObject} 
+                    hours={hours} 
+                    done={done} 
+                    planningId={planningId}
+                    studyDayId={studyDay.id}
+                    studyDayDate={studyDay.date}
+                  />
                 ))}
               </div>
             </div>

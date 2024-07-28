@@ -1,8 +1,10 @@
 import { Either } from "./either/Either";
 import { PlanningStudyObject } from "./PlanningStudyObject";
 import { StudyObject, StudyObjectJSON } from "./StudyObject";
+import {v4} from 'uuid';
 
 type StudyDayProps = {
+  id?: string;
   date: Date;
   hours: number;
 };
@@ -13,26 +15,36 @@ export enum StudyDayError {
 }
 
 export type StudyDayJSON = {
+  id: string;
   date: string;
   hours: number;
   hoursLeft: number;
-  hoursPerStudyObjects: {
+  plannedStudyObjects: {
     studyObject: StudyObjectJSON;
     hours: number;
+    done: boolean;
   }[];
 };
 
 export class StudyDay {
   private constructor(
+    private id: string,
     private date: Date,
     private hours: number,
-    private hoursPerStudyObjects: Map<StudyObject, number> = new Map()
+    private hoursPerStudyObjects: Map<StudyObject, {
+      hours: number;
+      done: boolean
+    }> = new Map()
   ) {}
 
   static create(
     props: StudyDayProps,
   ): Either<string, StudyDay> {
-    return Either.right(new StudyDay(props.date, props.hours));
+    if(!props.id){
+      props.id = v4();
+    }
+
+    return Either.right(new StudyDay(props.id, props.date, props.hours));
   }
 
   hasHoursLeft(): boolean {
@@ -51,15 +63,22 @@ export class StudyDay {
     planningStudyObject.addAllocation(this.date, hoursToAllocate);
     
     const hoursToMap = this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())
-      ? this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())! + hoursToAllocate
+      ? this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())!.hours + hoursToAllocate
       : hoursToAllocate;
 
-    this.hoursPerStudyObjects.set(planningStudyObject.getStudyObject(), hoursToMap);
+    this.hoursPerStudyObjects.set(planningStudyObject.getStudyObject(), {
+      hours: hoursToMap,
+      done: false
+    });
 
     if (hoursLeftInDay < planningStudyObject.getHoursLeft()) {
       return Either.left(StudyDayError.NOT_ENOUGH_HOURS_LEFT);
     } 
     return Either.right(undefined)
+  }
+
+  getId(): string {
+    return this.id;
   }
 
   getDate(): Date {
@@ -71,20 +90,22 @@ export class StudyDay {
   }
   getHoursLeft(): number {
     const hours = this.hoursPerStudyObjects.values();
-    return this.hours - Array.from(hours).reduce((acc, allocated) => acc + allocated, 0);
+    return this.hours - Array.from(hours).reduce((acc, allocated) => acc + allocated.hours, 0);
   }
 
   getHoursPerStudyObjects(): Map<StudyObject, number> {
-    return this.hoursPerStudyObjects;
+    return new Map(Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, hours]) => [studyObject, hours.hours]));
   }
 
   toJSON(): StudyDayJSON {
     return {
+      id: this.id,
       date: this.date.toISOString(),
       hours: this.hours,
       hoursLeft: this.getHoursLeft(),
-      hoursPerStudyObjects: Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, hours]) => ({
+      plannedStudyObjects: Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, { done, hours }]) => ({
         studyObject: studyObject.toJSON(),
+        done,
         hours,
       })),
     };

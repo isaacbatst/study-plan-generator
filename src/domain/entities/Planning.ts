@@ -1,3 +1,4 @@
+import { v4 } from "uuid"
 import { PlanningInvalidParamsError } from "../errors/InvalidParamsError"
 import { PlanningDistributionType, PlanningDistributor } from "./PlanningDistributor"
 import { PlanningDistributorAlternate } from "./PlanningDistributorAlternate"
@@ -54,7 +55,7 @@ export class Planning {
 
 
   constructor(params: PlanningParams) {
-    this.id = params.id || crypto.randomUUID()
+    this.id = params.id || v4()
     this.availableWeekDays = params.availableWeekDays || [true, true, true, true, true, true, true]
     this.createdAt = params.createdAt || new Date()
     this.hoursPerDay = typeof params.availableHoursPerDay === 'number' ? params.availableHoursPerDay : 2

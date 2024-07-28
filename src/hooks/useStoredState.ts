@@ -1,17 +1,19 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
-export function useStoredState<T>(key: string, initialState: T): [T, (value: T) => void] {
+export function useStoredState<T>(key: string, initialState: T): [T, (value: T) => void, boolean] {
   const [state, setState] = useState<T>(initialState)
+  const [isLoading, setIsLoading] = useState(true)
   const prefix = 'planejei:'
   const keyWithPrefix = `${prefix}${key}`
 
-  const setStoredState = (value: T) => {
+  const setStoredState = useCallback((value: T) => {
     setState(value)
     if(typeof window !== 'undefined'){
       localStorage.setItem(keyWithPrefix, JSON.stringify(value))
     }
-  }
+  }, [keyWithPrefix])
+    
 
   useEffect(() => {
     if(typeof window !== 'undefined'){
@@ -19,8 +21,10 @@ export function useStoredState<T>(key: string, initialState: T): [T, (value: T) 
       if(storedState) {
         setState(JSON.parse(storedState))
       }
+
+      setIsLoading(false)
     }
   }, [keyWithPrefix])
 
-  return [state, setStoredState]
+  return [state, setStoredState, isLoading]
 }

@@ -11,8 +11,10 @@ import {
 import { ChevronsUpDown } from "lucide-react"
 import React, { useMemo } from "react"
 import { toast } from "sonner"
+import { Planning } from "../../domain/entities-2/Planning"
+import { PlanningDistribution } from "../../domain/entities-2/PlanningDistribution"
+import { Subject, SubjectJSON } from "../../domain/entities-2/Subject"
 import { PlanningInvalidParamsError } from "../../domain/errors/InvalidParamsError"
-import { SubjectRepositorySingleton } from "../../infra/persistance/repository/SubjectRepositoryMemorySingleton"
 import { Option } from "../../lib/Option"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import CreatePlanningFormAvailableDays from "./CreatePlanningFormAvailableDays"
@@ -21,9 +23,7 @@ import CreatePlanningFormHoursPerDay from "./CreatePlanningFormHoursPerDay"
 import CreatePlanningFormPeriod from "./CreatePlanningFormPeriod"
 import { CreatePlanningFormSchema, CreatePlanningFormSchemaType } from "./CreatePlanningFormSchema"
 import CreatePlanningFormSubjectSelect from "./CreatePlanningFormSubjectSelect"
-import { Subject, SubjectJSON } from "../../domain/entities-2/Subject"
-import { Planning } from "../../domain/entities-2/Planning"
-import { PlanningDistribution } from "../../domain/entities-2/PlanningDistribution"
+import {v4} from 'uuid';
 
 type Props = {
   subjects: SubjectJSON[]
@@ -71,7 +71,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         hoursPerDay: parsing.data.hoursPerDay,
         distribution: parsing.data.distribution,
         createdAt: new Date(),
-        id: '1',
+        id: v4(),
         subjects: selectedSubjects
           .filter(subject => subjects.find(s => s.id === subject.value))
           .map(subject => Subject.fromJSON(subjects.find(s => s.id === subject.value)!)),
@@ -96,7 +96,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         hoursPerDay: data.hoursPerDay,
         distribution: data.distribution,
         createdAt: new Date(),
-        id: '1',
+        id: v4(),
         subjects: selectedSubjects
           .filter(subject => subjects.find(s => s.id === subject.value))
           .map(subject => Subject.fromJSON(subjects.find(s => s.id === subject.value)!)),
