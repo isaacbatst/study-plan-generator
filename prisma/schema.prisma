@@ -23,7 +23,7 @@ model Course {
   id            String         @id @default(uuid())
   name          String
   createdAt     DateTime       @default(now())
-  version       Int            
+  version       Int
   coursePeriods CoursePeriod[]
   institutionId String
   institution   Institution    @relation(fields: [institutionId], references: [id])
@@ -34,18 +34,16 @@ model CoursePeriod {
   position Int
   courseId String
   course   Course    @relation(fields: [courseId], references: [id])
-  name     String
   subjects Subject[]
 
   @@unique([courseId, position])
 }
 
 model Subject {
-  id             String        @id @default(uuid())
-  coursePeriodId String
-  coursePeriod   CoursePeriod  @relation(fields: [coursePeriodId], references: [id])
-  name           String
-  studyObjects    StudyObject[]
+  id            String         @id @default(uuid())
+  coursePeriods CoursePeriod[]
+  name          String
+  studyObjects  StudyObject[]
 }
 
 model StudyObject {

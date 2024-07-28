@@ -1,4 +1,4 @@
-import * as crypto from "node:crypto";
+import * as crypto from "crypto";
 import { Either } from "./either/Either";
 
 enum StudyObjectError {
@@ -9,7 +9,17 @@ type StudyObjectProps = {
   id?: string;
   name: string;
   hours: number;
+  subjectName: string;
+  position?: number;
+};
+
+export type StudyObjectJSON = {
+  id: string;
+  name: string;
+  hours: number;
   position: number;
+  subjectName: string;
+  fullName: string;
 };
 
 export class StudyObject {
@@ -18,6 +28,7 @@ export class StudyObject {
     private name: string,
     private hours: number,
     private position: number,
+    private subjectName: string
   ) {}
 
   static create(props: StudyObjectProps): Either<StudyObjectError, StudyObject> {
@@ -28,8 +39,15 @@ export class StudyObject {
       return Either.left(StudyObjectError.NEGATIVE_HOURS);
     }
 
+    return Either.right(new StudyObject(props.id, props.name, props.hours, props.position ?? 0, props.subjectName));
+  }
 
-    return Either.right(new StudyObject(props.id, props.name, props.hours, props.position));
+  static fromJSON(json: StudyObjectJSON): StudyObject {
+    return new StudyObject(json.id, json.name, json.hours, json.position, json.subjectName);
+  }
+
+  static getFullName(subjectName: string, name: string): string {
+    return `${subjectName} - ${name}`;
   }
 
   getId(): string {
@@ -40,11 +58,26 @@ export class StudyObject {
     return this.name;
   }
 
+  getFullName(): string {
+    return StudyObject.getFullName(this.subjectName, this.name);
+  }
+
   getHours(): number {
     return this.hours;
   }
 
   getPosition(): number {
     return this.position;
+  }
+
+  toJSON(): StudyObjectJSON {
+    return {
+      id: this.id,
+      name: this.name,
+      hours: this.hours,
+      position: this.position,
+      fullName: this.getFullName(),
+      subjectName: this.subjectName,
+    };
   }
 }

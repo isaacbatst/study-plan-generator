@@ -1,6 +1,6 @@
 import { ControllerRenderProps, FieldPath } from "react-hook-form";
 import { z } from "zod";
-import { PlanningDistributionType } from "../../domain/entities/PlanningDistributor";
+import { PlanningDistribution } from "../../domain/entities-2/PlanningDistribution";
 
 export const CreatePlanningFormSchema = z.object({
   startDate: z.date({
@@ -16,7 +16,7 @@ export const CreatePlanningFormSchema = z.object({
   hoursPerDay: z.coerce.number().min(1, {
     message: 'É necessário pelo menos 1 hora disponível'
   }).max(24),
-  distribution: z.nativeEnum(PlanningDistributionType)
+  distribution: z.nativeEnum(PlanningDistribution)
 })
 
 export type CreatePlanningFormSchemaType = z.infer<typeof CreatePlanningFormSchema>

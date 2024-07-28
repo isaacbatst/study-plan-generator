@@ -1,9 +1,9 @@
 import Header from "../components/Header";
 import Plannings from "../components/Plannings";
 import { Toaster } from "../components/ui/sonner";
-import { SubjectRepositoryMemorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton";
+import { SubjectRepositorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton";
 
-const subjectsRepository = SubjectRepositoryMemorySingleton.getInstance()
+const subjectsRepository = SubjectRepositorySingleton.getInstance()
 
 export default async function Home() {
   const subjects = await subjectsRepository.findAll()
@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
-      <Plannings subjects={subjects.map(subject => subject.toJSON())} />
+      <Plannings subjects={subjects} />
       <Toaster closeButton />
     </main>
   );

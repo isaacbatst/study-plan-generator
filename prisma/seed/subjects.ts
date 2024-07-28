@@ -1,6 +1,8 @@
 import { StudyObject } from "../../src/domain/entities-2/StudyObject"
 import { Subject, SubjectProps } from "../../src/domain/entities-2/Subject"
-
+import { courses } from "./courses"
+import { coursePeriods } from "./course-periods"
+import { CoursePeriod } from "../../src/domain/entities-2/CoursePeriod"
 const subjectsProps = {
 //   1.   INTRODUÇÃO AOS PRINCÍPIOS FUNDAMENTAIS DA COMPUTAÇÃO
 //   1.1 A EQUAÇÃO QUE REPRESENTA A ESSÊNCIA DOS COMPUTADORES
@@ -53,6 +55,10 @@ const subjectsProps = {
       '6.2 APLICAÇÕES NA ECONOMIA CRIATIVA, NEGÓCIOS E CIÊNCIAS JURÍDICAS',
       '6.3 APLICAÇÕES NA EDUCAÇÃO E ENGENHARIA',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![0],
+      coursePeriods.get(courses.cybersecurity)![0],
+    ]
   },
   //   1.   O AMBIENTE WEB CLIENTE X SERVIDOR E AS TECNOLOGIAS
   //  1.1 AMBIENTE WEB
@@ -112,6 +118,9 @@ const subjectsProps = {
       '6.2 MÉTODOS DA CLASSE PDO',
       '6.3 APLICAÇÃO COM HTML E PHP',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![0],
+    ]
   },
   // 1.   BASE COMPUTACIONAL
   // 1.1 A EVOLUÇÃO HISTÓRICA DOS COMPUTADORES
@@ -162,6 +171,10 @@ const subjectsProps = {
       '6.1 IDENTIFICAR CARACTERÍSTICAS E PROPRIEDADES DA ARQUITETURA CISC',
       '6.2 IDENTIFICAR CARACTERÍSTICAS E PROPRIEDADES DA ARQUITETURA RISC',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![0],
+      coursePeriods.get(courses.cybersecurity)![0],
+    ]
   },
   // 1.   PARADIGMAS DE LINGUAGEM PYTHON
   // 1.1 LINGUAGENS DE PROGRAMAÇÃO
@@ -212,6 +225,10 @@ const subjectsProps = {
       '5.3 DESENVOLVIMENTO WEB EM PYTHON',
       '5.4 CIÊNCIA DE DADOS EM PYTHON',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![0],
+      coursePeriods.get(courses.cybersecurity)![0],
+    ]
   },
   // 1.   PRINCÍPIOS DA SEGURANÇA E O CICLO DE VIDA DA INFORMAÇÃO
   // 1.1 SEGURANÇA DA INFORMAÇÃO
@@ -251,6 +268,10 @@ const subjectsProps = {
       '6.2 ETAPAS DO PCN',
       '6.3 PGCN E BIBLIOTECA ITIL',
     ], 
+    periods: [
+      coursePeriods.get(courses.computerScience)![0],
+      coursePeriods.get(courses.cybersecurity)![0],
+    ]
   },
   // 1.   TEORIA DOS CONJUNTOS E PRINCÍPIOS DE CONTAGEM
   // 1.1 LINGUAGEM DA TEORIA DOS CONJUNTOS
@@ -309,6 +330,9 @@ const subjectsProps = {
       '6.3 TÉCNICAS ENVOLVENDO QUANTIFICADORES',
       '6.4 PRINCÍPIO DA INDUÇÃO',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![1],
+    ]
   },
   //   1.   FUNDAMENTOS DE COMPUTAÇÃO EM NUVEM
   //  1.1 COMPUTAÇÃO EM NUVEM
@@ -364,6 +388,11 @@ const subjectsProps = {
       '6.3 SEGURANÇA E OPERAÇÕES NO GOOGLE CLOUD',
       '6.4 APLICAÇÕES PRÁTICAS COM O GOOGLE CLOUD',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![1],
+      coursePeriods.get(courses.cybersecurity)![1],
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
   // 1 ESTRUTURAS DE DADOS HETEROGÊNEAS
   // 1.1 PONTEIROS
@@ -409,6 +438,10 @@ const subjectsProps = {
       '5.2 ÁRVORES BINÁRIAS',
       '5.3 ÁRVORES DE BUSCA',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![1],
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
   //   1.   SISTEMA DE BANCO DE DADOS
   //  1.1 HISTÓRICO DOS BANCOS DE DADOS
@@ -467,6 +500,9 @@ const subjectsProps = {
       '6.2 SUBCONSULTAS ANINHADAS E CORRELATAS',
       '6.3 OPERADORES DE CONJUNTO',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![1],
+    ]
   },
   //   1.   CONCEITOS BÁSICOS DE MODELAGEM DE SISTEMAS
   //   1.1 A IMPORTÂNCIA DOS MODELOS NA EXPOSIÇÃO DE REQUISITOS E SOLUÇÕES
@@ -528,6 +564,10 @@ const subjectsProps = {
       '5.3 CARACTERÍSTICAS DOS PRINCÍPIOS SOLID',
       '5.4 O PROPÓSITO DOS PRINCIPAIS PADRÕES GOF',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![1],
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
   dataAnalysis: {
     name: 'Análise de Dados',
@@ -552,6 +592,9 @@ const subjectsProps = {
       '6.1 A ÁREA DE ECONOMETRIA E A ABORDAGEM EMPÍRICA PARA PROBLEMAS SOCIOECONÔMICOS',
       '6.2 CONCEITOS BÁSICOS DOS ESTIMADORES DE MÍNIMOS QUADRADOS ORDINÁRIO',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![2],
+    ]
   },
   structuredProgrammingIntroduction: {
     name: 'Introdução à Programação Estruturada em C',
@@ -572,6 +615,9 @@ const subjectsProps = {
       '6.1 APLICAÇÃO DE VETOR',
       '6.2 APLICAÇÃO DE MATRIZ',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![2],
+    ]
   },
   rapidDevelopment: {
     name: 'Desenvolvimento Rápido de Aplicações em Python',
@@ -596,6 +642,10 @@ const subjectsProps = {
       '5.3 O DESIGN DE INTERFACE COM O USUÁRIO NA RAD',
       '5.4 APLICAÇÃO RAD IMPLEMENTADA EM PYTHON',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![2],
+      coursePeriods.get(courses.cybersecurity)![1],
+    ]
   },
   computerNetworksFundamentals: {
     name: 'Fundamentos de Redes de Computadores',
@@ -621,7 +671,87 @@ const subjectsProps = {
       '6.2 SOFTWARES E EQUIPAMENTOS SEGUROS',
       '6.3 GERENCIAMENTO DE REDES',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![2],
+      coursePeriods.get(courses.cybersecurity)![0],
+    ]
   },
+  
+  // const computerSciencePeriods: [Course, PeriodProps[]] = [courses.computerScience, [
+  //   {
+  //     name: '1º Período',
+  //     position: 0,
+  //     subjects: [
+  //       subjects.computingThinking,
+  //       subjects.webDevelopment,
+  //       subjects.computersArchitecture,
+  //       subjects.programmingParadigms,
+  //       subjects.securityIntroduction,
+  //     ],
+  //   },
+  //   {
+  //     name: '2º Período',
+  //     position: 1,
+  //     subjects: [
+  //       subjects.math,
+  //       subjects.cloudComputing,
+  //       subjects.dataStructures,
+  //       subjects.databases,
+  //       subjects.umlSystemsModeling,
+  //     ],
+  //   },
+  //   {
+  //     name: '3º Período',
+  //     position: 2,
+  //     subjects: [
+  //       subjects.dataAnalysis,
+  //       subjects.structuredProgrammingIntroduction,
+  //       subjects.rapidDevelopment,
+  //       subjects.computerNetworksFundamentals,
+  //       subjects.softwareEngineering,
+  //     ],
+  //   },
+  // ]]
+
+  // const cybersecurityPeriods: [Course, PeriodProps[]] = [courses.cybersecurity, [
+  //   {
+  //     name: '1º Período',
+  //     position: 0,
+  //     subjects: [
+  //       subjects.computerNetworksFundamentals,
+  //       subjects.securityIntroduction,
+  //       subjects.programmingParadigms,
+  //       subjects.computersArchitecture,
+  //       subjects.computingThinking,
+  //     ]
+  //   },
+  //   {
+  //     name: '2º Período',
+  //     position: 1,
+  //     subjects: [
+  //       subjects.cloudComputing,
+  //       subjects.rapidDevelopment,
+  //       subjects.itServiceManagement,
+  //       subjects.cyberSecurityThreatIntelligence,
+  //       subjects.computerNetworkProtocols,
+  //     ]
+  //   },
+  // ]]
+
+  // const systemsAnalysisPeriods: [Course, PeriodProps[]] = [courses.systemsAnalysis, [
+  //   {
+  //     name: '2º Período',
+  //     position: 1,
+  //     subjects: [
+  //       subjects.cloudComputing,
+  //       subjects.dataStructures,
+  //       subjects.umlSystemsModeling,
+  //       subjects.communicationBetweenApplications,
+  //       subjects.usabilityEngineering,
+  //     ],
+  //   },
+  // ]]
+
   softwareEngineering: {
     name: 'Engenharia de Software',
     studyObjects: [
@@ -646,40 +776,10 @@ const subjectsProps = {
       '5.3 CONSTRUÇÃO DE SISTEMAS',
       '5.4 FERRAMENTAS CASE PARA GERENCIAMENTO DE CONFIGURAÇÕES',
     ],
+    periods: [
+      coursePeriods.get(courses.computerScience)![2],
+    ]
   },
-  // const communication = new Subject('communication', 'Comunicação entre Aplicações', [sdSecondPeriod])
-  //   communication.addTheme(new SubjectTheme('communication-1', '1', [
-  //     new SubjectThemeModule('communication-1-1', '1.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-1-2', '1.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-1-3', '1.3', 'Comunicação entre Aplicações'),
-  //   ]))
-  //   communication.addTheme(new SubjectTheme('communication-2', '2', [
-  //     new SubjectThemeModule('communication-2-1', '2.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-2-2', '2.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-2-3', '2.3', 'Comunicação entre Aplicações'),
-  //   ]))
-  //   communication.addTheme(new SubjectTheme('communication-3', '3', [
-  //     new SubjectThemeModule('communication-3-1', '3.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-3-2', '3.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-3-3', '3.3', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-3-4', '3.4', 'Comunicação entre Aplicações'),
-  //   ]))
-  //   communication.addTheme(new SubjectTheme('communication-4', '4', [
-  //     new SubjectThemeModule('communication-4-1', '4.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-4-2', '4.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-4-3', '4.3', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-4-4', '4.4', 'Comunicação entre Aplicações'),
-  //   ]))
-  //   communication.addTheme(new SubjectTheme('communication-5', '5', [
-  //     new SubjectThemeModule('communication-5-1', '5.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-5-2', '5.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-5-3', '5.3', 'Comunicação entre Aplicações'),
-  //   ]))
-  //   communication.addTheme(new SubjectTheme('communication-6', '6', [
-  //     new SubjectThemeModule('communication-6-1', '6.1', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-6-2', '6.2', 'Comunicação entre Aplicações'),
-  //     new SubjectThemeModule('communication-6-3', '6.3', 'Comunicação entre Aplicações'),
-  //   ]))
   communicationBetweenApplications: {
     name: 'Comunicação entre Aplicações',
     studyObjects: [
@@ -704,30 +804,10 @@ const subjectsProps = {
       '6.2 COMUNICAÇÃO ENTRE APLICAÇÕES',
       '6.3 COMUNICAÇÃO ENTRE APLICAÇÕES',
     ],
+    periods: [
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
-  // usability.addTheme(new SubjectTheme('usability-2', '2', [
-  //   new SubjectThemeModule('usability-2-1', '2.1', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-2-2', '2.2', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-2-3', '2.3', 'Engenharia de Usabilidade'),
-  // ]))
-  // usability.addTheme(new SubjectTheme('usability-3', '3', [
-  //   new SubjectThemeModule('usability-3-1', '3.1', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-3-2', '3.2', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-3-3', '3.3', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-3-4', '3.4', 'Engenharia de Usabilidade'),
-  // ]))
-  // usability.addTheme(new SubjectTheme('usability-4', '4', [
-  //   new SubjectThemeModule('usability-4-1', '4.1', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-4-2', '4.2', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-4-3', '4.3', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-4-4', '4.4', 'Engenharia de Usabilidade'),
-  // ]))
-  // usability.addTheme(new SubjectTheme('usability-5', '5', [
-  //   new SubjectThemeModule('usability-5-1', '5.1', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-5-2', '5.2', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-5-3', '5.3', 'Engenharia de Usabilidade'),
-  //   new SubjectThemeModule('usability-5-4', '5.4', 'Engenharia de Usabilidade'),
-  // ]))
   usabilityEngineering: {
     name: 'Engenharia de Usabilidade',
     studyObjects: [
@@ -750,37 +830,10 @@ const subjectsProps = {
       '5.3 ENGENHARIA DE USABILIDADE',
       '5.4 ENGENHARIA DE USABILIDADE',
     ],
+    periods: [
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
-  // const agileDevelopementPython = new Subject('agile-developement-python', 'Desenvolvimento Rápido com Python', [cyberSecuritySecondPeriod])
-  // agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-1', '1', [
-  //   new SubjectThemeModule('agile-developement-python-1-1', '1.1', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-1-2', '1.2', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-1-3', '1.3', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-1-4', '1.4', 'Desenvolvimento Rápido com Python'),
-  // ]))
-  // agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-2', '2', [
-  //   new SubjectThemeModule('agile-developement-python-2-1', '2.1', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-2-2', '2.2', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-2-3', '2.3', 'Desenvolvimento Rápido com Python'),
-  // ]))
-  // agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-3', '3', [
-  //   new SubjectThemeModule('agile-developement-python-3-1', '3.1', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-3-2', '3.2', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-3-3', '3.3', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-3-4', '3.4', 'Desenvolvimento Rápido com Python'),
-  // ]))
-  // agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-4', '4', [
-  //   new SubjectThemeModule('agile-developement-python-4-1', '4.1', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-4-2', '4.2', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-4-3', '4.3', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-4-4', '4.4', 'Desenvolvimento Rápido com Python'),
-  // ]))
-  // agileDevelopementPython.addTheme(new SubjectTheme('agile-developement-python-5', '5', [
-  //   new SubjectThemeModule('agile-developement-python-5-1', '5.1', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-5-2', '5.2', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-5-3', '5.3', 'Desenvolvimento Rápido com Python'),
-  //   new SubjectThemeModule('agile-developement-python-5-4', '5.4', 'Desenvolvimento Rápido com Python'),
-  // ]))
   agileDevelopment: {
     name: 'Desenvolvimento Ágil com Python',
     studyObjects: [
@@ -804,39 +857,10 @@ const subjectsProps = {
       '5.3 DESENVOVIMENTO ÁGIL COM PYTHON',
       '5.4 DESENVOVIMENTO ÁGIL COM PYTHON',
     ],
+    periods: [
+      coursePeriods.get(courses.systemsAnalysis)![1],
+    ]
   },
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-1', '1', [
-  //   new SubjectThemeModule('it-service-management-1-1', '1.1', 'Gestão de Serviços de TI'),
-  // ]))
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-2', '2', [
-  //   new SubjectThemeModule('it-service-management-2-1', '2.1', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-2-2', '2.2', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-2-3', '2.3', 'Gestão de Serviços de TI'),
-  // ]))
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-3', '3', [
-  //   new SubjectThemeModule('it-service-management-3-1', '3.1', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-3-2', '3.2', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-3-3', '3.3', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-3-4', '3.4', 'Gestão de Serviços de TI'),
-  // ]))
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-4', '4', [
-  //   new SubjectThemeModule('it-service-management-4-1', '4.1', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-4-2', '4.2', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-4-3', '4.3', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-4-4', '4.4', 'Gestão de Serviços de TI'),
-  // ]))
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-5', '5', [
-  //   new SubjectThemeModule('it-service-management-5-1', '5.1', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-5-2', '5.2', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-5-3', '5.3', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-5-4', '5.4', 'Gestão de Serviços de TI'),
-  // ]))
-  // itServiceManagement.addTheme(new SubjectTheme('it-service-management-6', '6', [
-  //   new SubjectThemeModule('it-service-management-6-1', '6.1', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-6-2', '6.2', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-6-3', '6.3', 'Gestão de Serviços de TI'),
-  //   new SubjectThemeModule('it-service-management-6-4', '6.4', 'Gestão de Serviços de TI'),
-  // ]))
   itServiceManagement: {
     name: 'Gerenciamento de Serviços de TI',
     studyObjects: [
@@ -861,40 +885,10 @@ const subjectsProps = {
       '6.3 GESTÃO DE SERVIÇOS DE TI',
       '6.4 GESTÃO DE SERVIÇOS DE TI',
     ],
+    periods: [
+      coursePeriods.get(courses.cybersecurity)![1],
+    ]
   },
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-1', '1', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-1-1', '1.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-2', '2', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-2-1', '2.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-3', '3', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-3-1', '3.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-4', '4', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-4-1', '4.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-5', '5', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-5-1', '5.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-6', '6', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-6-1', '6.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-7', '7', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-7-1', '7.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-8', '8', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-8-1', '8.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-9', '9', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-9-1', '9.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-10', '10', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-10-1', '10.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
-  // cyberSecurityThreatIntelligence.addTheme(new SubjectTheme('cyber-security-threat-intelligence-11', '11', [
-  //   new SubjectThemeModule('cyber-security-threat-intelligence-11-1', '11.1', 'Inteligência de Ameaças Cibernéticas'),
-  // ]))
   cyberSecurityThreatIntelligence: {
     name: 'Inteligência de Ameaças Cibernéticas',
     studyObjects: [
@@ -910,31 +904,10 @@ const subjectsProps = {
       '10.1 INTELIGÊNCIA DE AMEAÇAS CIBERNÉTICAS',
       '11.1 INTELIGÊNCIA DE AMEAÇAS CIBERNÉTICAS',
     ],
+    periods: [
+      coursePeriods.get(courses.cybersecurity)![1],
+    ]
   },
-  // computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-1', '1', [
-  //   new SubjectThemeModule('computer-network-protocols-1-1', '1.1', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-1-2', '1.2', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-1-3', '1.3', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-1-4', '1.4', 'Protocolos de Redes de Computadores'),
-  // ]))
-  // computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-2', '2', [
-  //   new SubjectThemeModule('computer-network-protocols-2-1', '2.1', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-2-2', '2.2', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-2-3', '2.3', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-2-4', '2.4', 'Protocolos de Redes de Computadores'),
-  // ]))
-  // computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-3', '3', [
-  //   new SubjectThemeModule('computer-network-protocols-3-1', '3.1', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-3-2', '3.2', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-3-3', '3.3', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-3-4', '3.4', 'Protocolos de Redes de Computadores'),
-  // ]))
-  // computerNetworkProtocols.addTheme(new SubjectTheme('computer-network-protocols-4', '4', [
-  //   new SubjectThemeModule('computer-network-protocols-4-1', '4.1', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-4-2', '4.2', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-4-3', '4.3', 'Protocolos de Redes de Computadores'),
-  //   new SubjectThemeModule('computer-network-protocols-4-4', '4.4', 'Protocolos de Redes de Computadores'),
-  // ]))
   computerNetworkProtocols: {
     name: 'Protocolos de Redes de Computadores',
     studyObjects: [
@@ -955,45 +928,10 @@ const subjectsProps = {
       '4.3 PROTOCOLOS DE REDES DE COMPUTADORES',
       '4.4 PROTOCOLOS DE REDES DE COMPUTADORES',
     ],
+    periods: [
+      coursePeriods.get(courses.cybersecurity)![1],
+    ]
   },
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-1', '1', [
-  //   new SubjectThemeModule('software-design-patterns-java-1-1', '1.1', 'Padrões de Projetos de Software Com Java'),
-  // ]))
-  // // tema 2 (4)
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-2', '2', [
-  //   new SubjectThemeModule('software-design-patterns-java-2-1', '2.1', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-2-2', '2.2', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-2-3', '2.3', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-2-4', '2.4', 'Padrões de Projetos de Software Com Java'),
-  // ]))
-  // // tema 3 (4)
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-3', '3', [
-  //   new SubjectThemeModule('software-design-patterns-java-3-1', '3.1', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-3-2', '3.2', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-3-3', '3.3', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-3-4', '3.4', 'Padrões de Projetos de Software Com Java'),
-  // ]))
-  // // tema 4 (4)
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-4', '4', [
-  //   new SubjectThemeModule('software-design-patterns-java-4-1', '4.1', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-4-2', '4.2', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-4-3', '4.3', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-4-4', '4.4', 'Padrões de Projetos de Software Com Java'),
-  // ]))
-  // // tema 5 (4)
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-5', '5', [
-  //   new SubjectThemeModule('software-design-patterns-java-5-1', '5.1', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-5-2', '5.2', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-5-3', '5.3', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-5-4', '5.4', 'Padrões de Projetos de Software Com Java'),
-  // ]))
-  // // tema 6 (4)
-  // softwareDesignPatternsJava.addTheme(new SubjectTheme('software-design-patterns-java-6', '6', [
-  //   new SubjectThemeModule('software-design-patterns-java-6-1', '6.1', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-6-2', '6.2', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-6-3', '6.3', 'Padrões de Projetos de Software Com Java'),
-  //   new SubjectThemeModule('software-design-patterns-java-6-4', '6.4', 'Padrões de Projetos de Software Com Java'),
-  // ]))
   softwareDesignPatternsJava: {
     name: 'Padrões de Projetos de Software Com Java',
     studyObjects: [
@@ -1019,44 +957,10 @@ const subjectsProps = {
       '6.3 PADRÕES DE PROJETOS DE SOFTWARE COM JAVA',
       '6.4 PADRÕES DE PROJETOS DE SOFTWARE COM JAVA',
     ],
+    periods: [
+      coursePeriods.get(courses.cybersecurity)![1],
+    ]
   },
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-1', '1', [
-  //   new SubjectThemeModule('mobile-programming-android-1-1', '1.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-1-2', '1.2', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
-  // // tema 2 (3)
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-2', '2', [
-  //   new SubjectThemeModule('mobile-programming-android-2-1', '2.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-2-2', '2.2', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-2-3', '2.3', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
-  // // tema 3 (4)
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-3', '3', [
-  //   new SubjectThemeModule('mobile-programming-android-3-1', '3.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-3-2', '3.2', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-3-3', '3.3', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-3-4', '3.4', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
-  // // tema 4 (4)
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-4', '4', [
-  //   new SubjectThemeModule('mobile-programming-android-4-1', '4.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-4-2', '4.2', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-4-3', '4.3', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-4-4', '4.4', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
-  // // tema 5 (3)
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-5', '5', [
-  //   new SubjectThemeModule('mobile-programming-android-5-1', '5.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-5-2', '5.2', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-5-3', '5.3', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
-  // // tema 6 (4)
-  // mobileProgrammingAndroid.addTheme(new SubjectTheme('mobile-programming-android-6', '6', [
-  //   new SubjectThemeModule('mobile-programming-android-6-1', '6.1', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-6-2', '6.2', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-6-3', '6.3', 'Programação para Dispositivos Móveis para Android'),
-  //   new SubjectThemeModule('mobile-programming-android-6-4', '6.4', 'Programação para Dispositivos Móveis para Android'),
-  // ]))
   mobileProgrammingAndroid: {
     name: 'Programação para Dispositivos Móveis para Android',
     studyObjects: [
@@ -1081,44 +985,8 @@ const subjectsProps = {
       '6.3 PROGRAMAÇÃO PARA DISPOSITIVOS MÓVEIS PARA ANDROID',
       '6.4 PROGRAMAÇÃO PARA DISPOSITIVOS MÓVEIS PARA ANDROID',
     ],
+    periods: [],
   },
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-1', '1', [
-  //   new SubjectThemeModule('big-data-python-1-1', '1.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-1-2', '1.2', 'Tópicos de Big Data em Python'),
-  // ]))
-  // // tema 2 (4)
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-2', '2', [
-  //   new SubjectThemeModule('big-data-python-2-1', '2.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-2-2', '2.2', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-2-3', '2.3', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-2-4', '2.4', 'Tópicos de Big Data em Python'),
-  // ]))
-  // // tema 3 (3)
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-3', '3', [
-  //   new SubjectThemeModule('big-data-python-3-1', '3.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-3-2', '3.2', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-3-3', '3.3', 'Tópicos de Big Data em Python'),
-  // ]))
-  // // tema 4 (4)
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-4', '4', [
-  //   new SubjectThemeModule('big-data-python-4-1', '4.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-4-2', '4.2', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-4-3', '4.3', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-4-4', '4.4', 'Tópicos de Big Data em Python'),
-  // ]))
-  // // tema 5 (4)
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-5', '5', [
-  //   new SubjectThemeModule('big-data-python-5-1', '5.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-5-2', '5.2', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-5-3', '5.3', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-5-4', '5.4', 'Tópicos de Big Data em Python'),
-  // ]))
-  // // tema 6 (3)
-  // bigDataPython.addTheme(new SubjectTheme('big-data-python-6', '6', [
-  //   new SubjectThemeModule('big-data-python-6-1', '6.1', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-6-2', '6.2', 'Tópicos de Big Data em Python'),
-  //   new SubjectThemeModule('big-data-python-6-3', '6.3', 'Tópicos de Big Data em Python'),
-  // ]))
   bigDataPython: {
     name: 'Tópicos de Big Data em Python',
     studyObjects: [
@@ -1143,40 +1011,8 @@ const subjectsProps = {
       '6.2 TÓPICOS DE BIG DATA EM PYTHON',
       '6.3 TÓPICOS DE BIG DATA EM PYTHON',
     ],
+    periods: []
   },
-  // // Tema 1 (1 modulo)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-1', '1', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-1-1', '1.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
-  // // tema 2 (3)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-2', '2', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-2-1', '2.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-2-2', '2.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-2-3', '2.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
-  // // tema 3 (2)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-3', '3', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-3-1', '3.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-3-2', '3.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
-  // // tema 4 (3)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-4', '4', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-4-1', '4.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-4-2', '4.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-4-3', '4.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
-  // // tema 5 (4)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-5', '5', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-5-1', '5.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-5-2', '5.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-5-3', '5.3', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-5-4', '5.4', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
-  // // tema 6 (2)
-  // cloudIotIndustryPython.addTheme(new SubjectTheme('cloud-iot-industry-python-6', '6', [
-  //   new SubjectThemeModule('cloud-iot-industry-python-6-1', '6.1', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  //   new SubjectThemeModule('cloud-iot-industry-python-6-2', '6.2', 'Tópicos de Cloud IoT e Indústria 4.0 em Python'),
-  // ]))
   cloudIotIndustryPython: {
     name: 'Tópicos de Cloud IoT e Indústria 4.0 em Python',
     studyObjects: [
@@ -1196,22 +1032,20 @@ const subjectsProps = {
       '6.1 TÓPICOS DE CLOUD IOT E INDÚSTRIA 4.0 EM PYTHON',
       '6.2 TÓPICOS DE CLOUD IOT E INDÚSTRIA 4.0 EM PYTHON',
     ],
+    periods: []
   },
 }
 
-const extractNumberingAndName = (studyObject: string) => {
-  const [numbering, name] = studyObject.split(' ')
-  return { numbering: numbering.split('.').map(Number), name }
-}
-
-export const subjects = Object.fromEntries(Object.entries(subjectsProps).map(([key, value]) => {
+export const subjects = Object.fromEntries(Object.entries(subjectsProps).map(([key, subjectProps]) => {
   const subject = Subject.create({
-    name: value.name,
-    studyObjects: value.studyObjects.map((so, index) => {
+    name: subjectProps.name,
+    coursePeriods: subjectProps.periods.filter((p) => p instanceof CoursePeriod) as CoursePeriod[],
+    studyObjects: subjectProps.studyObjects.map((so, index) => {
       const studyObject = StudyObject.create({ 
-        name: extractNumberingAndName(so).name,
+        name: so,
         hours: 2,
-        position: index
+        position: index,
+        subjectName: subjectProps.name,
       });
       if(studyObject.isLeft()) {
         throw new Error(studyObject.getLeft())

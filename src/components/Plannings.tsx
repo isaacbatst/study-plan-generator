@@ -1,8 +1,7 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import { Planning, PlanningJSON } from '../domain/entities/Planning'
-import { SubjectJSON } from '../domain/entities/Subject'
-import { useStoredState } from '../hooks/useStoredState'
+import { Planning, PlanningJSON } from '../domain/entities-2/Planning'
+import { SubjectJSON } from '../domain/entities-2/Subject'
 import CreatePlanningForm from './CreatePlanningForm/CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningForm/CreatePlanningFormDialog'
 import PlanningView from './PlanningView'
@@ -12,7 +11,7 @@ type Props = {
 }
 
 const Plannings = ({subjects}: Props) => {
-  const [studyPlans, setStudyPlans] = useStoredState<PlanningJSON[]>('study-plans', [])
+  const [studyPlans, setStudyPlans] = useState<PlanningJSON[]>([])
   const [showInitialForm, setShowInitialForm] = useState<boolean>(studyPlans.length === 0)
   
   useEffect(() => {

@@ -1,27 +1,44 @@
-import * as crypto from "node:crypto";
+import * as crypto from "crypto";
+import { Course, CourseJSON } from "./Course";
 import { Either } from "./either/Either";
-import { Subject } from "./Subject";
 
 export type CoursePeriodProps = {
-  name: string
-  subjects: Subject[]
-  position: number
   id?: string
+  position: number
+  course: Course
+}
+
+export type CoursePeriodJSON = {
+  id: string
+  name: string
+  position: number
+  course: CourseJSON
 }
 
 export class CoursePeriod {
   private constructor(
     private id: string,
-    private name: string,
-    private subjects: Subject[],
     private position: number,
+    private course: Course,
   ){}
 
   static create(props: CoursePeriodProps): Either<string, CoursePeriod> {
     if(!props.id) {
       props.id = crypto.randomUUID()
     }
-    return Either.right(new CoursePeriod(props.id, props.name, props.subjects, props.position))
+    return Either.right(new CoursePeriod(props.id, props.position, props.course))
+  }
+
+  static fromJSON(json: CoursePeriodJSON): CoursePeriod {
+    return new CoursePeriod(
+      json.id,
+      json.position,
+      Course.fromJSON(json.course)
+    )
+  }
+
+  static getName(position: number, courseName: string) {
+    return `${position + 1}º Período - ${courseName}`
   }
 
   getId() {
@@ -33,10 +50,19 @@ export class CoursePeriod {
   }
 
   getName() {
-    return this.name
+    return CoursePeriod.getName(this.position, this.course.getName())
   }
 
-  getSubjects() {
-    return this.subjects
+  getCourse() {
+    return this.course
+  }
+
+  toJSON(): CoursePeriodJSON {
+    return {
+      id: this.id,
+      name: this.getName(),
+      position: this.position,
+      course: this.course.toJSON()
+    }
   }
 } 

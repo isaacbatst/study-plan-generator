@@ -1,10 +1,10 @@
 import { useId } from 'react'
 import Select from 'react-select'
-import { SubjectJSON } from '../../domain/entities/Subject'
 import { FormDescription, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { CreatePlanningFormField } from './CreatePlanningFormSchema'
 import { Option } from '../../lib/Option'
+import { SubjectJSON } from '../../domain/entities-2/Subject'
 
 type Props = {
   subjects: SubjectJSON[] 

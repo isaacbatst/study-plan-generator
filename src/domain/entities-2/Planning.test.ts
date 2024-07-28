@@ -9,6 +9,7 @@ import { PlanningDistribution } from "./PlanningDistribution";
 describe("Planning", () => {
   it("should generate study days with single study object", () => {
     const studyObject = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
@@ -36,11 +37,13 @@ describe("Planning", () => {
 
   it("should generate study days with multiple study objects", () => {
     const studyObject1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObject2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -70,11 +73,13 @@ describe("Planning", () => {
 
   it('should generate study days with multiple study objects and multiple subjects', () => {
     const studyObject1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObject2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -86,11 +91,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObject3 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObject4 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Physics 102",
       hours: 2,
@@ -125,11 +132,13 @@ describe("Planning", () => {
 
   it('should generate study days with multiply study objects per day', () => {
     const studyObject1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObject2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -158,6 +167,7 @@ describe("Planning", () => {
 
   it('should generate study days with splitted study object', () => {
     const studyObject1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 3,
@@ -188,11 +198,13 @@ describe("Planning", () => {
 
   it('should generate study days with splitted study object and other study object after', () => {
     const studyObject1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 3,
     }).getRight();
     const studyObject2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -228,11 +240,13 @@ describe("Planning", () => {
 
   it('should generate study days alternating subjects per study object', () => {
     const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -244,11 +258,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Physics 102",
       hours: 2,
@@ -283,11 +299,13 @@ describe("Planning", () => {
 
   it('should generate study days alternating subjects per study object with splitted study object', () => {
     const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 3,
     }).getRight();
     const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -299,11 +317,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Physics 102",
       hours: 2,
@@ -350,22 +370,26 @@ describe("Planning", () => {
 
   it('should generate study days alternating subjects per day', () => {
     const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
     }).getRight();
     // math 3 and 4
     const studyObjectMath3 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Math 103",
       hours: 2,
     }).getRight();
     const studyObjectMath4 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Math 104",
       hours: 2,
@@ -377,11 +401,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
       id: "5",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
       id: "6",
       name: "Physics 102",
       hours: 2,
@@ -417,11 +443,13 @@ describe("Planning", () => {
 
   it('should generate study days alternating subjects per day with splitted study object', () => {
     const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 3,
     }).getRight();
     const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -433,11 +461,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Physics 102",
       hours: 2,
@@ -476,11 +506,13 @@ describe("Planning", () => {
 
   it('should generate study days with custom available weekdays', () => {
     const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
       id: "1",
       name: "Math 101",
       hours: 2,
     }).getRight();
     const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
       id: "2",
       name: "Math 102",
       hours: 2,
@@ -492,11 +524,13 @@ describe("Planning", () => {
     }).getRight();
 
     const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
       id: "3",
       name: "Physics 101",
       hours: 2,
     }).getRight();
     const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
       id: "4",
       name: "Physics 102",
       hours: 2,
@@ -513,7 +547,7 @@ describe("Planning", () => {
       startDate: new Date("2021-01-01"),
       subjects: [math, physics],
       hoursPerDay: 2,
-      availableWeekdays: [1, 3, 5]
+      availableWeekdays: new Set([1, 3, 5])
     }).getRight();
 
     const studyDaysOrError = planning.getStudyDays();

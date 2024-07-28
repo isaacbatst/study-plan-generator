@@ -1,6 +1,6 @@
 import { Either } from "./either/Either";
 import { PlanningStudyObject } from "./PlanningStudyObject";
-import { StudyObject } from "./StudyObject";
+import { StudyObject, StudyObjectJSON } from "./StudyObject";
 
 type StudyDayProps = {
   date: Date;
@@ -11,6 +11,16 @@ export enum StudyDayError {
   NOT_ENOUGH_HOURS_LEFT = "Not enough hours left",
   ZERO_HOURS_LEFT = "Zero hours left",
 }
+
+export type StudyDayJSON = {
+  date: string;
+  hours: number;
+  hoursLeft: number;
+  hoursPerStudyObjects: {
+    studyObject: StudyObjectJSON;
+    hours: number;
+  }[];
+};
 
 export class StudyDay {
   private constructor(
@@ -66,5 +76,17 @@ export class StudyDay {
 
   getHoursPerStudyObjects(): Map<StudyObject, number> {
     return this.hoursPerStudyObjects;
+  }
+
+  toJSON(): StudyDayJSON {
+    return {
+      date: this.date.toISOString(),
+      hours: this.hours,
+      hoursLeft: this.getHoursLeft(),
+      hoursPerStudyObjects: Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, hours]) => ({
+        studyObject: studyObject.toJSON(),
+        hours,
+      })),
+    };
   }
 }

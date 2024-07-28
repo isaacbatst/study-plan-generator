@@ -1,19 +1,23 @@
-import * as crypto from "node:crypto";
+import * as crypto from "crypto";
 import { Either } from "./either/Either";
 import { CoursePeriod } from "./CoursePeriod";
 
 type CourseProps = {
   id?: string;
   name: string;
-  periods: CoursePeriod[];
   version?: number;
+};
+
+export type CourseJSON = {
+  id: string;
+  name: string;
+  version: number;
 };
 
 export class Course {
   private constructor(
     private id: string,
     private name: string,
-    private periods: CoursePeriod[] = [],
     private version: number = 1,
   ) {}
 
@@ -24,7 +28,11 @@ export class Course {
       props.id = crypto.randomUUID();
     }
 
-    return Either.right(new Course(props.id, props.name, props.periods, props.version));
+    return Either.right(new Course(props.id, props.name, props.version));
+  }
+
+  static fromJSON(json: CourseJSON): Course {
+    return new Course(json.id, json.name, json.version);
   }
 
   getId(): string {
@@ -34,12 +42,16 @@ export class Course {
   getName(): string {
     return this.name
   }
-  
-  getPeriods(): CoursePeriod[] {
-    return this.periods
-  }
 
   getVersion(): number {
     return this.version
+  }
+
+  toJSON(): CourseJSON {
+    return {
+      id: this.id,
+      name: this.name,
+      version: this.version,
+    };
   }
 }

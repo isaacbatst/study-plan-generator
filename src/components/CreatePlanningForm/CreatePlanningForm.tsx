@@ -11,11 +11,8 @@ import {
 import { ChevronsUpDown } from "lucide-react"
 import React, { useMemo } from "react"
 import { toast } from "sonner"
-import { Planning } from "../../domain/entities/Planning"
-import { PlanningDistributionType } from "../../domain/entities/PlanningDistributor"
-import Subject, { SubjectJSON } from "../../domain/entities/Subject"
 import { PlanningInvalidParamsError } from "../../domain/errors/InvalidParamsError"
-import { SubjectRepositoryMemorySingleton } from "../../infra/persistance/repository/SubjectRepositoryMemorySingleton"
+import { SubjectRepositorySingleton } from "../../infra/persistance/repository/SubjectRepositoryMemorySingleton"
 import { Option } from "../../lib/Option"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import CreatePlanningFormAvailableDays from "./CreatePlanningFormAvailableDays"
@@ -24,6 +21,9 @@ import CreatePlanningFormHoursPerDay from "./CreatePlanningFormHoursPerDay"
 import CreatePlanningFormPeriod from "./CreatePlanningFormPeriod"
 import { CreatePlanningFormSchema, CreatePlanningFormSchemaType } from "./CreatePlanningFormSchema"
 import CreatePlanningFormSubjectSelect from "./CreatePlanningFormSubjectSelect"
+import { Subject, SubjectJSON } from "../../domain/entities-2/Subject"
+import { Planning } from "../../domain/entities-2/Planning"
+import { PlanningDistribution } from "../../domain/entities-2/PlanningDistribution"
 
 type Props = {
   subjects: SubjectJSON[]
@@ -31,7 +31,12 @@ type Props = {
   insideModal?: boolean
 }
 
-const subjectsRepository = SubjectRepositoryMemorySingleton.getInstance()
+const toWeekDaySet = (availableDays: boolean[]) => {
+  return availableDays.reduce((acc: Set<number>, value, index) => {
+    if(value) acc.add(index)
+    return acc
+  }, new Set<number>())
+}
 
 export default function CreatePlanningForm({subjects, savePlanning, insideModal = false}: Props) {
   const form = useForm<CreatePlanningFormSchemaType>({
@@ -39,7 +44,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     defaultValues: {
       availableDays: [false, true, true, true, true, true, false],
       hoursPerDay: 2,
-      distribution: PlanningDistributionType.ALTERNATE_DAILY,
+      distribution: PlanningDistribution.ALTERNATE_SUBJECT_PER_DAY,
       subjects: []
     }
   })
@@ -59,22 +64,25 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         subjects: selectedSubjects
       })
       if(!parsing.success) return
-      const planning = new Planning({
+      // convert [false, true, true, true, true, true, false] to Set([1, 2, 3, 4, 5])
+      const planningOrError = Planning.create({
         startDate: parsing.data.startDate,
-        availableWeekDays: parsing.data.availableDays,
-        availableHoursPerDay: parsing.data.hoursPerDay,
-        distribution: parsing.data.distribution
-      })
-  
-      selectedSubjects.forEach(selected => {
-        const json = subjects.find(subject => subject.id === selected.value)
-        if(json) {
-          const subject = Subject.fromJSON(json)
-          planning.addSubject(subject)
-        }
+        availableWeekdays: toWeekDaySet(parsing.data.availableDays),
+        hoursPerDay: parsing.data.hoursPerDay,
+        distribution: parsing.data.distribution,
+        createdAt: new Date(),
+        id: '1',
+        subjects: selectedSubjects
+          .filter(subject => subjects.find(s => s.id === subject.value))
+          .map(subject => Subject.fromJSON(subjects.find(s => s.id === subject.value)!)),
       })
 
-      return planning.endDate
+      if(planningOrError.isLeft()) return
+      const planning = planningOrError.getRight()
+
+      const endDateOrError = planning.getEndDate()
+      if(endDateOrError.isLeft()) return
+      return endDateOrError.getRight()
     } catch (err) {
       console.log(err)
     }
@@ -82,15 +90,20 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
 
   async function onSubmit(data: CreatePlanningFormSchemaType) {
     try {
-      const subjects = await subjectsRepository.findAllByIds(data.subjects.map(subject => subject.value))
-      const planning = new Planning({
+      const planningOrError = Planning.create({
         startDate: data.startDate,
-        availableWeekDays: data.availableDays,
-        availableHoursPerDay: data.hoursPerDay,
-        distribution: data.distribution
+        availableWeekdays: toWeekDaySet(data.availableDays),
+        hoursPerDay: data.hoursPerDay,
+        distribution: data.distribution,
+        createdAt: new Date(),
+        id: '1',
+        subjects: selectedSubjects
+          .filter(subject => subjects.find(s => s.id === subject.value))
+          .map(subject => Subject.fromJSON(subjects.find(s => s.id === subject.value)!)),
       })
-      subjects.forEach(subject => planning.addSubject(subject))
-      
+
+      if(planningOrError.isLeft()) return
+      const planning = planningOrError.getRight()
       savePlanning(planning)
       navigator.clipboard.writeText(planning.toString());
       toast('Copiado para a área de transferência', {
@@ -103,6 +116,8 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         form.setError(err.field, { message: err.message })
         return
       }
+
+      console.log(err)
 
       form.setError('root.error', { message: 'Ocorreu um erro inesperado. Tente novamente mais tarde.' })
     }
@@ -175,7 +190,9 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
               />
             </CollapsibleContent>
           </Collapsible>
-          <Button type="submit" className="self-center">Criar plano de estudos</Button>
+          <Button type="submit" className="self-center"
+            disabled={form.formState.isSubmitting || !form.formState.isValid}
+          >Criar plano de estudos</Button>
         </form>
       </Form>
     </div>

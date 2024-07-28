@@ -1,6 +1,6 @@
 import { Either } from "./either/Either";
 import { Subject } from "./Subject";
-import { StudyDay, StudyDayError } from "./StudyDay";
+import { StudyDay, StudyDayError, StudyDayJSON } from "./StudyDay";
 import { PlanningStudyObject } from "./PlanningStudyObject";
 import { PlanningDistribution } from "./PlanningDistribution";
 import { StudyObject } from "./StudyObject";
@@ -12,9 +12,19 @@ type PlanningProps = {
   subjects: Subject[];
   hoursPerDay: number;
   distribution?: PlanningDistribution;
-  availableWeekdays?: number[];
+  availableWeekdays?: Set<number>;
 };
 
+export type PlanningJSON = {
+  id: string;
+  createdAt: string;
+  startDate: string;
+  subjects: Subject[];
+  hoursPerDay: number;
+  distribution: PlanningDistribution;
+  availableWeekdays: Set<number>;
+  studyDays: StudyDayJSON[];
+};
 
 export class Planning {
   private constructor(
@@ -24,7 +34,7 @@ export class Planning {
     private subjects: Subject[],
     private hoursPerDay: number,
     private distribution: PlanningDistribution = PlanningDistribution.UNTIL_FINISH_SUBJECT,
-    private availableWeekdays: number[],
+    private availableWeekdays: Set<number>,
   ) {
   }
   
@@ -36,7 +46,9 @@ export class Planning {
       props.subjects, 
       props.hoursPerDay,
       props.distribution,
-      props.availableWeekdays ?? [0, 1, 2, 3, 4, 5, 6], // Default to all weekdays
+      props.availableWeekdays ?? new Set([
+        0, 1, 2, 3, 4, 5, 6,
+      ]), // Default to all weekdays
     ));
   }
   
@@ -73,11 +85,34 @@ export class Planning {
     }
   }
 
+  getEndDate(): Either<string, Date> {
+    const studyDaysOrError = this.getStudyDays();
+    if(studyDaysOrError.isLeft()) {
+      return Either.left(studyDaysOrError.getLeft());
+    }
+    const studyDays = studyDaysOrError.getRight();
+    const lastStudyDay = studyDays[studyDays.length - 1];
+    return Either.right(lastStudyDay.getDate());
+  }
+
+  toJSON(): PlanningJSON {
+    return {
+      id: this.id,
+      createdAt: this.createdAt.toISOString(),
+      startDate: this.startDate.toISOString(),
+      subjects: this.subjects,
+      hoursPerDay: this.hoursPerDay,
+      distribution: this.distribution,
+      availableWeekdays: this.availableWeekdays,
+      studyDays: this.getStudyDays().getRight().map((studyDay) => studyDay.toJSON()) ?? [],
+    }
+  }
+
   private getNextDate(currentDate: Date): Date {
     const oneDay = 24 * 60 * 60 * 1000;
     const nextDate = new Date(currentDate.getTime() + oneDay);
     const nextWeekday = nextDate.getUTCDay();
-    if(this.availableWeekdays.includes(nextWeekday)) {
+    if(this.availableWeekdays.has(nextWeekday)) {
       return nextDate;
     }
     return this.getNextDate(nextDate);

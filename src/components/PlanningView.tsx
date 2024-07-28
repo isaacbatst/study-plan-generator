@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { WeekGroup } from '../domain/WeekGroup';
-import { StudyDayJSON } from '../domain/entities/StudyDay';
 import Week from './Week';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import { Button } from './ui/button';
 import { Trash } from 'lucide-react';
-import { PlanningJSON } from '../domain/entities/Planning';
+import { StudyDayJSON } from '../domain/entities-2/StudyDay';
+import { PlanningJSON } from '../domain/entities-2/Planning';
 
 type Props = {
   studyPlan: PlanningJSON
@@ -63,11 +63,12 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
   return weekGroups;
 }
 
+
 const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
   const weekGroups = useMemo(() => {
     return groupStudyDaysByWeek(studyPlan.studyDays)
   }, [studyPlan.studyDays])
-
+  
   const createdAt = new Date(studyPlan.createdAt)
   const createdAtText = `Criado em ${createdAt.toLocaleDateString('pt-BR')} às ${createdAt.toLocaleTimeString('pt-BR')}`
   return (

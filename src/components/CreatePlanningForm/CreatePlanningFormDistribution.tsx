@@ -2,16 +2,17 @@ import React from 'react'
 import { FormItem, FormLabel, FormMessage } from '../ui/form'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { CreatePlanningFormField } from './CreatePlanningFormSchema'
-import { PlanningDistributionType } from '../../domain/entities/PlanningDistributor'
+import { PlanningDistribution } from '../../domain/entities-2/PlanningDistribution'
 
 type Props = {
   field: CreatePlanningFormField<'distribution'>
 }
 
-const distributions: Record<PlanningDistributionType, string> = {
-  [PlanningDistributionType.ALTERNATE_DAILY]: 'Trocar matéria todo dia',
-  [PlanningDistributionType.ALTERNATE]: 'Trocar matéria sempre que concluir um módulo',
-  [PlanningDistributionType.UNTIL_FINISH]: 'Só trocar matéria quando concluir todos seus módulos',
+const distributions: Record<PlanningDistribution, string> = {
+  [PlanningDistribution.ALTERNATE_SUBJECT_PER_DAY]: 'Trocar matéria todo dia',
+  // [PlanningDistribution.ALTERNATE_SUBJECT_PER_WEEK]: 'Alternar matérias semanalmente',
+  [PlanningDistribution.ALTERNATE_SUBJECT_PER_STUDY_OBJECT]: 'Trocar matéria quando terminar assunto',
+  [PlanningDistribution.UNTIL_FINISH_SUBJECT]: 'Só trocar de matéria quando terminar',
 }
 
 const CreatePlanningFormDistribution = ({field}: Props) => {

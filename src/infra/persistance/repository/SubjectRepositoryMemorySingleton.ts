@@ -1,9 +1,10 @@
-import SubjectRepositoryMemory from "./SubjectRepositoryMemory";
+import prisma from "../prisma";
+import { SubjectRepositoryPrisma } from "./SubjectRepositoryPrisma";
 
-export class SubjectRepositoryMemorySingleton {
-  private static instance: SubjectRepositoryMemory = new SubjectRepositoryMemory()
+export class SubjectRepositorySingleton {
+  private static instance = new SubjectRepositoryPrisma(prisma)
 
-  static getInstance(): SubjectRepositoryMemory {
-    return SubjectRepositoryMemorySingleton.instance
+  static getInstance(): SubjectRepositoryPrisma {
+    return SubjectRepositorySingleton.instance
   }
 }

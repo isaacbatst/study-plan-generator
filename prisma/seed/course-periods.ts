@@ -1,4 +1,7 @@
+import { Course } from "../../src/domain/entities-2/Course";
 import { CoursePeriod, CoursePeriodProps } from "../../src/domain/entities-2/CoursePeriod";
+import { Subject } from "../../src/domain/entities-2/Subject";
+import { courses } from "./courses";
 import { subjects } from "./subjects";
 
 // import Course from "../../../domain/entities/Course"
@@ -768,90 +771,65 @@ import { subjects } from "./subjects";
 //   }
 // }
 
-const periodsProps = {
-  computerScience: [
-    {
-      name: '1º Período',
-      position: 0,
-      subjects: [
-        subjects.computingThinking,
-        subjects.webDevelopment,
-        subjects.computersArchitecture,
-        subjects.programmingParadigms,
-        subjects.securityIntroduction,
-      ],
-    },
-    {
-      name: '2º Período',
-      position: 1,
-      subjects: [
-        subjects.math,
-        subjects.cloudComputing,
-        subjects.dataStructures,
-        subjects.databases,
-        subjects.umlSystemsModeling,
-      ],
-    },
-    {
-      name: '3º Período',
-      position: 2,
-      subjects: [
-        subjects.dataAnalysis,
-        subjects.structuredProgrammingIntroduction,
-        subjects.rapidDevelopment,
-        subjects.computerNetworksFundamentals,
-        subjects.softwareEngineering,
-      ],
-    },
-  ],
-  cybersecurity: [
-    {
-      name: '1º Período',
-      position: 0,
-      subjects: [
-        subjects.computerNetworksFundamentals,
-        subjects.securityIntroduction,
-        subjects.programmingParadigms,
-        subjects.computersArchitecture,
-        subjects.computingThinking,
-      ]
-    },
-    {
-      name: '2º Período',
-      position: 1,
-      subjects: [
-        subjects.cloudComputing,
-        subjects.rapidDevelopment,
-        subjects.itServiceManagement,
-        subjects.cyberSecurityThreatIntelligence,
-        subjects.computerNetworkProtocols,
-      ]
-    }
-  ],
-  systemsAnalysis: [
-    {
-      name: '2º Período',
-      position: 1,
-      subjects: [
-        subjects.cloudComputing,
-        subjects.dataStructures,
-        subjects.umlSystemsModeling,
-        subjects.communicationBetweenApplications,
-        subjects.usabilityEngineering,
-      ],
-    },
-  ],
+type PeriodProps = {
+  position: number
 }
 
+const computerSciencePeriods: [Course, PeriodProps[]] = [courses.computerScience, [
+  {
+    position: 0,
+  },
+  {
+    position: 1,
+  },
+  {
+    position: 2,
+  },
+]]
 
+const cybersecurityPeriods: [Course, PeriodProps[]] = [courses.cybersecurity, [
+  {
+    position: 0,
+  },
+  {
+    position: 1,
+  },
+]]
 
-export const coursePeriods = Object.fromEntries(
-  Object.entries(periodsProps).map(([course, periods]) => [
-    course as keyof typeof periodsProps,
-    periods.map(period => {
-      const coursePeriod = CoursePeriod.create(period)
-      if(coursePeriod.isLeft()) throw new Error(coursePeriod.getLeft())
-      return coursePeriod.getRight()
+const systemsAnalysisPeriods: [Course, (PeriodProps | null)[]] = [courses.systemsAnalysis, [
+  null,
+  {
+    position: 1,
+  },
+]]
+
+const periodsProps = new Map([
+  computerSciencePeriods,
+  cybersecurityPeriods,
+  systemsAnalysisPeriods,
+])
+
+const coursePeriods = new Map<Course, (CoursePeriod | null)[]>()
+
+periodsProps.forEach((periodProps, course) => {
+  const periods = periodProps.map(period => {
+    if (!period) {
+      return null
+    }
+
+    const coursePeriod = CoursePeriod.create({
+      ...period,
+      course,
     })
-  ])
-) as Record<keyof typeof periodsProps, CoursePeriod[]>
+
+    if (coursePeriod.isLeft()) {
+      throw new Error(coursePeriod.getLeft())
+    }
+
+    return coursePeriod.getRight()
+  })
+
+  coursePeriods.set(course, periods)
+})
+
+export { coursePeriods }
