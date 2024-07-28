@@ -191,7 +191,6 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
             </CollapsibleContent>
           </Collapsible>
           <Button type="submit" className="self-center"
-            disabled={form.formState.isSubmitting || !form.formState.isValid}
           >Criar plano de estudos</Button>
         </form>
       </Form>
