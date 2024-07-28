@@ -57,9 +57,9 @@ const Week = ({week, index, planningId}: Props) => {
           const key = `${week.startDate}-${day}`
           const studyDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
           if(!studyDay) return (
-            <div key={key} className="space-y-2 lg:space-y-4">
+            <div key={key} className="space-y-2 lg:space-y-4 py-3">
               {header}
-              <div className="space-y-4 bg-opacity-15 p-5 bg-gray-300">
+              <div className="space-y-4 bg-opacity-15 p-5 bg-green-400">
                 <div className="space-y-1 xl:space-y-2">
                   <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
                   <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
@@ -71,7 +71,7 @@ const Week = ({week, index, planningId}: Props) => {
           )
 
           return (
-            <div key={key} className="space-y-3 lg:space-y-4">
+            <div key={key} className="space-y-3 py-3 lg:space-y-4">
               {header}
               <div className="space-y-2">
                 {studyDay.plannedStudyObjects.map(({ hours, studyObject, done }) => (
