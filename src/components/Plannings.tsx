@@ -45,7 +45,7 @@ const Plannings = ({subjects}: Props) => {
     <div className='sm:container'>
       {!showInitialForm && <CreatePlanningFormDialog savePlanning={addStudyPlan} subjects={subjects}  />}
       <div className="flex flex-col items-center gap-5 py-5">
-        {showInitialForm && <div className='px-5 md:px-0'>
+        {showInitialForm && <div className='px-0'>
           <CreatePlanningForm 
             savePlanning={(studyPlan) => {
               addStudyPlan(studyPlan)
