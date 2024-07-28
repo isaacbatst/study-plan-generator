@@ -13,3 +13,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Institution {
+  id      String   @id @default(uuid())
+  name    String
+  courses Course[]
+}
+
+model Course {
+  id            String         @id @default(uuid())
+  name          String
+  createdAt     DateTime       @default(now())
+  version       Int            
+  coursePeriods CoursePeriod[]
+  institutionId String
+  institution   Institution    @relation(fields: [institutionId], references: [id])
+}
+
+model CoursePeriod {
+  id       String    @id @default(uuid())
+  position Int
+  courseId String
+  course   Course    @relation(fields: [courseId], references: [id])
+  name     String
+  subjects Subject[]
+
+  @@unique([courseId, position])
+}
+
+model Subject {
+  id             String        @id @default(uuid())
+  coursePeriodId String
+  coursePeriod   CoursePeriod  @relation(fields: [coursePeriodId], references: [id])
+  name           String
+  studyObjects    StudyObject[]
+}
+
+model StudyObject {
+  id        String  @id @default(uuid())
+  name      String
+  hours     Int
+  position  Int
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id])
+
+  @@unique([subjectId, position])
+}

@@ -1,10 +1,12 @@
-import { CoursePeriod } from "./CoursePeriod";
+import * as crypto from "node:crypto";
 import { Either } from "./either/Either";
+import { CoursePeriod } from "./CoursePeriod";
 
 type CourseProps = {
-  id: string;
+  id?: string;
   name: string;
   periods: CoursePeriod[];
+  version?: number;
 };
 
 export class Course {
@@ -12,12 +14,17 @@ export class Course {
     private id: string,
     private name: string,
     private periods: CoursePeriod[] = [],
+    private version: number = 1,
   ) {}
 
   static create(
     props: CourseProps,
   ): Either<string, Course> {
-    return Either.right(new Course(props.id, props.name, props.periods));
+    if (!props.id) {
+      props.id = crypto.randomUUID();
+    }
+
+    return Either.right(new Course(props.id, props.name, props.periods, props.version));
   }
 
   getId(): string {
@@ -26,5 +33,13 @@ export class Course {
 
   getName(): string {
     return this.name
+  }
+  
+  getPeriods(): CoursePeriod[] {
+    return this.periods
+  }
+
+  getVersion(): number {
+    return this.version
   }
 }

@@ -1,8 +1,9 @@
+import * as crypto from "node:crypto";
 import { Either } from "./either/Either";
 import { StudyObject } from "./StudyObject";
 
-type SubjectProps = {
-  id: string;
+export type SubjectProps = {
+  id?: string;
   name: string;
   studyObjects: StudyObject[];
 };
@@ -15,6 +16,9 @@ export class Subject {
   ) {}
 
   static create(props: SubjectProps): Either<string, Subject> {
+    if (!props.id) {
+      props.id = crypto.randomUUID();
+    }
     return Either.right(new Subject(props.id, props.name, props.studyObjects));
   }
 

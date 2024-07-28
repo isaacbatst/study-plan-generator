@@ -1,3 +1,4 @@
+import * as crypto from "node:crypto";
 import { Either } from "./either/Either";
 
 enum StudyObjectError {
@@ -5,9 +6,10 @@ enum StudyObjectError {
 }
 
 type StudyObjectProps = {
-  id: string;
+  id?: string;
   name: string;
   hours: number;
+  position: number;
 };
 
 export class StudyObject {
@@ -15,14 +17,19 @@ export class StudyObject {
     private id: string,
     private name: string,
     private hours: number,
+    private position: number,
   ) {}
 
   static create(props: StudyObjectProps): Either<StudyObjectError, StudyObject> {
+    if(!props.id) {
+      props.id = crypto.randomUUID();
+    }
     if(props.hours < 0) {
       return Either.left(StudyObjectError.NEGATIVE_HOURS);
     }
 
-    return Either.right(new StudyObject(props.id, props.name, props.hours));
+
+    return Either.right(new StudyObject(props.id, props.name, props.hours, props.position));
   }
 
   getId(): string {
@@ -35,5 +42,9 @@ export class StudyObject {
 
   getHours(): number {
     return this.hours;
+  }
+
+  getPosition(): number {
+    return this.position;
   }
 }
