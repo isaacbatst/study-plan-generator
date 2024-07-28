@@ -54,6 +54,8 @@ async function main() {
         }
       })
     }))
+  }, {
+    timeout: 30000
   })
 }
 
