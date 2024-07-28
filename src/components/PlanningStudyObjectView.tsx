@@ -21,7 +21,7 @@ const capitalize = (str: string) => {
 const getColor = (done: boolean, hasPassed: boolean) => {
   if(done) return 'bg-green-400'
   if(hasPassed) return 'bg-red-600'
-  return 'bg-gray-400'
+  return 'bg-gray-300'
 }
 
 const PlanningStudyObjectView = ({

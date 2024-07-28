@@ -72,7 +72,7 @@ const Week = ({week, index, planningId}: Props) => {
               ))}
             </div>
           ) : (
-            <div className="space-y-4 bg-opacity-15 p-5 bg-gray-400">
+            <div className="space-y-4 bg-opacity-15 p-5 bg-gray-300">
               <div className="space-y-1 xl:space-y-2">
                 <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
                 <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
