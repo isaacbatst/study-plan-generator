@@ -44,8 +44,9 @@ const Week = ({week, index, planningId}: Props) => {
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate)
           date.setDate(date.getDate()+dayIndex)
+          const isToday = new Date().toDateString() === date.toDateString()
           const dayName = dayNamesPtBr[dayIndex]
-          const header = (<div className='flex items-end xl:flex-col gap-2 xl:gap-0 xl:items-start'>
+          const header = (<div className={`flex items-end xl:flex-col gap-2 p-2 xl:gap-0 xl:items-start`}>
             <h2 className="text-2xl font-bold tracking-tighter leading-7 sm:text-2xl 2xl:text-2xl flex lg:block items-center">
               <span>{date.getDate()} de {monthNamesPtBr[date.getMonth()]}</span>
             </h2>
@@ -56,36 +57,38 @@ const Week = ({week, index, planningId}: Props) => {
           )
           const key = `${week.startDate}-${day}`
           const studyDay = week.studyDays.find(studyDay => new Date(studyDay.date).getDay() === dayIndex)
-          if(!studyDay) return (
-            <div key={key} className="space-y-2 lg:space-y-4 py-3">
-              {header}
-              <div className="space-y-4 bg-opacity-15 p-5 bg-green-400">
-                <div className="space-y-1 xl:space-y-2">
-                  <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
-                  <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
-                    Nenhum estudo programado para este dia
-                  </p>
-                </div>
+          const studyDayBody = studyDay ? (
+            <div className="space-y-2">
+              {studyDay.plannedStudyObjects.map(({ hours, studyObject, done }) => (
+                <PlanningStudyObjectView 
+                  key={studyObject.id} 
+                  studyObject={studyObject} 
+                  hours={hours} 
+                  done={done} 
+                  planningId={planningId}
+                  studyDayId={studyDay.id}
+                  studyDayDate={studyDay.date}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4 bg-opacity-15 p-5 bg-green-400">
+              <div className="space-y-1 xl:space-y-2">
+                <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
+                <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
+                  Nenhum estudo programado para este dia
+                </p>
               </div>
             </div>
           )
 
           return (
-            <div key={key} className="space-y-3 py-3 lg:space-y-4">
+            <div key={key} className={`space-y-3 py-3 lg:space-y-4 p-2 ${isToday ? 
+              'border-2 border-blue-100 bg-blue-300 bg-opacity-10' : 
+              ''}
+            `}>
               {header}
-              <div className="space-y-2">
-                {studyDay.plannedStudyObjects.map(({ hours, studyObject, done }) => (
-                  <PlanningStudyObjectView 
-                    key={studyObject.id} 
-                    studyObject={studyObject} 
-                    hours={hours} 
-                    done={done} 
-                    planningId={planningId}
-                    studyDayId={studyDay.id}
-                    studyDayDate={studyDay.date}
-                  />
-                ))}
-              </div>
+              {studyDayBody}
             </div>
           )
         })}

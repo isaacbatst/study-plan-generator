@@ -31,7 +31,7 @@ export class StudyDay {
     private id: string,
     private date: Date,
     private hours: number,
-    private hoursPerStudyObjects: Map<StudyObject, {
+    private planned: Map<StudyObject, {
       hours: number;
       done: boolean
     }> = new Map()
@@ -62,11 +62,11 @@ export class StudyDay {
 
     planningStudyObject.addAllocation(this.date, hoursToAllocate);
     
-    const hoursToMap = this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())
-      ? this.hoursPerStudyObjects.get(planningStudyObject.getStudyObject())!.hours + hoursToAllocate
+    const hoursToMap = this.planned.get(planningStudyObject.getStudyObject())
+      ? this.planned.get(planningStudyObject.getStudyObject())!.hours + hoursToAllocate
       : hoursToAllocate;
 
-    this.hoursPerStudyObjects.set(planningStudyObject.getStudyObject(), {
+    this.planned.set(planningStudyObject.getStudyObject(), {
       hours: hoursToMap,
       done: false
     });
@@ -89,12 +89,20 @@ export class StudyDay {
     return this.hours;
   }
   getHoursLeft(): number {
-    const hours = this.hoursPerStudyObjects.values();
+    const hours = this.planned.values();
     return this.hours - Array.from(hours).reduce((acc, allocated) => acc + allocated.hours, 0);
   }
 
   getHoursPerStudyObjects(): Map<StudyObject, number> {
-    return new Map(Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, hours]) => [studyObject, hours.hours]));
+    return new Map(Array.from(this.planned.entries()).map(([studyObject, hours]) => [studyObject, hours.hours]));
+  }
+
+  toString() {
+    return `${this.date.toLocaleDateString('pt-BR')}: ${
+      Array.from(this.planned.entries())
+        .map(([studyObject, { done, hours }]) => `${studyObject.getName()} (${hours}h)`)
+        .join(',')
+    }`
   }
 
   toJSON(): StudyDayJSON {
@@ -103,7 +111,7 @@ export class StudyDay {
       date: this.date.toISOString(),
       hours: this.hours,
       hoursLeft: this.getHoursLeft(),
-      plannedStudyObjects: Array.from(this.hoursPerStudyObjects.entries()).map(([studyObject, { done, hours }]) => ({
+      plannedStudyObjects: Array.from(this.planned.entries()).map(([studyObject, { done, hours }]) => ({
         studyObject: studyObject.toJSON(),
         done,
         hours,

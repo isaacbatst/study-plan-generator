@@ -68,6 +68,9 @@ const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
   const weekGroups = useMemo(() => {
     return groupStudyDaysByWeek(studyPlan.studyDays)
   }, [studyPlan.studyDays])
+
+  const today = new Date()
+  const todayWeekIndex = weekGroups.findIndex(week => new Date(week.startDate) <= today && new Date(week.endDate) >= today)
   
   const createdAt = new Date(studyPlan.createdAt)
   const createdAtText = `Criado em ${createdAt.toLocaleDateString('pt-BR')} às ${createdAt.toLocaleTimeString('pt-BR')}`
@@ -83,7 +86,11 @@ const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
           <Trash size={16} />
         </Button>
       </div>
-      <Carousel className="max-w-[75vw] lg:max-w-[90vw] ">
+      <Carousel className="max-w-[75vw] lg:max-w-[90vw]"
+        opts={{
+          startIndex: todayWeekIndex,
+        }}
+      >
         <CarouselContent>
           {weekGroups.map((week, index) => (
             <CarouselItem key={`${week.startDate}-${week.endDate}`}>

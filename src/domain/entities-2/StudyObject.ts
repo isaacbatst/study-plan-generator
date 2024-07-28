@@ -80,4 +80,8 @@ export class StudyObject {
       subjectName: this.subjectName,
     };
   }
+
+  toString(): string {
+    return this.getFullName();
+  }
 }

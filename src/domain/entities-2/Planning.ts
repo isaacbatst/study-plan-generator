@@ -257,4 +257,16 @@ export class Planning {
     
     return Either.right(studyDays);
   }
+
+  toString(): string {
+    const studyDaysOrError = this.getStudyDays();
+    if(studyDaysOrError.isLeft()) {
+      console.error(studyDaysOrError.getLeft());
+      return 'Erro ao gerar planejamento em formato de texto';
+    }
+
+    const title = `Planejamento de ${this.startDate.toLocaleDateString('pt-BR')} à ${this.getEndDate().getRight().toLocaleDateString('pt-BR')}\n`
+    const body = studyDaysOrError.getRight().map(studyDay => studyDay.toString()).join('\n')
+    return title + body
+  }
 }
