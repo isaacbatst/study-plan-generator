@@ -15,7 +15,6 @@ import { toast } from "sonner"
 import { Planning } from "../../domain/entities/Planning"
 import { PlanningDistribution } from "../../domain/entities/PlanningDistribution"
 import { Subject, SubjectJSON } from "../../domain/entities/Subject"
-import { PlanningInvalidParamsError } from "../../domain/errors/InvalidParamsError"
 import { Option } from "../../lib/Option"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import CreatePlanningFormAvailableDays from "./CreatePlanningFormAvailableDays"
@@ -149,11 +148,6 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         duration: 10000,
       })
     } catch (err) {
-      if(err instanceof PlanningInvalidParamsError){
-        form.setError(err.field, { message: err.message })
-        return
-      }
-
       console.log(err)
 
       form.setError('root.error', { message: 'Ocorreu um erro inesperado. Tente novamente mais tarde.' })
