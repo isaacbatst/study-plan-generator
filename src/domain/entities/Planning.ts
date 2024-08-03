@@ -49,8 +49,6 @@ export class Planning {
       }
     }
 
-    console.log('availabilityPerWeekday', availabilityPerWeekday);
-
     return Either.right(new Planning(
       props.id, 
       props.createdAt, 

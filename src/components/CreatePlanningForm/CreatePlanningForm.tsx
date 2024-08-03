@@ -1,12 +1,13 @@
 'use client'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useFieldArray, UseFieldArrayReturn, useForm } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormDescription,
-  FormField
+  FormField,
+  FormLabel
 } from "@/components/ui/form"
 import { ChevronsUpDown } from "lucide-react"
 import React, { useMemo } from "react"
@@ -24,6 +25,7 @@ import CreatePlanningFormPeriod from "./CreatePlanningFormPeriod"
 import { CreatePlanningFormSchema, CreatePlanningFormSchemaType } from "./CreatePlanningFormSchema"
 import CreatePlanningFormSubjectSelect from "./CreatePlanningFormSubjectSelect"
 import {v4} from 'uuid';
+import CreatePlanningFormAvailabilityPerWeekday from "./CreatePlanningFormAvailabilityPerWeekday"
 
 type Props = {
   subjects: SubjectJSON[]
@@ -45,15 +47,41 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
       availableDays: [false, true, true, true, true, true, false],
       hoursPerDay: 2,
       distribution: PlanningDistribution.ALTERNATE_SUBJECT_PER_DAY,
-      subjects: []
+      subjects: [],
+      availabilityPerWeekday: [0, 2, 2, 2, 2, 2, 0].map(value => ({ value }))
     }
+  })
+
+  const {fields: availabilityPerWeekdayFields} = useFieldArray({
+    control: form.control,
+    name: 'availabilityPerWeekday'
   })
 
   const setSubjects = React.useCallback((subjects: Option[]) => form.setValue('subjects', subjects), [form])
 
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false)
+  const [isDifferentHoursPerDay, setIsDifferentHoursPerDay] = React.useState(false)
 
-  const { availableDays, distribution, hoursPerDay, startDate, subjects: selectedSubjects } = form.watch()
+  const { availableDays, distribution, hoursPerDay, startDate, subjects: selectedSubjects, availabilityPerWeekday: [
+    { value: sunday },
+    { value: monday },
+    { value: tuesday },
+    { value: wednesday },
+    { value: thursday },
+    { value: friday },
+    { value: saturday },
+  ] } = form.watch()
+
+  const availabilityPerWeekday = useMemo(() => [
+    Number(sunday), 
+    Number(monday), 
+    Number(tuesday), 
+    Number(wednesday), 
+    Number(thursday), 
+    Number(friday), 
+    Number(saturday)
+  ], [sunday, monday, tuesday, wednesday, thursday, friday, saturday])
+  
   const endDate = useMemo(() => {
     try {
       const parsing = CreatePlanningFormSchema.safeParse({
@@ -61,14 +89,20 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         distribution,
         hoursPerDay,
         startDate,
-        subjects: selectedSubjects
+        subjects: selectedSubjects,
+        availabilityPerWeekday: availabilityPerWeekday.map(value => ({ value })),
       })
-      if(!parsing.success) return
-      // convert [false, true, true, true, true, true, false] to Set([1, 2, 3, 4, 5])
+      if(!parsing.success) {
+        console.log(parsing.error.errors)
+        return
+      }
       const planningOrError = Planning.create({
         startDate: parsing.data.startDate,
         availableWeekdays: toWeekDaySet(parsing.data.availableDays),
         hoursPerDay: parsing.data.hoursPerDay,
+        availabilityPerWeekday: isDifferentHoursPerDay
+          ? new Map(availabilityPerWeekday.map((value, index) => [index, value]))
+          : undefined,
         distribution: parsing.data.distribution,
         createdAt: new Date(),
         id: v4(),
@@ -86,7 +120,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     } catch (err) {
       console.log(err)
     }
-  }, [availableDays, distribution, hoursPerDay, startDate, selectedSubjects, subjects])
+  }, [availableDays, distribution, hoursPerDay, startDate, selectedSubjects, subjects, availabilityPerWeekday, isDifferentHoursPerDay])
 
   async function onSubmit(data: CreatePlanningFormSchemaType) {
     try {
@@ -94,6 +128,9 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
         startDate: data.startDate,
         availableWeekdays: toWeekDaySet(data.availableDays),
         hoursPerDay: data.hoursPerDay,
+        availabilityPerWeekday: isDifferentHoursPerDay
+          ? new Map(data.availabilityPerWeekday.map((value, index) => [index, value.value]))
+          : undefined,
         distribution: data.distribution,
         createdAt: new Date(),
         id: v4(),
@@ -124,7 +161,6 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
   }
 
   const dynamicClasses = insideModal ? '' : 'shadow-lg rounded-lg lg:p-10 bg-white max-w-[100vw] lg:max-w-[50vw]'
-
   return (
     <div className={`text-center xl:text-left flex justify-center items-center flex-1 px-3 py-10 max-w-full ${dynamicClasses}`}>
       <Form {...form}>
@@ -174,13 +210,51 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
                 render={({ field }) => (
                   <CreatePlanningFormAvailableDays field={field} />
                 )} />
-              <FormField
-                control={form.control}
-                name="hoursPerDay"
-                render={({ field }) => (
-                  <CreatePlanningFormHoursPerDay field={field} />
-                )}
-              />
+              <div className="flex flex-col space-y-4">
+                <FormLabel htmlFor="hoursPerDay">
+                  Horas de estudo por dia
+                </FormLabel>
+                {
+                  !isDifferentHoursPerDay && (
+                    <FormField
+                      control={form.control}
+                      name='hoursPerDay'
+                      render={({ field }) => (
+                        <CreatePlanningFormHoursPerDay field={field} />
+                      )}
+                    />
+                  )
+                }
+                <Collapsible className="flex flex-col gap-4 justify-center items-center"
+                  open={isDifferentHoursPerDay}
+                  onOpenChange={setIsDifferentHoursPerDay}
+                >
+                  <CollapsibleContent>
+                    <div className="flex flex-col lg:flex-row space-x-2 justify-center">
+                      {
+                        availabilityPerWeekdayFields
+                          .map((field, index) => (
+                            <FormField
+                              control={form.control}
+                              key={field.id}
+                              name={`availabilityPerWeekday.${index}.value`}
+                              render={({ field }) => (
+                                <CreatePlanningFormAvailabilityPerWeekday field={field} index={index} />
+                              )}
+                            />
+                          ))
+                      }
+                    </div>
+                  </CollapsibleContent>
+                  <CollapsibleTrigger asChild>
+                    <Button variant='ghost' size='sm'>
+                      {
+                        isDifferentHoursPerDay ? 'Mesma quantidade de horas por dia' : 'Quero variar o número de horas por dia'
+                      }
+                    </Button>
+                  </CollapsibleTrigger>
+                </Collapsible>
+              </div>
               <FormField
                 control={form.control}
                 name="distribution"

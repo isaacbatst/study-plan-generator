@@ -2,7 +2,8 @@ import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import React from 'react'
 import { WeekDay } from '../../domain/WeekDay'
 import { FormItem, FormLabel, FormMessage } from '../ui/form'
-import { CreatePlanningFormField } from './CreatePlanningFormSchema'
+import { CreatePlanningFormField, CreatePlanningFormSchemaType } from './CreatePlanningFormSchema'
+import { useFormContext } from 'react-hook-form'
 
 type Props = {
   field: CreatePlanningFormField<'availableDays'>
@@ -19,6 +20,27 @@ const weekDayLabels: Record<WeekDay, string> = {
 }
 
 const CreatePlanningFormAvailableDays = ({field}: Props) => {
+  const { watch, setValue } = useFormContext<CreatePlanningFormSchemaType>()
+  const availableDays = watch('availableDays')
+  const hoursPerDay = watch('hoursPerDay')
+  const previousValue = React.useRef<boolean[]>()
+
+  React.useEffect(() => {
+    if(previousValue.current){
+      const dayDisabledNow = availableDays.findIndex((day, index) => !day && previousValue.current![index])
+      const dayEnabledNow = availableDays.findIndex((day, index) => day && !previousValue.current![index])
+      if(dayDisabledNow > -1){
+        setValue(`availabilityPerWeekday.${dayDisabledNow}.value`, 0)
+      }
+      if(dayEnabledNow > -1){
+        setValue(`availabilityPerWeekday.${dayEnabledNow}.value`, hoursPerDay)
+      }
+    }
+
+    previousValue.current = availableDays
+  }, [availableDays, setValue, hoursPerDay])
+  
+
   return (
     <FormItem className="flex flex-col ">
       <FormLabel className='mb-2'>Dias que poderei me dedicar:</FormLabel>
@@ -26,7 +48,8 @@ const CreatePlanningFormAvailableDays = ({field}: Props) => {
         value={Object.values(WeekDay).filter((_, index) => field.value[index])}
         onValueChange={(value) => {
           const selectedDays = value as WeekDay[]
-          field.onChange(Object.values(WeekDay).map(day => selectedDays.includes(day)))
+          const selectedWeekDays = Object.values(WeekDay).map(day => selectedDays.includes(day))
+          field.onChange(selectedWeekDays)
         }}>
         {Object.values(WeekDay)
           .map((day) => (
