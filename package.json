@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
+    "test": "vitest --exclude=db-data",
     "postinstall": "prisma generate"
   },
   "prisma": {

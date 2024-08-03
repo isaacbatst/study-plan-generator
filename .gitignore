@@ -1,7 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# docker volumes
+db-data
 # environment variables
 .env*
-
 # dependencies
 /node_modules
 /.pnp

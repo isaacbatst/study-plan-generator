@@ -13,6 +13,7 @@ type PlanningProps = {
   hoursPerDay: number;
   distribution?: PlanningDistribution;
   availableWeekdays?: Set<number>;
+  availabilityPerWeekday?: Map<number, number>;
 };
 
 export type PlanningJSON = {
@@ -35,10 +36,21 @@ export class Planning {
     private hoursPerDay: number,
     private distribution: PlanningDistribution = PlanningDistribution.UNTIL_FINISH_SUBJECT,
     private availableWeekdays: Set<number>,
+    private availabilityPerWeekday: Map<number, number>
   ) {
   }
   
   static create(props: PlanningProps): Either<string, Planning> {
+    const availabilityPerWeekday = props.availabilityPerWeekday ?? new Map();
+
+    for(let weekday = 0; weekday < 7; weekday += 1) {
+      if(!availabilityPerWeekday.has(weekday)) {
+        availabilityPerWeekday.set(weekday, props.hoursPerDay);
+      }
+    }
+
+    console.log('availabilityPerWeekday', availabilityPerWeekday);
+
     return Either.right(new Planning(
       props.id, 
       props.createdAt, 
@@ -49,6 +61,7 @@ export class Planning {
       props.availableWeekdays ?? new Set([
         0, 1, 2, 3, 4, 5, 6,
       ]), // Default to all weekdays
+      availabilityPerWeekday
     ));
   }
   
@@ -146,6 +159,7 @@ export class Planning {
       const studyDayOrError = StudyDay.create({
         date: currentDate,
         hours: this.hoursPerDay,
+        availablityPerWeekday: this.availabilityPerWeekday,
       });
       if(studyDayOrError.isLeft()) {
         return Either.left(studyDayOrError.getLeft());
@@ -166,13 +180,13 @@ export class Planning {
     return Either.right(studyDays);
   }
   
-  
-  
   private getStudyDaysAlternatingSubjectPerStudyObject(): Either<string, StudyDay[]> {
     const studyDays: StudyDay[] = [];
+
     let currentStudyDayOrError = StudyDay.create({
-      date: this.startDate,
+      date: this.getFirstAvailableDate(this.startDate),
       hours: this.hoursPerDay,
+      availablityPerWeekday: this.availabilityPerWeekday,
     });
     if(currentStudyDayOrError.isLeft()) {
       return Either.left(currentStudyDayOrError.getLeft())
@@ -205,6 +219,7 @@ export class Planning {
             currentStudyDayOrError = StudyDay.create({
               date: nextDay,
               hours: this.hoursPerDay,
+              availablityPerWeekday: this.availabilityPerWeekday,
             });
             if(currentStudyDayOrError.isLeft()) {
               return Either.left(currentStudyDayOrError.getLeft());
@@ -223,8 +238,9 @@ export class Planning {
   private getStudyDaysUntilFinishSubject(): Either<string, StudyDay[]> {
     const studyDays: StudyDay[] = [];
     let currentStudyDayOrError = StudyDay.create({
-      date: this.startDate,
+      date: this.getFirstAvailableDate(this.startDate),
       hours: this.hoursPerDay,
+      availablityPerWeekday: this.availabilityPerWeekday,
     });
     if(currentStudyDayOrError.isLeft()) {
       return Either.left(currentStudyDayOrError.getLeft())
@@ -244,6 +260,7 @@ export class Planning {
             currentStudyDayOrError = StudyDay.create({
               date:  this.getNextDate(currentStudyDay.getDate()),
               hours: this.hoursPerDay,
+              availablityPerWeekday: this.availabilityPerWeekday,
             });
             if(currentStudyDayOrError.isLeft()) {
               return Either.left(currentStudyDayOrError.getLeft());
@@ -256,6 +273,23 @@ export class Planning {
     })
     
     return Either.right(studyDays);
+  }
+
+    
+  private isDayAvailable(date: Date): boolean {
+    const weekday = date.getUTCDay();
+    return this.availableWeekdays.has(weekday);
+  }  
+
+  private getFirstAvailableDate(date: Date): Date {
+    if(this.isDayAvailable(date)) {
+      return date;
+    }
+    return this.getFirstAvailableDate(this.getNextDate(date));
+  }
+
+  private getHoursPerWeekday(day: number): number {
+    return this.availabilityPerWeekday.get(day) ?? this.hoursPerDay;
   }
 
   toString(): string {

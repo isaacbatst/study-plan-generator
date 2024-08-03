@@ -430,7 +430,6 @@ describe("Planning", () => {
     const studyDaysOrError = planning.getStudyDays();
     expect(studyDaysOrError.isRight()).toBe(true);
     const studyDays = studyDaysOrError.getRight();
-    console.dir(studyDays, { depth: null });
     expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
     expect(studyDays[0].getHoursLeft()).toBe(0);
     expect(studyDays[0].getHoursPerStudyObjects().get(studyObjectMath1)).toBe(2);
@@ -489,7 +488,6 @@ describe("Planning", () => {
 
     const studyDaysOrError = planning.getStudyDays();
     expect(studyDaysOrError.isRight()).toBe(true);
-    console.dir(studyDaysOrError.getRight(), { depth: null });
     const studyDays = studyDaysOrError.getRight();
     expect(studyDays[0].getDate()).toEqual(new Date("2021-01-01"));
     expect(studyDays[0].getHoursLeft()).toBe(0);
@@ -562,5 +560,70 @@ describe("Planning", () => {
     expect(studyDays[3].getDate()).toEqual(new Date("2021-01-08")); // friday
     expect(studyDays[3].getHoursLeft()).toBe(0);
     expect(studyDays.length).toBe(4);
+  })
+
+  it('should generate study days with custom availability per weekday', () => {
+    // available on monday (2h) and wednesday (4h)
+    const studyObjectMath1 = StudyObject.create({
+      subjectName: "Math",
+      id: "1",
+      name: "Math 101",
+      hours: 2,
+    }).getRight();
+    const studyObjectMath2 = StudyObject.create({
+      subjectName: "Math",
+      id: "2",
+      name: "Math 102",
+      hours: 2,
+    }).getRight();
+    const math = Subject.create({
+      id: "1",
+      name: "Math",
+      studyObjects: [studyObjectMath1, studyObjectMath2],
+    }).getRight();
+    const studyObjectPhysics1 = StudyObject.create({
+      subjectName: "Math",
+      id: "3",
+      name: "Physics 101",
+      hours: 2,
+    }).getRight();
+    const studyObjectPhysics2 = StudyObject.create({
+      subjectName: "Math",
+      id: "4",
+      name: "Physics 102",
+      hours: 2,
+    }).getRight();
+    const physics = Subject.create({
+      id: "2",
+      name: "Physics",
+      studyObjects: [studyObjectPhysics1, studyObjectPhysics2],
+    }).getRight();
+    const planning = Planning.create({
+      id: "1",
+      createdAt: new Date(),
+      startDate: new Date("2021-01-01"),
+      subjects: [math, physics],
+      hoursPerDay: 2,
+      availableWeekdays: new Set([1, 3]),
+      availabilityPerWeekday: new Map([
+        [1, 2],
+        [3, 4],
+      ])
+    }).getRight();
+    const studyDaysOrError = planning.getStudyDays();
+    expect(studyDaysOrError.isRight()).toBe(true);
+    const studyDays = studyDaysOrError.getRight();
+    console.log(studyDays);
+    expect(studyDays[0].getDate()).toEqual(new Date("2021-01-04")); // monday
+    expect(studyDays[0].getHoursLeft()).toBe(0);
+    expect(studyDays[0].getHoursPerStudyObjects().get(studyObjectMath1)).toBe(2);
+    expect(studyDays[1].getDate()).toEqual(new Date("2021-01-06")); // wednesday
+    expect(studyDays[1].getHoursLeft()).toBe(0);
+    expect(studyDays[1].getHoursPerStudyObjects().get(studyObjectMath2)).toBe(2);
+    expect(studyDays[1].getHoursPerStudyObjects().get(studyObjectPhysics1)).toBe(2);
+    expect(studyDays[2].getDate()).toEqual(new Date("2021-01-11")); // monday
+    expect(studyDays[2].getHoursLeft()).toBe(0);
+    expect(studyDays[2].getHoursPerStudyObjects().get(studyObjectPhysics2)).toBe(2);
+    expect(studyDays.length).toBe(3);
   })
 })

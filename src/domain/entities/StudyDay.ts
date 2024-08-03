@@ -7,6 +7,7 @@ type StudyDayProps = {
   id?: string;
   date: Date;
   hours: number;
+  availablityPerWeekday: Map<number, number>;
 };
 
 export enum StudyDayError {
@@ -27,15 +28,20 @@ export type StudyDayJSON = {
 };
 
 export class StudyDay {
+  private hours: number;
+
   private constructor(
     private id: string,
     private date: Date,
-    private hours: number,
+    defaultHoursPerDay: number,
+    availablityPerWeekday: Map<number, number>,
     private planned: Map<StudyObject, {
       hours: number;
       done: boolean
-    }> = new Map()
-  ) {}
+    }> = new Map(),
+  ) {
+    this.hours = availablityPerWeekday.get(date.getUTCDay()) ?? defaultHoursPerDay;
+  }
 
   static create(
     props: StudyDayProps,
@@ -44,7 +50,7 @@ export class StudyDay {
       props.id = v4();
     }
 
-    return Either.right(new StudyDay(props.id, props.date, props.hours));
+    return Either.right(new StudyDay(props.id, props.date, props.hours, props.availablityPerWeekday));
   }
 
   hasHoursLeft(): boolean {
