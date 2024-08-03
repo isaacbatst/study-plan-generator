@@ -1,7 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { SubjectJSON } from '../../../domain/entities-2/Subject';
-import { CoursePeriod } from '../../../domain/entities-2/CoursePeriod';
-import { StudyObject } from '../../../domain/entities-2/StudyObject';
+import { SubjectJSON } from '../../../domain/entities/Subject';
+import { CoursePeriod } from '../../../domain/entities/CoursePeriod';
+import { StudyObject } from '../../../domain/entities/StudyObject';
 
 export class SubjectRepositoryPrisma {
   constructor(private prisma: PrismaClient) {}

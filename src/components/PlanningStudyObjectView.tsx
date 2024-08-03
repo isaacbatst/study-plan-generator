@@ -1,5 +1,5 @@
 import React from 'react'
-import { StudyObjectJSON } from '../domain/entities-2/StudyObject'
+import { StudyObjectJSON } from '../domain/entities/StudyObject'
 import CheckboxWithText from './ui/checkbox-with-text';
 import { usePlanningsContext } from './PlanningsContext';
 

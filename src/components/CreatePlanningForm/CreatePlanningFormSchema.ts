@@ -1,6 +1,6 @@
 import { ControllerRenderProps, FieldPath } from "react-hook-form";
 import { z } from "zod";
-import { PlanningDistribution } from "../../domain/entities-2/PlanningDistribution";
+import { PlanningDistribution } from "../../domain/entities/PlanningDistribution";
 
 export const CreatePlanningFormSchema = z.object({
   startDate: z.date({

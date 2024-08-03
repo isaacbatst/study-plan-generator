@@ -1,4 +1,4 @@
-import { StudyDayJSON } from "./entities-2/StudyDay";
+import { StudyDayJSON } from "./entities/StudyDay";
 
 export type WeekGroup = {
   startDate: string;

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { SubjectJSON } from '../domain/entities-2/Subject'
+import { SubjectJSON } from '../domain/entities/Subject'
 import CreatePlanningForm from './CreatePlanningForm/CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningForm/CreatePlanningFormDialog'
 import { usePlanningsContext } from './PlanningsContext'

@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import CreatePlanningForm from "./CreatePlanningForm"
-import { SubjectJSON } from "../../domain/entities-2/Subject"
-import { Planning } from "../../domain/entities-2/Planning"
+import { SubjectJSON } from "../../domain/entities/Subject"
+import { Planning } from "../../domain/entities/Planning"
 
 type Props = {
   subjects: SubjectJSON[]

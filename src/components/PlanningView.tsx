@@ -4,8 +4,8 @@ import Week from './Week';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import { Button } from './ui/button';
 import { Trash } from 'lucide-react';
-import { StudyDayJSON } from '../domain/entities-2/StudyDay';
-import { PlanningJSON } from '../domain/entities-2/Planning';
+import { StudyDayJSON } from '../domain/entities/StudyDay';
+import { PlanningJSON } from '../domain/entities/Planning';
 
 type Props = {
   studyPlan: PlanningJSON

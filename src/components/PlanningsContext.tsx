@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Planning, PlanningJSON } from "../domain/entities-2/Planning";
+import { Planning, PlanningJSON } from "../domain/entities/Planning";
 import { useStoredState } from "../hooks/useStoredState";
 
 type PlanningsContextType = {
