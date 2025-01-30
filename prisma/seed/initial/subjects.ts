@@ -1,8 +1,8 @@
-import { StudyObject } from "../../src/domain/entities/StudyObject"
-import { Subject, SubjectProps } from "../../src/domain/entities/Subject"
+import { StudyObject } from "../../../src/domain/entities/StudyObject"
+import { Subject, SubjectProps } from "../../../src/domain/entities/Subject"
 import { courses } from "./courses"
 import { coursePeriods } from "./course-periods"
-import { CoursePeriod } from "../../src/domain/entities/CoursePeriod"
+import { CoursePeriod } from "../../../src/domain/entities/CoursePeriod"
 const subjectsProps = {
 //   1.   INTRODUÇÃO AOS PRINCÍPIOS FUNDAMENTAIS DA COMPUTAÇÃO
 //   1.1 A EQUAÇÃO QUE REPRESENTA A ESSÊNCIA DOS COMPUTADORES

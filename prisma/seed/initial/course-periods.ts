@@ -1,6 +1,6 @@
-import { Course } from "../../src/domain/entities/Course";
-import { CoursePeriod, CoursePeriodProps } from "../../src/domain/entities/CoursePeriod";
-import { Subject } from "../../src/domain/entities/Subject";
+import { Course } from "../../../src/domain/entities/Course";
+import { CoursePeriod, CoursePeriodProps } from "../../../src/domain/entities/CoursePeriod";
+import { Subject } from "../../../src/domain/entities/Subject";
 import { courses } from "./courses";
 import { subjects } from "./subjects";
 

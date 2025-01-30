@@ -1,4 +1,4 @@
-import { Course } from "../../src/domain/entities/Course";
+import { Course } from "../../../src/domain/entities/Course";
 
 const coursesProps = {
   computerScience: {
