@@ -4,6 +4,8 @@ import { Toaster } from "../components/ui/sonner";
 import { SubjectRepositorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton";
 import Wrapper from "./wrapper";
 
+export const dynamic = "force-dynamic";
+
 const subjectsRepository = SubjectRepositorySingleton.getInstance()
 
 export default async function Home() {
