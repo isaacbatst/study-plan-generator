@@ -1,5 +1,6 @@
 import { StudyObject } from "@/domain/entities/StudyObject";
 import { PrismaClient } from "@prisma/client";
+import { fromStringsToStudyObjects } from "./utils";
 
 const COMPLIANCE_SUBJECT_ID = "d25a93bb-8d5d-4407-8fae-5c7915455f77";
 const PROJECT_MANAGEMENT_SUBJECT_ID = "8b7df2ad-6e8d-401c-b8fc-3a843573b042";
@@ -28,21 +29,6 @@ const prisma = new PrismaClient();
 //   return [key, subject.getRight()]
 // })) as Record<keyof typeof subjectsProps, Subject>
 // use code above as reference to create the study objects
-
-const fromStringsToStudyObjects = (studyObjects: string[], subjectName: string) => {
-  return studyObjects.map((so, index) => {
-    const studyObject = StudyObject.create({
-      name: so,
-      hours: 2,
-      position: index,
-      subjectName,
-    });
-    if (studyObject.isLeft()) {
-      throw new Error(studyObject.getLeft());
-    }
-    return studyObject.getRight();
-  });
-}
 
 async function main() {
   await prisma.$transaction(async (tx) => {

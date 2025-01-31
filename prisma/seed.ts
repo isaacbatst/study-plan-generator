@@ -6,11 +6,19 @@ const prisma = new PrismaClient()
 
 async function main() {
   await prisma.$transaction(async (tx) => {
-    const estacio = await prisma.institution.create({
-      data: {
+    let estacio = await prisma.institution.findFirst({
+      where: {
         name: 'Estácio de Sá'
       }
     })
+
+    if(!estacio) {
+      estacio = await tx.institution.create({
+        data: {
+          name: 'Estácio de Sá'
+        }
+      })
+    }
 
     await Promise.all(Object.values(subjects).map(async subject => {
       await tx.subject.create({
@@ -27,30 +35,6 @@ async function main() {
               }))
             }
           },
-          coursePeriods: subject.getCoursePeriods().length > 0 ? {
-            connectOrCreate: subject.getCoursePeriods().map(coursePeriod => ({
-              where: { id: coursePeriod.getId() },
-              create: {
-                id: coursePeriod.getId(),
-                position: coursePeriod.getPosition(),
-                course: {
-                  connectOrCreate: {
-                    where: { id: coursePeriod.getCourse().getId() },
-                    create: {
-                      id: coursePeriod.getCourse().getId(),
-                      name: coursePeriod.getCourse().getName(),
-                      version: coursePeriod.getCourse().getVersion(),
-                      institution: {
-                        connect: {
-                          id: estacio.id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }))
-          } : undefined 
         }
       })
     }))
