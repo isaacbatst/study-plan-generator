@@ -25,10 +25,9 @@ const CreatePlanningFormSubjectSelect = ({subjects, field, setSubjects}: Props) 
       setSubjects(selectedSubjects.map(subject => ({label: subject.name, value: subject.id})))
     }
   }
-
   const sortedSubjects = subjects.slice().sort((a, b) => a.name.localeCompare(b.name))
   const sortedCoursePeriods = coursePeriods.slice().sort((a, b) => a.name.localeCompare(b.name))
-
+  console.log('sortedCoursePeriods', subjects.flatMap(subject => subject.coursePeriods).map(cp => ({name: cp.name, id: cp.id})))
   return (
     <FormItem className="flex flex-col">
       <FormLabel>Quais matérias vou estudar:</FormLabel>

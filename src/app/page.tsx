@@ -10,7 +10,6 @@ const subjectsRepository = SubjectRepositorySingleton.getInstance()
 
 export default async function Home() {
   const subjects = await subjectsRepository.findAll()
-
   return (
     <main className="flex min-h-screen flex-col">
       <Header />

@@ -1,7 +1,9 @@
-import React from 'react'
-import { StudyObjectJSON } from '../domain/entities/StudyObject'
-import CheckboxWithText from './ui/checkbox-with-text';
-import { usePlanningsContext } from './PlanningsContext';
+import React from "react";
+import { StudyObjectJSON } from "../domain/entities/StudyObject";
+import { usePlanningsContext } from "./PlanningsContext";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
+import { cn } from "../lib/utils";
 
 type Props = {
   studyObject: StudyObjectJSON;
@@ -10,19 +12,22 @@ type Props = {
   planningId: string;
   studyDayId: string;
   studyDayDate: string;
-}
+};
 
 const capitalize = (str: string) => {
-  return str.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  }).join(' ')
-}
+  return str
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+};
 
 const getColor = (done: boolean, hasPassed: boolean) => {
-  if(done) return 'bg-green-400'
-  if(hasPassed) return 'bg-red-600'
-  return 'bg-gray-300'
-}
+  if (done) return "bg-green-400";
+  if (hasPassed) return "bg-red-600";
+  return "bg-gray-300";
+};
 
 const PlanningStudyObjectView = ({
   done,
@@ -30,37 +35,42 @@ const PlanningStudyObjectView = ({
   studyObject,
   planningId,
   studyDayId,
-  studyDayDate
+  studyDayDate,
 }: Props) => {
-  const {toggleStudyObjectDone} = usePlanningsContext()
+  const { toggleStudyObjectDone } = usePlanningsContext();
 
-  const date = new Date(studyDayDate)
-  const now = new Date()
+  const date = new Date(studyDayDate);
+  const now = new Date();
   const hasPassed = date < now;
-  const color = getColor(done, hasPassed)
+  const bgColor = getColor(done, hasPassed);
 
   return (
-    <div key={studyObject.id} className={`${color} bg-opacity-15 p-5 space-y-3`}>
-      <div className='space-y-1 xl:space-y-2'>
+    <div key={studyObject.id} className={cn("p-5 space-y-3", `${bgColor}/15`)}>
+      <div className="space-y-1 xl:space-y-2">
         <h3 className="text-xl font-bold tracking-tighter sm:text-xl">
           {studyObject.subjectName}
         </h3>
-        <h4 className={`font-semibold`}>
-          {capitalize(studyObject.name)}
-        </h4>
+        <h4 className={`font-semibold`}>{capitalize(studyObject.name)}</h4>
         <p className="max-w-[900px] font-semibold text-gray-500 md:text-base dark:text-gray-400">
           {hours} horas
         </p>
       </div>
-      <CheckboxWithText checked={done} onChange={() => toggleStudyObjectDone(planningId, studyDayId, studyObject.id)}>
-        {
-          done ?
-            <span className='line-through'>Concluído</span> :
-            <span className=''>Pendente</span>
+      <Checkbox
+        id={`study-object-${studyObject.id}`}
+        checked={done}
+        onChange={() =>
+          toggleStudyObjectDone(planningId, studyDayId, studyObject.id)
         }
-      </CheckboxWithText>
+      />
+      <Label htmlFor={`study-object-${studyObject.id}`} className="text-sm">
+        {done ? (
+          <span className="line-through">Concluído</span>
+        ) : (
+          <span className="">Pendente</span>
+        )}
+      </Label>
     </div>
-  )
-}
+  );
+};
 
-export default PlanningStudyObjectView
+export default PlanningStudyObjectView;

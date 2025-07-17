@@ -1,7 +1,5 @@
-import React from 'react'
-import { WeekGroup } from '../domain/WeekGroup'
 import { WeekDay } from '../domain/WeekDay'
-import CheckboxWithText from './ui/checkbox-with-text'
+import { WeekGroup } from '../domain/WeekGroup'
 import PlanningStudyObjectView from './PlanningStudyObjectView'
 
 type Props = {
@@ -72,7 +70,7 @@ const Week = ({week, index, planningId}: Props) => {
               ))}
             </div>
           ) : (
-            <div className="space-y-4 bg-opacity-15 p-5 bg-gray-300">
+            <div className="space-y-4 p-5 bg-gray-300/15">
               <div className="space-y-1 xl:space-y-2">
                 <h3 className="text-xl font-bold tracking-tighter sm:text-xl">Dia livre</h3>
                 <p className="max-w-[900px]  text-gray-500 md:text-base dark:text-gray-400">
@@ -84,7 +82,7 @@ const Week = ({week, index, planningId}: Props) => {
 
           return (
             <div key={key} className={`space-y-3 py-3 lg:space-y-4 p-2 ${isToday ? 
-              'border-2 border-blue-300 bg-blue-100 bg-opacity-10' : 
+              'border-2 border-blue-300 bg-blue-100/20' : 
               ''}
             `}>
               {header}
