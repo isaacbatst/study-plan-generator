@@ -68,11 +68,14 @@ async function main() {
       })
 
       if (existingSubject) {
-        // Update existing subject
+        // Update existing subject and connect to course period
         await tx.subject.update({
           where: { id: subject.id },
           data: {
             name: subject.name,
+            coursePeriods: {
+              set: subject.periodId ? [{ id: subject.periodId }] : []
+            }
           }
         })
 
@@ -81,11 +84,14 @@ async function main() {
           where: { subjectId: subject.id }
         })
       } else {
-        // Create new subject
+        // Create new subject and connect to course period
         await tx.subject.create({
           data: {
             id: subject.id,
             name: subject.name,
+            coursePeriods: {
+              connect: subject.periodId ? [{ id: subject.periodId }] : []
+            }
           }
         })
       }

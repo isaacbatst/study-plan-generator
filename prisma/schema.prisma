@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,9 +18,9 @@ model Course {
   name          String
   createdAt     DateTime       @default(now())
   version       Int
-  coursePeriods CoursePeriod[]
   institutionId String
   institution   Institution    @relation(fields: [institutionId], references: [id])
+  coursePeriods CoursePeriod[]
 }
 
 model CoursePeriod {
@@ -34,16 +28,16 @@ model CoursePeriod {
   position Int
   courseId String
   course   Course    @relation(fields: [courseId], references: [id])
-  subjects Subject[]
+  subjects Subject[] @relation("CoursePeriodToSubject")
 
   @@unique([courseId, position])
 }
 
 model Subject {
   id            String         @id @default(uuid())
-  coursePeriods CoursePeriod[]
   name          String
   studyObjects  StudyObject[]
+  coursePeriods CoursePeriod[] @relation("CoursePeriodToSubject")
 }
 
 model StudyObject {
