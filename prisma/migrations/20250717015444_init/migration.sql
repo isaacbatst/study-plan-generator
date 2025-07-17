@@ -48,7 +48,9 @@ CREATE TABLE "StudyObject" (
 -- CreateTable
 CREATE TABLE "_CoursePeriodToSubject" (
     "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_CoursePeriodToSubject_AB_pkey" PRIMARY KEY ("A","B")
 );
 
 -- CreateIndex
@@ -56,9 +58,6 @@ CREATE UNIQUE INDEX "CoursePeriod_courseId_position_key" ON "CoursePeriod"("cour
 
 -- CreateIndex
 CREATE UNIQUE INDEX "StudyObject_subjectId_position_key" ON "StudyObject"("subjectId", "position");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_CoursePeriodToSubject_AB_unique" ON "_CoursePeriodToSubject"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_CoursePeriodToSubject_B_index" ON "_CoursePeriodToSubject"("B");
