@@ -1,25 +1,16 @@
-import { Course } from "../../../src/domain/entities/Course";
+import { randomUUID } from 'crypto';
 
-const coursesProps = {
+export const courses = {
   computerScience: {
+    id: randomUUID(),
     name: 'Ciência da Computação',
   },
   systemsAnalysis: {
+    id: randomUUID(),
     name: 'Análise e Desenvolvimento de Sistemas',
   },
   cybersecurity: {
+    id: randomUUID(),
     name: 'Cybersecurity',
   }
 }
-
-export const courses = Object.fromEntries(
-  Object.entries(coursesProps).map(([key, value]) => {
-    const course = Course.create({
-      name: value.name,
-    })
-    if (course.isLeft()) {
-      throw new Error(course.getLeft())
-    }
-    return [key, course.getRight()]
-  })
-) as Record<keyof typeof coursesProps, Course>

@@ -1,74 +1,53 @@
-import { Course } from "../../../src/domain/entities/Course";
-import { CoursePeriod, CoursePeriodProps } from "../../../src/domain/entities/CoursePeriod";
-import { Subject } from "../../../src/domain/entities/Subject";
+import { randomUUID } from 'crypto';
 import { courses } from "./courses";
-import { subjects } from "./subjects";
 
-type PeriodProps = {
-  position: number
-}
-
-const computerSciencePeriods: [Course, PeriodProps[]] = [
-  courses.computerScience,
-  [
-    // {
-    //   position: 0,
-    // },
-    // {
-    //   position: 1,
-    // },
-    // {
-    //   position: 2,
-    // },
-    {
-      position: 3,
-    },
-  ],
+const computerSciencePeriods = [
+  {
+    id: randomUUID(),
+    position: 0,
+    courseId: courses.computerScience.id,
+  },
+  {
+    id: randomUUID(),
+    position: 1,
+    courseId: courses.computerScience.id,
+  },
+  {
+    id: randomUUID(),
+    position: 2,
+    courseId: courses.computerScience.id,
+  },
+  {
+    id: randomUUID(),
+    position: 3,
+    courseId: courses.computerScience.id,
+  },
 ];
 
-// const cybersecurityPeriods: [Course, PeriodProps[]] = [courses.cybersecurity, [
-//   {
-//     position: 0,
-//   },
-//   {
-//     position: 1,
-//   },
-// ]]
+const cybersecurityPeriods = [
+  {
+    id: randomUUID(),
+    position: 0,
+    courseId: courses.cybersecurity.id,
+  },
+  {
+    id: randomUUID(),
+    position: 1,
+    courseId: courses.cybersecurity.id,
+  },
+];
 
-// const systemsAnalysisPeriods: [Course, (PeriodProps | null)[]] = [courses.systemsAnalysis, [
-//   null,
-//   {
-//     position: 1,
-//   },
-// ]]
+const systemsAnalysisPeriods = [
+  null,
+  {
+    id: randomUUID(),
+    position: 1,
+    courseId: courses.systemsAnalysis.id,
+  },
+];
 
-const periodsProps = new Map([
-  computerSciencePeriods,
-  // cybersecurityPeriods,
-  // systemsAnalysisPeriods,
-])
-
-const coursePeriods = new Map<Course, (CoursePeriod | null)[]>()
-
-periodsProps.forEach((periodProps, course) => {
-  const periods = periodProps.map(period => {
-    if (!period) {
-      return null
-    }
-
-    const coursePeriod = CoursePeriod.create({
-      ...period,
-      course,
-    })
-
-    if (coursePeriod.isLeft()) {
-      throw new Error(coursePeriod.getLeft())
-    }
-
-    return coursePeriod.getRight()
-  })
-
-  coursePeriods.set(course, periods)
-})
-
-export { coursePeriods }
+export const coursePeriods = new Map([
+  [courses.computerScience, computerSciencePeriods],
+  [courses.cybersecurity, cybersecurityPeriods],
+  [courses.systemsAnalysis, systemsAnalysisPeriods],
+]);
