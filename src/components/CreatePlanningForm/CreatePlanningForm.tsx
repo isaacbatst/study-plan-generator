@@ -25,6 +25,7 @@ import { CreatePlanningFormSchema, CreatePlanningFormSchemaType } from "./Create
 import CreatePlanningFormSubjectSelect from "./CreatePlanningFormSubjectSelect"
 import {v4} from 'uuid';
 import CreatePlanningFormAvailabilityPerWeekday from "./CreatePlanningFormAvailabilityPerWeekday"
+import { cn } from "../../lib/utils"
 
 type Props = {
   subjects: SubjectJSON[]
@@ -154,11 +155,12 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
     }
   }
 
-  const dynamicClasses = insideModal ? '' : 'shadow-lg rounded-lg lg:p-10 bg-white max-w-[100vw] lg:max-w-[50vw]'
   return (
-    <div className={`text-center xl:text-left flex justify-center items-center flex-1 px-3 py-10 max-w-full ${dynamicClasses}`}>
+    <div className={cn("text-center xl:text-left flex justify-center items-center flex-1 px-3 py-10 max-w-full", {
+      'shadow-lg rounded-lg p-5 lg:p-10 bg-white max-w-lg xl:max-w-2xl': !insideModal,
+    })}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col flex-1">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col flex-1 max-w-full">
           {form.formState.errors.root?.error && <p>{form.formState.errors.root.error.message}</p>}
           <FormField
             control={form.control}
@@ -184,7 +186,6 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
           <Collapsible
             open={isAdvancedOpen}
             onOpenChange={setIsAdvancedOpen}
-            className="space-y-8"
           >
             <div className="flex items-center justify-center space-x-4">
               <h4 className="text-sm font-semibold">

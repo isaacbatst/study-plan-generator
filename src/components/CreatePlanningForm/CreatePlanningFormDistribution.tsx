@@ -23,11 +23,11 @@ const CreatePlanningFormDistribution = ({field}: Props) => {
         value={field.value}
         onValueChange={field.onChange}
         type="single"
-        className="flex flex-col sm:flex-row items-stretch"
+        className='max-w-full'
       >
         {
           Object.entries(distributions).map(([value, label]) => (
-            <ToggleGroupItem className="h-auto min-h-10 py-2" key={value} value={value}>{label}</ToggleGroupItem>
+            <ToggleGroupItem className="whitespace-normal py-2 h-auto" key={value} value={value}>{label}</ToggleGroupItem>
           ))
         }
       </ToggleGroup>
