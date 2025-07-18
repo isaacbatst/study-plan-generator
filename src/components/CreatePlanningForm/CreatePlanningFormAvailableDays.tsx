@@ -23,7 +23,7 @@ const CreatePlanningFormAvailableDays = ({field}: Props) => {
   const { watch, setValue } = useFormContext<CreatePlanningFormSchemaType>()
   const availableDays = watch('availableDays')
   const hoursPerDay = watch('hoursPerDay')
-  const previousValue = React.useRef<boolean[]>()
+  const previousValue = React.useRef<boolean[]>(undefined)
 
   React.useEffect(() => {
     if(previousValue.current){
@@ -42,7 +42,7 @@ const CreatePlanningFormAvailableDays = ({field}: Props) => {
   
 
   return (
-    <FormItem className="flex flex-col ">
+    <FormItem className="flex flex-col items-center mb-5">
       <FormLabel className='mb-2'>Dias que poderei me dedicar:</FormLabel>
       <ToggleGroup type="multiple" className='flex-wrap'
         value={Object.values(WeekDay).filter((_, index) => field.value[index])}

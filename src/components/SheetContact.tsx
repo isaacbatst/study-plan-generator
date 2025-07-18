@@ -46,7 +46,7 @@ export function SheetContact() {
             @isaacbatst
           </SheetDescription>
         </SheetHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 p-4">
           <div className="flex flex-col">
             {links.map((link) => (
               <div key={link.value} className="flex justify-between items-center">

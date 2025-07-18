@@ -187,7 +187,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
             open={isAdvancedOpen}
             onOpenChange={setIsAdvancedOpen}
           >
-            <div className="flex items-center justify-center space-x-4">
+            <div className="flex items-center justify-center space-x-4 mb-3">
               <h4 className="text-sm font-semibold">
                 Configurações avançadas
               </h4>
