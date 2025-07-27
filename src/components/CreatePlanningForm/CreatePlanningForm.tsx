@@ -205,7 +205,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
                 render={({ field }) => (
                   <CreatePlanningFormAvailableDays field={field} />
                 )} />
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col items-center space-y-4">
                 <FormLabel htmlFor="hoursPerDay">
                   Horas de estudo por dia
                 </FormLabel>
@@ -225,7 +225,7 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
                   onOpenChange={setIsDifferentHoursPerDay}
                 >
                   <CollapsibleContent>
-                    <div className="flex flex-col lg:flex-row space-x-2 justify-center">
+                    <div className="flex flex-row flex-wrap space-y-2 space-x-2 justify-center">
                       {
                         availabilityPerWeekdayFields
                           .map((field, index) => (
@@ -242,9 +242,9 @@ export default function CreatePlanningForm({subjects, savePlanning, insideModal 
                     </div>
                   </CollapsibleContent>
                   <CollapsibleTrigger asChild>
-                    <Button variant='ghost' size='sm'>
+                    <Button variant="outline" size='sm'>
                       {
-                        isDifferentHoursPerDay ? 'Mesma quantidade de horas por dia' : 'Quero variar o número de horas por dia'
+                        isDifferentHoursPerDay ? 'Quero horas iguais todo dia' : 'Quero variar o número de horas por dia'
                       }
                     </Button>
                   </CollapsibleTrigger>

@@ -14,7 +14,7 @@ const CreatePlanningFormAvailabilityPerWeekday = (props: Props) => {
   const availableDays = useWatch({ name: 'availableDays' })
   return (
     <FormItem>
-      <FormLabel>{days[props.index]}</FormLabel>
+      <FormLabel className='text-xs text-center inline-block'>{days[props.index]}</FormLabel>
       <FormControl>
         <Input placeholder="2" {...props.field} 
           disabled={!availableDays[props.index]}
