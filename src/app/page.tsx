@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import Plannings from "../components/Plannings";
 import { Toaster } from "../components/ui/sonner";
-import UploadFile from "../components/UploadFile";
 import { SubjectRepositorySingleton } from "../infra/persistance/repository/SubjectRepositoryMemorySingleton";
 import Wrapper from "./wrapper";
 
@@ -15,7 +14,6 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col">
       <Header />
       <Wrapper>
-        <div className="self-center py-2"><UploadFile /></div>
         <Plannings subjects={subjects} />
       </Wrapper>
       <Toaster closeButton />

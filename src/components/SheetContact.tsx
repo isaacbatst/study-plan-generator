@@ -20,6 +20,11 @@ const links = [
     valueLabel: 'isaacbatst@gmail.com'
   },
   {
+    label: 'WhatsApp',
+    value: 'https://wa.me/5584994531473',
+    valueLabel: '+5584994531473'
+  },
+  {
     label: 'Telegram',
     value: 'https://t.me/isaacbatst',
     valueLabel: 't.me/isaacbatst'
@@ -53,7 +58,7 @@ export function SheetContact() {
                 <Label htmlFor={link.value}>
                   {link.label}
                 </Label>
-                <a href={link.value} id={link.value}>
+                <a href={link.value} target="_blank" id={link.value}>
                   <Button variant='link' className='col-span-3'>
                     {link.valueLabel}
                   </Button>

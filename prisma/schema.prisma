@@ -33,11 +33,20 @@ model CoursePeriod {
   @@unique([courseId, position])
 }
 
+enum SubjectStatus {
+  pending
+  approved
+  rejected
+}
+
 model Subject {
-  id            String         @id @default(uuid())
-  name          String
-  studyObjects  StudyObject[]
-  coursePeriods CoursePeriod[] @relation("CoursePeriodToSubject")
+  id                   String         @id @default(uuid())
+  name                 String
+  createdAt            DateTime       @default(now())
+  studyObjects         StudyObject[]
+  coursePeriods        CoursePeriod[] @relation("CoursePeriodToSubject")
+  coursePeriodToCreate String?
+  status               SubjectStatus  @default(approved)
 }
 
 model StudyObject {

@@ -5,12 +5,14 @@ import CreatePlanningForm from './CreatePlanningForm/CreatePlanningForm'
 import { CreatePlanningFormDialog } from './CreatePlanningForm/CreatePlanningFormDialog'
 import { usePlanningsContext } from './PlanningsContext'
 import PlanningView from './PlanningView'
+import { useSubjects } from '../hooks/useSubjects'
 
 type Props = {
   subjects: SubjectJSON[]
 }
 
-const Plannings = ({subjects}: Props) => {
+const Plannings = ({subjects: defaultSubjects}: Props) => {
+  const subjects = useSubjects(defaultSubjects)
   const {plannings, isLoading, addStudyPlan,removeStudyPlan} = usePlanningsContext()
   const [showInitialForm, setShowInitialForm] = useState<boolean>(plannings.length === 0)
   
@@ -33,7 +35,7 @@ const Plannings = ({subjects}: Props) => {
           </svg>
         </div>
       }
-      {!isLoading && !showInitialForm && <CreatePlanningFormDialog savePlanning={addStudyPlan} subjects={subjects}  />}
+      {!isLoading && !showInitialForm && <CreatePlanningFormDialog savePlanning={addStudyPlan} subjects={subjects.data}  />}
       <div className="flex flex-col items-center gap-5 sm:py-5 flex-1 sm:flex-grow-0">
         {!isLoading && showInitialForm && 
           <CreatePlanningForm 
@@ -41,7 +43,7 @@ const Plannings = ({subjects}: Props) => {
               addStudyPlan(studyPlan)
               setShowInitialForm(false)
             }} 
-            subjects={subjects} 
+            subjects={subjects.data} 
           />}
         {plannings.map((studyPlan) => (
           <PlanningView key={studyPlan.id} removeStudyPlan={removeStudyPlan} studyPlan={studyPlan} />

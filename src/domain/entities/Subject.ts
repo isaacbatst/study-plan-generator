@@ -2,19 +2,23 @@ import {v4} from 'uuid';
 import { Either } from "./either/Either";
 import { StudyObject, StudyObjectJSON } from "./StudyObject";
 import { CoursePeriod, CoursePeriodJSON } from "./CoursePeriod";
+import { SubjectStatus } from '@prisma/client';
 
 export type SubjectProps = {
   id?: string;
   name: string;
   studyObjects: StudyObject[];
   coursePeriods?: CoursePeriod[];
+  status?: SubjectStatus;
 };
 
 export type SubjectJSON = {
   id: string;
+  createdAt?: Date;
   name: string;
   studyObjects: StudyObjectJSON[];
   coursePeriods: CoursePeriodJSON[];
+  status?: SubjectStatus;
 };
 
 export class Subject {
@@ -22,7 +26,8 @@ export class Subject {
     private id: string,
     private name: string,
     private studyObjects: StudyObject[],
-    private coursePeriods: CoursePeriod[]
+    private coursePeriods: CoursePeriod[],
+    private status: SubjectStatus = SubjectStatus.approved
   ) {}
 
   static create(props: SubjectProps): Either<string, Subject> {
@@ -38,6 +43,7 @@ export class Subject {
       json.name,
       json.studyObjects.map((studyObject) => StudyObject.fromJSON(studyObject)),
       json.coursePeriods.map((coursePeriod) => CoursePeriod.fromJSON(coursePeriod)),
+      json.status ?? SubjectStatus.approved
     );
   }
 
@@ -64,6 +70,7 @@ export class Subject {
       name: this.name,
       studyObjects: this.studyObjects.map((studyObject) => studyObject.toJSON()),
       coursePeriods: this.coursePeriods.map((coursePeriod) => coursePeriod.toJSON()),
+      status: this.status,
     };
   }
 }

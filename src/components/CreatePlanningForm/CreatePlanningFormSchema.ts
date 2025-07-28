@@ -11,7 +11,8 @@ export const CreatePlanningFormSchema = z.object({
   })),
   subjects: z.array(z.object({
     label: z.string(),
-    value: z.string()
+    value: z.string(),
+    status: z.string().optional()
   })).min(1, {
     message: 'É necessário pelo menos uma matéria'
   }),

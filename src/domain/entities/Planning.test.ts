@@ -613,7 +613,6 @@ describe("Planning", () => {
     const studyDaysOrError = planning.getStudyDays();
     expect(studyDaysOrError.isRight()).toBe(true);
     const studyDays = studyDaysOrError.getRight();
-    console.log(studyDays);
     expect(studyDays[0].getDate()).toEqual(new Date("2021-01-04")); // monday
     expect(studyDays[0].getHoursLeft()).toBe(0);
     expect(studyDays[0].getHoursPerStudyObjects().get(studyObjectMath1)).toBe(2);
