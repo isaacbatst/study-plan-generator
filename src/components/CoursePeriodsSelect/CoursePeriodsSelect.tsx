@@ -31,7 +31,7 @@ const CoursePeriodsSelect = ({
   subjects,
   creatable = false,
   selected,
-  placeholder = "Selecione o período e o curso...",
+  placeholder = "Ex: 2º Período de Engenharia de Software",
   className,
   onChange,
   onCreateOption,

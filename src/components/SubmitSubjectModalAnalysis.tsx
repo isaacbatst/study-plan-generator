@@ -1,7 +1,7 @@
 import { SubjectStatus } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
-import { ptBR } from 'date-fns/locale';
-import { Info } from "lucide-react";
+import { ptBR } from "date-fns/locale";
+import { FileSearch } from "lucide-react";
 import { useSubjects } from "../hooks/useSubjects";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -15,14 +15,14 @@ type Props = {};
 
 const SubmitSubjectModalAnalysis = (props: Props) => {
   const subjects = useSubjects([], { status: SubjectStatus.pending });
-  if(!subjects.data || subjects.data.length === 0) {
-    return <></>
+  if (!subjects.data || subjects.data.length === 0) {
+    return <></>;
   }
   return (
     <Collapsible>
       <CollapsibleTrigger asChild>
         <Button variant="outline" className="w-full">
-          <Info className="mr-2" />
+          <FileSearch />
           Confira as matérias em análise
         </Button>
       </CollapsibleTrigger>
@@ -37,7 +37,8 @@ const SubmitSubjectModalAnalysis = (props: Props) => {
                   {subject.name}
                   {subject.createdAt && (
                     <span className="text-muted-foreground">
-                      {" "}, enviado {formatDistanceToNow(new Date(subject.createdAt), {
+                      {" - "}
+                      {formatDistanceToNow(new Date(subject.createdAt), {
                         addSuffix: true,
                         locale: ptBR,
                       })}

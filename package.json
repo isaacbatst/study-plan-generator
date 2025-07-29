@@ -48,7 +48,7 @@
     "react-day-picker": "^9.8.0",
     "react-dom": "^19",
     "react-dropzone": "^14.3.8",
-    "react-hook-form": "^7.60.0",
+    "react-hook-form": "^7.61.1",
     "react-select": "^5.10.2",
     "sonner": "^2.0.6",
     "swr": "^2.3.4",

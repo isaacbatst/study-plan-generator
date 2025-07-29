@@ -4,8 +4,6 @@ import { extractTextFromPDF } from "./unpdf";
 import { StudyObject } from "../../../domain/entities/StudyObject";
 import { SubjectRepositorySingleton } from "../../../infra/persistance/repository/SubjectRepositoryMemorySingleton";
 import { Subject } from "../../../domain/entities/Subject";
-import prisma from "../../../infra/persistance/prisma";
-import { SubjectStatus } from "@prisma/client";
 
 export const config = {
   api: {
@@ -65,40 +63,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    try {
-      const created = await prisma.subject.create({
-        data: {
-          name: parsed.subjectName,
-          studyObjects: {
-            createMany: {
-              data: parsed.studyObjects.map((obj, i) => ({
-                name: obj,
-                hours: 2,
-                position: i,
-              })),
-            },
-          },
-          status: SubjectStatus.pending,
-          ...(isNewCoursePeriod ? {
-            coursePeriodToCreate: coursePeriod.toString(),
-          } : { coursePeriods: { connect: { id: coursePeriod.toString() } } }),
-        },
-        include: {
-          studyObjects: true,
-          coursePeriods: true,
-        },
-      });
-      return NextResponse.json(
-        created,
-        { status: 201 }
-      );
-    } catch (error) {
-      console.error("Error saving subject to database:", error);
-      return NextResponse.json(
-        { error: "Error saving subject to database" },
-        { status: 500 }
-      );
-    }
+    // Apenas retornar os dados processados, sem salvar no banco
+    const processedData = {
+      subjectName: parsed.subjectName,
+      studyObjects: parsed.studyObjects.map((obj, i) => ({
+        name: obj,
+        hours: 2,
+        position: i,
+      })),
+      coursePeriod: coursePeriod.toString(),
+      isNewCoursePeriod
+    };
+    
+    return NextResponse.json(
+      processedData,
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error extracting text from PDF:", error);
     return NextResponse.json(

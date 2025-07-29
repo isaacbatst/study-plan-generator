@@ -58,7 +58,6 @@ export class SubjectRepositoryPrisma {
       };
     };
   }>): SubjectJSON {
-    console.log("Mapping subject:", subject.name, "created at:", subject.createdAt);
     return {
       id: subject.id,
       name: subject.name,

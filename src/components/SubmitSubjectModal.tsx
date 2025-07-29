@@ -22,6 +22,7 @@ import {
   Check,
   CheckCircle2,
   Info,
+  LightbulbIcon,
   Loader2,
   LoaderCircle,
   Mail,
@@ -39,6 +40,10 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import SubmitSubjectModalAnalysis from "./SubmitSubjectModalAnalysis";
+import { Label } from "./ui/label";
+import SubmitSubjectModalConfirmation, {
+  ConfirmSubjectData,
+} from "./SubmitSubjectModalConfirmation";
 
 type Props = {
   subjects: SubjectJSON[];
@@ -53,8 +58,14 @@ const SubmitSubjectModal = (props: Props) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isShowingSuccessMessage, setIsShowingSuccessMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [processedData, setProcessedData] = useState<ConfirmSubjectData | null>(
+    null
+  );
+  const [currentStep, setCurrentStep] = useState<
+    "upload" | "confirmation" | "success"
+  >("upload");
 
-  const handleSubmit = async () => {
+  const handleUpload = async () => {
     try {
       setIsSubmitting(true);
       if (!coursePeriod) {
@@ -79,15 +90,44 @@ const SubmitSubjectModal = (props: Props) => {
         const message =
           "error" in errorData
             ? errorData.error
-            : "Erro ao enviar a matéria. Tente novamente mais tarde.";
+            : "Erro ao processar a matéria. Tente novamente mais tarde.";
         toast.error(message);
         return;
       }
-      await mutate("/api/subjects");
-      setIsShowingSuccessMessage(true);
-      resetForm();
+
+      const data = await response.json();
+      setProcessedData(data);
+      setCurrentStep("confirmation");
+    } catch (error) {
+      toast.error("Erro ao processar o arquivo. Tente novamente mais tarde.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirm = async (data: ConfirmSubjectData) => {
+    try {
+      const response = await fetch("/api/subjects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        const message =
+          "error" in errorData
+            ? errorData.error
+            : "Erro ao criar a matéria. Tente novamente mais tarde.";
+        throw new Error(message);
+      }
+
+      await mutate("/api/subjects");
+      setCurrentStep("success");
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -95,6 +135,8 @@ const SubmitSubjectModal = (props: Props) => {
     setCoursePeriod(null);
     setIsCoursePeriodNew(false);
     setSelectedFile(null);
+    setProcessedData(null);
+    setCurrentStep("upload");
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -113,74 +155,102 @@ const SubmitSubjectModal = (props: Props) => {
       <DialogTrigger asChild>
         <Button variant="ghost">Não encontrou suas matérias?</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        style={{
+          maxHeight: "90vh",
+        }}
+        className="flex flex-col"
+      >
         <DialogHeader>
           <DialogTitle>Envie uma matéria</DialogTitle>
         </DialogHeader>
         <DialogDescription className="text-sm text-muted-foreground">
           Contribua enviando uma matéria que não está na lista.
         </DialogDescription>
-        {isShowingSuccessMessage ? (
-          <SubmitSubjectModalSuccess
-            onBack={() => {
-              setIsShowingSuccessMessage(false);
-            }}
-          />
-        ) : (
+        {currentStep === "upload" && (
           <>
-            <div className="flex flex-col items-center justify-center">
-              <CoursePeriodsSelect
-                className="self-stretch mb-2"
-                subjects={props.subjects}
-                creatable
-                selected={coursePeriod ?? undefined}
-                isOptionDisabled={(option) => option.status === "pending"}
-                placeholder="Selecione ou crie um período do curso..."
-                onCreateOption={(inputValue) => {
-                  setCoursePeriod({ label: inputValue, value: inputValue });
-                  setIsCoursePeriodNew(true);
-                }}
-                onChange={(coursePeriod) => {
-                  if (coursePeriod) {
-                    setCoursePeriod(coursePeriod ?? null);
-                    setIsCoursePeriodNew(false);
-                  }
-                }}
-              />
-              <UploadFile
-                onFileAccepted={handleFileAccepted}
-                selectedFile={selectedFile}
-              />
+            <div className="flex-1 overflow-y-auto py-2">
+              <div className="flex flex-col items-center justify-center gap-2 mb-2">
+                <Label className="text-sm text-muted-foreground">
+                  Selecione o curso/período
+                </Label>
+                <CoursePeriodsSelect
+                  className="self-stretch"
+                  subjects={props.subjects}
+                  creatable
+                  selected={coursePeriod ?? undefined}
+                  isOptionDisabled={(option) => option.status === "pending"}
+                  onCreateOption={(inputValue) => {
+                    setCoursePeriod({ label: inputValue, value: inputValue });
+                    setIsCoursePeriodNew(true);
+                  }}
+                  onChange={(coursePeriod) => {
+                    if (coursePeriod) {
+                      setCoursePeriod(coursePeriod ?? null);
+                      setIsCoursePeriodNew(false);
+                    }
+                  }}
+                />
+                <UploadFile
+                  onFileAccepted={handleFileAccepted}
+                  selectedFile={selectedFile}
+                />
+                <Alert>
+                  <LightbulbIcon />
+                  <AlertTitle>Seu curso/período não está na lista?</AlertTitle>
+                  <AlertDescription>
+                    Digite no primeiro campo, por exemplo, "2º Período de
+                    Engenharia de Software", confirme e envie o PDF da matéria
+                    que deseja adicionar.
+                  </AlertDescription>
+                </Alert>
+              </div>
+              <SubmitSubjectModalAnalysis />
             </div>
-            <SubmitSubjectModalAnalysis />
-            <DialogFooter>
+            <DialogFooter className="sticky bottom-0 bg-background pt-4 pb-2 z-10">
               <DialogClose asChild>
                 <Button variant="outline">Cancelar</Button>
               </DialogClose>
               <Button
                 type="button"
-                onClick={handleSubmit}
+                onClick={handleUpload}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
-                    <LoaderCircle className="animate-spin mr-2" />
+                    <LoaderCircle className="animate-spin" />
                     <RotativeText
                       texts={[
-                        "Processando com AI",
-                        "Analisando o PDF",
-                        "Extraindo dados",
-                        "Quase lá...",
+                        "Analisando o PDF 🔍",
+                        "Extraindo Dados 🎲",
+                        "Processando com AI ✨",
+                        "Quase lá... 🥅",
                       ]}
-                      ms={5000}
+                      ms={3000}
                     />
                   </>
                 ) : (
-                  "Enviar"
+                  "Processar"
                 )}
               </Button>
             </DialogFooter>
           </>
+        )}
+
+        {currentStep === "confirmation" && processedData && (
+          <SubmitSubjectModalConfirmation
+            data={processedData}
+            onConfirm={handleConfirm}
+            onBack={() => setCurrentStep("upload")}
+          />
+        )}
+
+        {currentStep === "success" && (
+          <SubmitSubjectModalSuccess
+            onBack={() => {
+              resetForm();
+            }}
+          />
         )}
       </DialogContent>
     </Dialog>
