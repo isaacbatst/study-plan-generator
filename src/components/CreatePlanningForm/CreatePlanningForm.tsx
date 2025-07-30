@@ -244,7 +244,7 @@ export default function CreatePlanningForm({
             {endDate && (
               <FormDescription>
                 <span className="font-semibold">Previsão de término:</span>{" "}
-                {endDate.toLocaleDateString('pt-BR')}
+                {endDate.toLocaleDateString("pt-BR")}
               </FormDescription>
             )}
           </div>
