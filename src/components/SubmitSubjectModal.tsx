@@ -169,7 +169,7 @@ const SubmitSubjectModal = (props: Props) => {
         </DialogDescription>
         {currentStep === "upload" && (
           <>
-            <div className="flex-1 overflow-y-auto py-2">
+            <div className="flex-1 overflow-y-auto p-2">
               <div className="flex flex-col items-center justify-center gap-2 mb-2">
                 <Label className="text-sm text-muted-foreground">
                   Selecione o curso/período
@@ -185,8 +185,8 @@ const SubmitSubjectModal = (props: Props) => {
                     setIsCoursePeriodNew(true);
                   }}
                   onChange={(coursePeriod) => {
-                    if (coursePeriod) {
-                      setCoursePeriod(coursePeriod ?? null);
+                    setCoursePeriod(coursePeriod ?? null);
+                    if(coursePeriod) {
                       setIsCoursePeriodNew(false);
                     }
                   }}

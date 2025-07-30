@@ -92,7 +92,7 @@ const SubmitSubjectModalConfirmation = ({ data, onConfirm, onBack }: Props) => {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <FormLabel>Objetos de Estudo</FormLabel>
+                <FormLabel>Objetos de Estudo / Horas</FormLabel>
                 <Button
                   type="button"
                   variant="outline"
