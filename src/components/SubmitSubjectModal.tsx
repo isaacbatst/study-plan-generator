@@ -1,5 +1,20 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { LightbulbIcon, LoaderCircle } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { mutate } from "swr";
+import { SubjectJSON } from "../domain/entities/Subject";
+import CoursePeriodsSelect, {
+  CoursePeriodOption,
+} from "./CoursePeriodsSelect/CoursePeriodsSelect";
+import RotativeText from "./RotativeText";
+import SubmitSubjectModalAnalysis from "./SubmitSubjectModalAnalysis";
+import SubmitSubjectModalConfirmation, {
+  ConfirmSubjectData,
+} from "./SubmitSubjectModalConfirmation";
+import SubmitSubjectModalSuccess from "./SubmitSubjectModalSuccess";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogClose,
@@ -10,40 +25,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
-import CoursePeriodsSelect, {
-  CoursePeriodOption,
-} from "./CoursePeriodsSelect/CoursePeriodsSelect";
-import { SubjectJSON } from "../domain/entities/Subject";
-import UploadFile from "./UploadFile";
-import { toast } from "sonner";
-import { Option } from "../lib/Option";
-import {
-  Check,
-  CheckCircle2,
-  Info,
-  LightbulbIcon,
-  Loader2,
-  LoaderCircle,
-  Mail,
-  Phone,
-  Send,
-  Terminal,
-} from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import { mutate } from "swr";
-import SubmitSubjectModalSuccess from "./SubmitSubjectModalSuccess";
-import RotativeText from "./RotativeText";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
-import SubmitSubjectModalAnalysis from "./SubmitSubjectModalAnalysis";
 import { Label } from "./ui/label";
-import SubmitSubjectModalConfirmation, {
-  ConfirmSubjectData,
-} from "./SubmitSubjectModalConfirmation";
+import UploadFile from "./UploadFile";
 
 type Props = {
   subjects: SubjectJSON[];
@@ -51,15 +34,14 @@ type Props = {
 
 const SubmitSubjectModal = (props: Props) => {
   const [coursePeriod, setCoursePeriod] = useState<CoursePeriodOption | null>(
-    null,
+    null
   );
   const [isCoursePeriodNew, setIsCoursePeriodNew] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isShowingSuccessMessage, setIsShowingSuccessMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [processedData, setProcessedData] = useState<ConfirmSubjectData | null>(
-    null,
+    null
   );
   const [currentStep, setCurrentStep] = useState<
     "upload" | "confirmation" | "success"
