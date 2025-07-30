@@ -55,20 +55,22 @@ const PlanningStudyObjectView = ({
           {hours} horas
         </p>
       </div>
-      <Checkbox
-        id={`study-object-${studyObject.id}`}
-        checked={done}
-        onChange={() =>
-          toggleStudyObjectDone(planningId, studyDayId, studyObject.id)
-        }
-      />
-      <Label htmlFor={`study-object-${studyObject.id}`} className="text-sm">
-        {done ? (
-          <span className="line-through">Concluído</span>
-        ) : (
-          <span className="">Pendente</span>
-        )}
-      </Label>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id={`study-object-${studyObject.id}`}
+          checked={done}
+          onCheckedChange={() => {
+            toggleStudyObjectDone(planningId, studyDayId, studyObject.id);
+          }}
+        />
+        <Label htmlFor={`study-object-${studyObject.id}`} className="text-sm">
+          {done ? (
+            <span className="line-through">Concluído</span>
+          ) : (
+            <span className="">Pendente</span>
+          )}
+        </Label>
+      </div>
     </div>
   );
 };
