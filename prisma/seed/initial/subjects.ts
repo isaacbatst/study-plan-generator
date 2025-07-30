@@ -220,7 +220,7 @@ const subjectsProps = {
       '5.3 ACESSO A BANCO DE DADOS EM PYTHON',
       '5.4 PROGRAMAÇÃO DISTRIBUÍDA EM PYTHON',
     ],
-    periodId: coursePeriods.get(courses.computerScience)![1]?.id,
+    periodId: coursePeriods.get(courses.computerScience)![0]?.id,
   },
   dataStructures: {
     id: randomUUID(),
@@ -320,7 +320,7 @@ const subjectsProps = {
       '4.3 ESTATÍSTICA DESCRITIVA',
       '4.4 ESTATÍSTICA INFERENCIAL',
     ],
-    periodId: coursePeriods.get(courses.computerScience)![0]?.id,
+    periodId: coursePeriods.get(courses.computerScience)![1]?.id,
   },
   securityIntroduction: {
     id: randomUUID(),

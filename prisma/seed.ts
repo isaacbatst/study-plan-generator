@@ -108,7 +108,7 @@ async function main() {
       })
     }))
   }, {
-    timeout: 60000
+    timeout: 15000
   })
 }
 
