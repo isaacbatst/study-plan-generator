@@ -34,14 +34,14 @@ type Props = {
 
 const SubmitSubjectModal = (props: Props) => {
   const [coursePeriod, setCoursePeriod] = useState<CoursePeriodOption | null>(
-    null
+    null,
   );
   const [isCoursePeriodNew, setIsCoursePeriodNew] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [processedData, setProcessedData] = useState<ConfirmSubjectData | null>(
-    null
+    null,
   );
   const [currentStep, setCurrentStep] = useState<
     "upload" | "confirmation" | "success"
