@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   if (!coursePeriod) {
     return NextResponse.json(
       { error: "Course period is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -33,14 +33,14 @@ export async function POST(request: NextRequest) {
   if (file.type !== "application/pdf") {
     return NextResponse.json(
       { error: "Only PDF files are allowed" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (file.size > 5 * 1024 * 1024) {
     return NextResponse.json(
       { error: "File size exceeds limit of 5MB" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     if (!text) {
       return NextResponse.json(
         { error: "No text found in PDF" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     if (!parsed) {
       return NextResponse.json(
         { error: "Failed to parse subject from PDF text" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -72,18 +72,15 @@ export async function POST(request: NextRequest) {
         position: i,
       })),
       coursePeriod: coursePeriod.toString(),
-      isNewCoursePeriod
+      isNewCoursePeriod,
     };
-    
-    return NextResponse.json(
-      processedData,
-      { status: 200 }
-    );
+
+    return NextResponse.json(processedData, { status: 200 });
   } catch (error) {
     console.error("Error extracting text from PDF:", error);
     return NextResponse.json(
       { error: "Error extracting text from PDF" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,18 +1,18 @@
-import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover'
-import { format } from 'date-fns'
-import React from 'react'
-import { cn } from '../../lib/utils'
-import { FormItem, FormLabel, FormControl, FormMessage } from '../ui/form'
-import { Button } from '../ui/button'
-import { CreatePlanningFormField } from './CreatePlanningFormSchema'
-import { CalendarIcon } from 'lucide-react'
-import { Calendar } from '../ui/calendar'
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import { format } from "date-fns";
+import React from "react";
+import { cn } from "../../lib/utils";
+import { FormItem, FormLabel, FormControl, FormMessage } from "../ui/form";
+import { Button } from "../ui/button";
+import { CreatePlanningFormField } from "./CreatePlanningFormSchema";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "../ui/calendar";
 
 type Props = {
-  field: CreatePlanningFormField<'startDate'>
-}
+  field: CreatePlanningFormField<"startDate">;
+};
 
-const CreatePlanningFormPeriod = ({field}: Props) => {
+const CreatePlanningFormPeriod = ({ field }: Props) => {
   return (
     <FormItem className="flex flex-col">
       <FormLabel className="mb-2">Quando vou começar:</FormLabel>
@@ -23,13 +23,11 @@ const CreatePlanningFormPeriod = ({field}: Props) => {
               variant="outline"
               className={cn(
                 "pl-3 text-left font-normal",
-                !field.value && "text-muted-foreground"
+                !field.value && "text-muted-foreground",
               )}
             >
               {field.value && field.value ? (
-                <span>
-                  {format(field.value, "dd/MM/yyyy")}
-                </span>
+                <span>{format(field.value, "dd/MM/yyyy")}</span>
               ) : (
                 <span>Selecione a data para começar</span>
               )}
@@ -48,7 +46,7 @@ const CreatePlanningFormPeriod = ({field}: Props) => {
       </Popover>
       <FormMessage />
     </FormItem>
-  )
-}
+  );
+};
 
-export default CreatePlanningFormPeriod
+export default CreatePlanningFormPeriod;

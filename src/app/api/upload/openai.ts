@@ -1,6 +1,6 @@
-import openai from 'openai';
-import {zodTextFormat} from 'openai/helpers/zod'
-import z from 'zod';
+import openai from "openai";
+import { zodTextFormat } from "openai/helpers/zod";
+import z from "zod";
 
 const client = new openai.OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,7 +8,7 @@ const client = new openai.OpenAI({
 
 export const parseSubjectFromPDFText = async (text: string) => {
   const response = await client.responses.parse({
-    model: 'gpt-4.1-nano',
+    model: "gpt-4.1-nano",
     instructions: `Extraia os nome da matéria e a lista de assuntos (objetos de estudo) do plano de ensino.
   
     A lista dos objetos deve conter a numeração e o título de cada objeto de estudo. Os objetos de estudo normalmente ficam na seção "Temas de Aprendizagem". Extraia como objeto de estudo os subtemas, que são os itens numerados dentro dos temas de aprendizagem, incluindo a numeração e o título.
@@ -105,12 +105,15 @@ export const parseSubjectFromPDFText = async (text: string) => {
     `,
     input: text,
     text: {
-      format: zodTextFormat(z.object({
-        subjectName: z.string(),
-        studyObjects: z.array(z.string()),
-      }), "subject"),
-    }
+      format: zodTextFormat(
+        z.object({
+          subjectName: z.string(),
+          studyObjects: z.array(z.string()),
+        }),
+        "subject",
+      ),
+    },
   });
 
   return response.output_parsed;
-}
+};

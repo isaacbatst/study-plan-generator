@@ -36,23 +36,21 @@ type UploadFileProps = {
   selectedFile: File | null;
 };
 
-export default function UploadFile({ onFileAccepted, selectedFile }: UploadFileProps) {
-  const {
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ 
-    accept: { "application/pdf": [] }, 
-    maxFiles: 1,
-    onDrop: (acceptedFiles) => {
-      if (acceptedFiles.length > 0) {
-        onFileAccepted(acceptedFiles[0]);
-      }
-    }
-  });
-  
+export default function UploadFile({
+  onFileAccepted,
+  selectedFile,
+}: UploadFileProps) {
+  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
+    useDropzone({
+      accept: { "application/pdf": [] },
+      maxFiles: 1,
+      onDrop: (acceptedFiles) => {
+        if (acceptedFiles.length > 0) {
+          onFileAccepted(acceptedFiles[0]);
+        }
+      },
+    });
+
   const style = useMemo(
     () => ({
       ...baseStyle,
@@ -60,7 +58,7 @@ export default function UploadFile({ onFileAccepted, selectedFile }: UploadFileP
       ...(isDragAccept ? acceptStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
-    [isFocused, isDragAccept, isDragReject]
+    [isFocused, isDragAccept, isDragReject],
   ) as DropzoneRootProps;
 
   return (
@@ -82,4 +80,3 @@ export default function UploadFile({ onFileAccepted, selectedFile }: UploadFileP
     </section>
   );
 }
-

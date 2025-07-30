@@ -8,15 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 
 export function extractCoursePeriodsOptions(subjects: SubjectJSON[]) {
   const coursePeriods = subjects
-    .flatMap(subject => {
-      return subject.coursePeriods.map(coursePeriod => ({
+    .flatMap((subject) => {
+      return subject.coursePeriods.map((coursePeriod) => ({
         ...coursePeriod,
         status: subject.status,
       }));
     })
     .filter(
       (coursePeriod, index, self) =>
-        self.findIndex((cp) => cp.id === coursePeriod.id) === index
+        self.findIndex((cp) => cp.id === coursePeriod.id) === index,
     );
   const sortedCoursePeriods = coursePeriods
     .slice()

@@ -43,7 +43,7 @@ const SubmitSubjectModalSuccess = ({ onBack }: Props) => {
             <a
               target="_blank"
               href={`https://wa.me/5584994531473?text=${encodeURIComponent(
-                `Olá, gostaria de solicitar a liberação de uma matéria no Planejei.`
+                `Olá, gostaria de solicitar a liberação de uma matéria no Planejei.`,
               )}`}
               className="text-blue-600 hover:underline"
             >

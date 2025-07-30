@@ -1,4 +1,4 @@
-import {v4} from 'uuid';
+import { v4 } from "uuid";
 import { Either } from "./either/Either";
 import { CoursePeriod } from "./CoursePeriod";
 
@@ -21,9 +21,7 @@ export class Course {
     private version: number = 1,
   ) {}
 
-  static create(
-    props: CourseProps,
-  ): Either<string, Course> {
+  static create(props: CourseProps): Either<string, Course> {
     if (!props.id) {
       props.id = v4();
     }
@@ -36,15 +34,15 @@ export class Course {
   }
 
   getId(): string {
-    return this.id
+    return this.id;
   }
 
   getName(): string {
-    return this.name
+    return this.name;
   }
 
   getVersion(): number {
-    return this.version
+    return this.version;
   }
 
   toJSON(): CourseJSON {

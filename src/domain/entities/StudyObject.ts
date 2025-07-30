@@ -1,4 +1,4 @@
-import {v4} from 'uuid';
+import { v4 } from "uuid";
 import { Either } from "./either/Either";
 
 enum StudyObjectError {
@@ -28,22 +28,38 @@ export class StudyObject {
     private name: string,
     private hours: number,
     private position: number,
-    private subjectName: string
+    private subjectName: string,
   ) {}
 
-  static create(props: StudyObjectProps): Either<StudyObjectError, StudyObject> {
-    if(!props.id) {
+  static create(
+    props: StudyObjectProps,
+  ): Either<StudyObjectError, StudyObject> {
+    if (!props.id) {
       props.id = v4();
     }
-    if(props.hours < 0) {
+    if (props.hours < 0) {
       return Either.left(StudyObjectError.NEGATIVE_HOURS);
     }
 
-    return Either.right(new StudyObject(props.id, props.name, props.hours, props.position ?? 0, props.subjectName));
+    return Either.right(
+      new StudyObject(
+        props.id,
+        props.name,
+        props.hours,
+        props.position ?? 0,
+        props.subjectName,
+      ),
+    );
   }
 
   static fromJSON(json: StudyObjectJSON): StudyObject {
-    return new StudyObject(json.id, json.name, json.hours, json.position, json.subjectName);
+    return new StudyObject(
+      json.id,
+      json.name,
+      json.hours,
+      json.position,
+      json.subjectName,
+    );
   }
 
   static getFullName(subjectName: string, name: string): string {

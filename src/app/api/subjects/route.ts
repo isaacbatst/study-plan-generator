@@ -7,25 +7,28 @@ export const GET = async (req: NextRequest) => {
   try {
     const searchParams = req.nextUrl.searchParams;
     const status = searchParams.get("status");
-    if(status && !Object.values(SubjectStatus).includes(status as SubjectStatus)) {
+    if (
+      status &&
+      !Object.values(SubjectStatus).includes(status as SubjectStatus)
+    ) {
       return new Response("Invalid status", { status: 400 });
     }
     const subjectsRepository = SubjectRepositorySingleton.getInstance();
     const subjects = await subjectsRepository.findAll({
-      status: (status as SubjectStatus) ?? SubjectStatus.approved
+      status: (status as SubjectStatus) ?? SubjectStatus.approved,
     });
-    
+
     return new Response(JSON.stringify(subjects), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   } catch (error) {
-    console.error('Error fetching subjects:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    console.error("Error fetching subjects:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
-}
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,13 +37,15 @@ export async function POST(request: NextRequest) {
 
     if (!subjectName || !studyObjects || !coursePeriod) {
       return new Response(
-        JSON.stringify({ error: "Subject name, study objects, and course period are required" }),
-        { 
+        JSON.stringify({
+          error: "Subject name, study objects, and course period are required",
+        }),
+        {
           status: 400,
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-        }
+        },
       );
     }
 
@@ -69,25 +74,19 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return new Response(
-      JSON.stringify(created),
-      { 
-        status: 201,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return new Response(JSON.stringify(created), {
+      status: 201,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("Error creating subject:", error);
-    return new Response(
-      JSON.stringify({ error: "Error creating subject" }),
-      { 
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Error creating subject" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 }

@@ -1,19 +1,27 @@
-import { useMemo } from 'react';
-import { WeekGroup } from '../domain/WeekGroup';
-import Week from './Week';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
-import { Button } from './ui/button';
-import { Trash } from 'lucide-react';
-import { StudyDayJSON } from '../domain/entities/StudyDay';
-import { PlanningJSON } from '../domain/entities/Planning';
+import { useMemo } from "react";
+import { WeekGroup } from "../domain/WeekGroup";
+import Week from "./Week";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
+import { Button } from "./ui/button";
+import { Trash } from "lucide-react";
+import { StudyDayJSON } from "../domain/entities/StudyDay";
+import { PlanningJSON } from "../domain/entities/Planning";
 
 type Props = {
-  studyPlan: PlanningJSON
-  removeStudyPlan: (id: string) => void
-}
+  studyPlan: PlanningJSON;
+  removeStudyPlan: (id: string) => void;
+};
 
 function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
-  const sortedStudyDays = [...studyDays].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  const sortedStudyDays = [...studyDays].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
 
   const weekGroups: WeekGroup[] = [];
   let currentWeek: WeekGroup | null = null;
@@ -26,7 +34,7 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
       // Set "startDate" to the Sunday of the week
       const startDate = new Date(currentDate);
       startDate.setDate(startDate.getDate() - currentDayOfWeek);
-      
+
       currentWeek = {
         startDate: startDate.toISOString(),
         endDate: studyDay.date,
@@ -42,11 +50,11 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
         currentWeek.studyDays.push(studyDay);
       } else {
         weekGroups.push(currentWeek);
-        
+
         // Set "startDate" to the Sunday of the new week
         const startDate = new Date(currentDate);
         startDate.setDate(startDate.getDate() - currentDayOfWeek);
-        
+
         currentWeek = {
           startDate: startDate.toISOString(),
           endDate: studyDay.date,
@@ -63,30 +71,36 @@ function groupStudyDaysByWeek(studyDays: StudyDayJSON[]): WeekGroup[] {
   return weekGroups;
 }
 
-
-const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
+const PlanningView = ({ studyPlan, removeStudyPlan }: Props) => {
   const weekGroups = useMemo(() => {
-    return groupStudyDaysByWeek(studyPlan.studyDays)
-  }, [studyPlan.studyDays])
+    return groupStudyDaysByWeek(studyPlan.studyDays);
+  }, [studyPlan.studyDays]);
 
-  const today = new Date()
-  const todayWeekIndex = weekGroups.findIndex(week => new Date(week.startDate) <= today && new Date(week.endDate) >= today)
-  
-  const createdAt = new Date(studyPlan.createdAt)
-  const createdAtText = `Criado em ${createdAt.toLocaleDateString('pt-BR')} às ${createdAt.toLocaleTimeString('pt-BR')}`
+  const today = new Date();
+  const todayWeekIndex = weekGroups.findIndex(
+    (week) =>
+      new Date(week.startDate) <= today && new Date(week.endDate) >= today,
+  );
+
+  const createdAt = new Date(studyPlan.createdAt);
+  const createdAtText = `Criado em ${createdAt.toLocaleDateString("pt-BR")} às ${createdAt.toLocaleTimeString("pt-BR")}`;
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       <div className="flex gap-2">
-        <p className='text-sm font-light p-3 border rounded-full mb-4'>
-          <span className='mr-2'>{createdAtText}</span>
+        <p className="text-sm font-light p-3 border rounded-full mb-4">
+          <span className="mr-2">{createdAtText}</span>
         </p>
-        <Button 
-          onClick={() => removeStudyPlan(studyPlan.id)} 
-          variant='destructive' size='icon' className='rounded-full'>
+        <Button
+          onClick={() => removeStudyPlan(studyPlan.id)}
+          variant="destructive"
+          size="icon"
+          className="rounded-full"
+        >
           <Trash size={16} />
         </Button>
       </div>
-      <Carousel className="max-w-[75vw] lg:max-w-[90vw]"
+      <Carousel
+        className="max-w-[75vw] lg:max-w-[90vw]"
         opts={{
           startIndex: todayWeekIndex,
         }}
@@ -98,12 +112,12 @@ const PlanningView = ({studyPlan, removeStudyPlan}: Props) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className='-left-[2.1rem]'  />
-        <CarouselNext className='-right-[2.1rem]' />
+        <CarouselPrevious className="-left-[2.1rem]" />
+        <CarouselNext className="-right-[2.1rem]" />
       </Carousel>
-      <hr className='mt-5 self-stretch border-slate-300' />
+      <hr className="mt-5 self-stretch border-slate-300" />
     </div>
-  )
-}
+  );
+};
 
-export default PlanningView
+export default PlanningView;

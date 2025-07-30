@@ -1,17 +1,17 @@
-import { Prisma, PrismaClient, SubjectStatus } from '@prisma/client';
-import { Subject, SubjectJSON } from '../../../domain/entities/Subject';
-import { CoursePeriod } from '../../../domain/entities/CoursePeriod';
-import { StudyObject } from '../../../domain/entities/StudyObject';
+import { Prisma, PrismaClient, SubjectStatus } from "@prisma/client";
+import { Subject, SubjectJSON } from "../../../domain/entities/Subject";
+import { CoursePeriod } from "../../../domain/entities/CoursePeriod";
+import { StudyObject } from "../../../domain/entities/StudyObject";
 
 export class SubjectRepositoryPrisma {
   constructor(private prisma: PrismaClient) {}
 
   async create(subject: Subject): Promise<void> {
-     await this.prisma.subject.create({
+    await this.prisma.subject.create({
       data: {
         name: subject.getName(),
         coursePeriods: {
-          connect: subject.getCoursePeriods().map(coursePeriod => ({
+          connect: subject.getCoursePeriods().map((coursePeriod) => ({
             id: coursePeriod.getId(),
           })),
         },
@@ -21,16 +21,18 @@ export class SubjectRepositoryPrisma {
               name: studyObject.getName(),
               hours: studyObject.getHours(),
               position: index,
-            }))
-          }
-        }
-      }
+            })),
+          },
+        },
+      },
     });
   }
 
-  async findAll(options: {
-    status?: SubjectStatus
-  } = {}) {
+  async findAll(
+    options: {
+      status?: SubjectStatus;
+    } = {},
+  ) {
     const subjects = await this.prisma.subject.findMany({
       where: {
         status: options.status ?? SubjectStatus.approved,
@@ -39,48 +41,53 @@ export class SubjectRepositoryPrisma {
         studyObjects: true,
         coursePeriods: {
           include: {
-            course: true
-          }
-        }
-      }
-    })
+            course: true,
+          },
+        },
+      },
+    });
 
-    return subjects.map(subject => this.mapSubject(subject))
+    return subjects.map((subject) => this.mapSubject(subject));
   }
 
-  private mapSubject(subject: Prisma.SubjectGetPayload<{
-    include: {
-      studyObjects: true;
-      coursePeriods: {
-        include: {
-          course: true;
+  private mapSubject(
+    subject: Prisma.SubjectGetPayload<{
+      include: {
+        studyObjects: true;
+        coursePeriods: {
+          include: {
+            course: true;
+          };
         };
       };
-    };
-  }>): SubjectJSON {
+    }>,
+  ): SubjectJSON {
     return {
       id: subject.id,
       name: subject.name,
-      studyObjects: subject.studyObjects.map(studyObject => ({
+      studyObjects: subject.studyObjects.map((studyObject) => ({
         id: studyObject.id,
         name: studyObject.name,
         hours: studyObject.hours,
         position: studyObject.position,
         subjectName: subject.name,
-        fullName: StudyObject.getFullName(subject.name, studyObject.name)
+        fullName: StudyObject.getFullName(subject.name, studyObject.name),
       })),
       createdAt: subject.createdAt,
       status: subject.status,
-      coursePeriods: subject.coursePeriods.map(coursePeriod => ({
+      coursePeriods: subject.coursePeriods.map((coursePeriod) => ({
         id: coursePeriod.id,
         position: coursePeriod.position,
-        name: CoursePeriod.getName(coursePeriod.position, coursePeriod.course.name),
+        name: CoursePeriod.getName(
+          coursePeriod.position,
+          coursePeriod.course.name,
+        ),
         course: {
           id: coursePeriod.course.id,
           name: coursePeriod.course.name,
-          version: coursePeriod.course.version
-        }
-      }))
-    }
+          version: coursePeriod.course.version,
+        },
+      })),
+    };
   }
 }

@@ -28,15 +28,15 @@ const CreatePlanningFormSubjectSelect = ({
     if (selected) {
       const selectedSubjects = subjects.filter((subject) =>
         subject.coursePeriods.some(
-          (coursePeriod) => coursePeriod.id === selected.value
-        )
+          (coursePeriod) => coursePeriod.id === selected.value,
+        ),
       );
 
       setSubjects(
         selectedSubjects.map((subject) => ({
           label: subject.name,
           value: subject.id,
-        }))
+        })),
       );
     }
   };
@@ -55,10 +55,10 @@ const CreatePlanningFormSubjectSelect = ({
         options={sortedSubjects.map((subject) => ({
           label: `${subject.name}${subject.status === "pending" ? " (Em análise)" : ""}`,
           value: subject.id,
-          status: subject.status, 
+          status: subject.status,
         }))}
         isMulti
-        isOptionDisabled={(option => option.status === "pending")}
+        isOptionDisabled={(option) => option.status === "pending"}
         instanceId={subjectsSelectId}
         value={field.value}
         onChange={field.onChange}

@@ -1,7 +1,7 @@
 export class Either<L, R> {
   private constructor(
     private readonly left?: L,
-    private readonly right?: R
+    private readonly right?: R,
   ) {}
 
   static left<L, R>(value: L): Either<L, R> {

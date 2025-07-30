@@ -6,7 +6,7 @@ export const useSubjects = (
   defaultSubjects: SubjectJSON[] = [],
   options: {
     status?: SubjectStatus;
-  } = {}
+  } = {},
 ) => {
   if (!options.status) {
     options.status = "approved";
@@ -19,11 +19,11 @@ export const useSubjects = (
       if (!response.ok) {
         throw new Error("Failed to fetch subjects");
       }
-      const data = await response.json() as SubjectJSON[];
+      const data = (await response.json()) as SubjectJSON[];
       return data;
     },
     {
       fallbackData: defaultSubjects,
-    }
+    },
   );
 };

@@ -29,13 +29,13 @@ async function main() {
         update: {
           name: course.name,
           version: 1,
-          institutionId: estacio.id
+          institutionId: estacio!.id
         },
         create: {
           id: course.id,
           name: course.name,
           version: 1,
-          institutionId: estacio.id
+          institutionId: estacio!.id
         }
       })
     }))

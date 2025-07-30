@@ -35,7 +35,7 @@ const confirmSubjectSchema = z.object({
         name: z.string().min(1, "Nome do objeto de estudo é obrigatório"),
         hours: z.number().min(1, "Horas devem ser no mínimo 1"),
         position: z.number(),
-      })
+      }),
     )
     .min(1, "Pelo menos um objeto de estudo é necessário"),
   coursePeriod: z.string(),

@@ -72,7 +72,7 @@ export default function CreatePlanningForm({
 
   const setSubjects = React.useCallback(
     (subjects: SubjectOption[]) => form.setValue("subjects", subjects),
-    [form]
+    [form],
   );
 
   const [isAdvancedOpen, setIsAdvancedOpen] = React.useState(false);
@@ -106,7 +106,7 @@ export default function CreatePlanningForm({
       Number(friday),
       Number(saturday),
     ],
-    [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
+    [sunday, monday, tuesday, wednesday, thursday, friday, saturday],
   );
 
   const endDate = useMemo(() => {
@@ -130,7 +130,7 @@ export default function CreatePlanningForm({
         hoursPerDay: parsing.data.hoursPerDay,
         availabilityPerWeekday: isDifferentHoursPerDay
           ? new Map(
-              availabilityPerWeekday.map((value, index) => [index, value])
+              availabilityPerWeekday.map((value, index) => [index, value]),
             )
           : undefined,
         distribution: parsing.data.distribution,
@@ -139,7 +139,7 @@ export default function CreatePlanningForm({
         subjects: selectedSubjects
           .filter((subject) => subjects.find((s) => s.id === subject.value))
           .map((subject) =>
-            Subject.fromJSON(subjects.find((s) => s.id === subject.value)!)
+            Subject.fromJSON(subjects.find((s) => s.id === subject.value)!),
           ),
       });
 
@@ -174,7 +174,7 @@ export default function CreatePlanningForm({
               data.availabilityPerWeekday.map((value, index) => [
                 index,
                 value.value,
-              ])
+              ]),
             )
           : undefined,
         distribution: data.distribution,
@@ -183,7 +183,7 @@ export default function CreatePlanningForm({
         subjects: selectedSubjects
           .filter((subject) => subjects.find((s) => s.id === subject.value))
           .map((subject) =>
-            Subject.fromJSON(subjects.find((s) => s.id === subject.value)!)
+            Subject.fromJSON(subjects.find((s) => s.id === subject.value)!),
           ),
       });
 
@@ -213,7 +213,7 @@ export default function CreatePlanningForm({
         {
           "shadow-lg rounded-lg p-5 lg:p-10 bg-white max-w-lg xl:max-w-2xl":
             !insideModal,
-        }
+        },
       )}
     >
       <Form {...form}>
@@ -261,7 +261,6 @@ export default function CreatePlanningForm({
               </CollapsibleTrigger>
             </div>
             <CollapsibleContent className="space-y-4">
-
               <FormField
                 control={form.control}
                 name="availableDays"

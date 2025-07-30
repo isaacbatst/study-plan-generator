@@ -1,14 +1,9 @@
-'use client'
-import React, { PropsWithChildren } from 'react'
-import { PlanningsContextProvider } from '../components/PlanningsContext'
-
+"use client";
+import React, { PropsWithChildren } from "react";
+import { PlanningsContextProvider } from "../components/PlanningsContext";
 
 const Wrapper = (props: PropsWithChildren) => {
-  return (
-    <PlanningsContextProvider>
-      {props.children}
-    </PlanningsContextProvider>
-  )
-}
+  return <PlanningsContextProvider>{props.children}</PlanningsContextProvider>;
+};
 
-export default Wrapper
+export default Wrapper;

@@ -1,22 +1,24 @@
-import { SheetContact } from './SheetContact'
+import { SheetContact } from "./SheetContact";
 
-type Props = {}
+type Props = {};
 
 const Header = (props: Props) => {
   return (
     <header>
-      <div className='p-5 flex justify-between gap-2'>
+      <div className="p-5 flex justify-between gap-2">
         <div>
-          <h1 className='text-2xl font-bold mb-1'>Planejei</h1>
-          <p className='text-gray-500 hidden lg:block'>Crie seu plano de estudos e organize melhor seu tempo.</p>
+          <h1 className="text-2xl font-bold mb-1">Planejei</h1>
+          <p className="text-gray-500 hidden lg:block">
+            Crie seu plano de estudos e organize melhor seu tempo.
+          </p>
         </div>
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <SheetContact />
         </div>
       </div>
-      <hr className='lg:hidden' />
+      <hr className="lg:hidden" />
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

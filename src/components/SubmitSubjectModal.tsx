@@ -51,7 +51,7 @@ type Props = {
 
 const SubmitSubjectModal = (props: Props) => {
   const [coursePeriod, setCoursePeriod] = useState<CoursePeriodOption | null>(
-    null
+    null,
   );
   const [isCoursePeriodNew, setIsCoursePeriodNew] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +59,7 @@ const SubmitSubjectModal = (props: Props) => {
   const [isShowingSuccessMessage, setIsShowingSuccessMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [processedData, setProcessedData] = useState<ConfirmSubjectData | null>(
-    null
+    null,
   );
   const [currentStep, setCurrentStep] = useState<
     "upload" | "confirmation" | "success"
@@ -186,7 +186,7 @@ const SubmitSubjectModal = (props: Props) => {
                   }}
                   onChange={(coursePeriod) => {
                     setCoursePeriod(coursePeriod ?? null);
-                    if(coursePeriod) {
+                    if (coursePeriod) {
                       setIsCoursePeriodNew(false);
                     }
                   }}
@@ -199,9 +199,9 @@ const SubmitSubjectModal = (props: Props) => {
                   <LightbulbIcon />
                   <AlertTitle>Seu curso/período não está na lista?</AlertTitle>
                   <AlertDescription>
-                    Digite no primeiro campo, por exemplo, "2º Período de
-                    Engenharia de Software", confirme e envie o PDF da matéria
-                    que deseja adicionar.
+                    Digite no primeiro campo, por exemplo, &quot;2º Período de
+                    Engenharia de Software&quot;, confirme e envie o PDF da
+                    matéria que deseja adicionar.
                   </AlertDescription>
                 </Alert>
               </div>

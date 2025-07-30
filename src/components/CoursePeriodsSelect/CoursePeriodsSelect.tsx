@@ -14,7 +14,7 @@ type Props = {
   onChange: (option: CoursePeriodOption | null) => void;
   placeholder?: string;
   className?: string;
-  selected?: CoursePeriodOption | null  ;
+  selected?: CoursePeriodOption | null;
   isOptionDisabled?: (option: CoursePeriodOption) => boolean;
 } & (
   | {

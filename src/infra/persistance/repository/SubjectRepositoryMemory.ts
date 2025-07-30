@@ -14,7 +14,7 @@
 
 //     const csFirstPeriod = new CoursePeriod('cs-first-period', '1º Período de Ciência da Computação', computerScience.getId())
 //     const csSecondPeriod = new CoursePeriod('cs-second-period', '2º Período de Ciência da Computação', computerScience.getId())
-    
+
 //     const sdSecondPeriod = new CoursePeriod('sd-first-period', '2º Período de Análise e Desenvolvimento de Sistemas', systemsDevelopmentAndAnalysis.getId())
 
 //     const cyberSecurityFirstPeriod = new CoursePeriod('cyber-security-first-period', '1º Período de Cybersegurança', cyberSecurity.getId())
@@ -49,16 +49,15 @@
 //       new SubjectThemeModule('network-fundamentals-5-3', '5.3', 'Fundamentos de Redes de Computadores'),
 //     ]))
 
-
 //     const securityIntroduction = new Subject('security', 'Introdução à Segurança da Informação', [csFirstPeriod, cyberSecurityFirstPeriod])
 //     securityIntroduction.addTheme(new SubjectTheme('security-2', '2', [
 //       new SubjectThemeModule('security-3-1', '2.1', 'Introdução à Segurança da Informação'),
 //       new SubjectThemeModule('security-3-2', '2.2', 'Introdução à Segurança da Informação'),
-//     ])) 
+//     ]))
 //     securityIntroduction.addTheme(new SubjectTheme('security-3', '3', [
 //       new SubjectThemeModule('security-3-1', '3.1', 'Introdução à Segurança da Informação'),
 //       new SubjectThemeModule('security-3-2', '3.2', 'Introdução à Segurança da Informação'),
-//     ])) 
+//     ]))
 //     securityIntroduction.addTheme(new SubjectTheme('security-4', '4', [
 //       new SubjectThemeModule('security-4-1', '4.1', 'Introdução à Segurança da Informação'),
 //       new SubjectThemeModule('security-4-2', '4.2', 'Introdução à Segurança da Informação'),
@@ -75,8 +74,8 @@
 //     securityIntroduction.addTheme(new SubjectTheme('security-7', '7', [
 //       new SubjectThemeModule('security-7-1', '7.1', 'Introdução à Segurança da Informação'),
 //       new SubjectThemeModule('security-7-2', '7.2', 'Introdução à Segurança da Informação'),
-//       new SubjectThemeModule('security-7-3', '7.3', 'Introdução à Segurança da Informação'),  
-//     ])) 
+//       new SubjectThemeModule('security-7-3', '7.3', 'Introdução à Segurança da Informação'),
+//     ]))
 
 //     const programmingParadigms = new Subject('programming-paradigms', 'Paradigmas de Ling. de Programação com Python', [csFirstPeriod, cyberSecurityFirstPeriod])
 //     programmingParadigms.addTheme(new SubjectTheme('programming-paradigms-1', '1', [

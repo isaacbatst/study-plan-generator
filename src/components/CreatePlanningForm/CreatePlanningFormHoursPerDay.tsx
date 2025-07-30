@@ -1,12 +1,12 @@
-import { FormControl, FormItem, FormMessage } from '../ui/form'
-import { Input } from '../ui/input'
-import { CreatePlanningFormField } from './CreatePlanningFormSchema'
+import { FormControl, FormItem, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import { CreatePlanningFormField } from "./CreatePlanningFormSchema";
 
 type Props = {
-  field: CreatePlanningFormField<'hoursPerDay'>
-}
+  field: CreatePlanningFormField<"hoursPerDay">;
+};
 
-const CreatePlanningFormHoursPerDay = ({field}: Props) => {
+const CreatePlanningFormHoursPerDay = ({ field }: Props) => {
   return (
     <FormItem>
       <FormControl>
@@ -14,7 +14,7 @@ const CreatePlanningFormHoursPerDay = ({field}: Props) => {
       </FormControl>
       <FormMessage />
     </FormItem>
-  )
-}
+  );
+};
 
-export default CreatePlanningFormHoursPerDay
+export default CreatePlanningFormHoursPerDay;

@@ -1,15 +1,9 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
-    "react/jsx-indent": [
-      "error",
-      2,
-      {
-        "checkAttributes": true,
-        "indentLogicalExpressions": true
-      }
-    ],
-    "react/jsx-indent-props": ["error", 2],
-    "indent": ["error", 2]
+    "prettier/prettier": "error"
   }
 }

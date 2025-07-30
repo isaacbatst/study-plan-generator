@@ -6,10 +6,10 @@ import Wrapper from "./wrapper";
 
 export const dynamic = "force-dynamic";
 
-const subjectsRepository = SubjectRepositorySingleton.getInstance()
+const subjectsRepository = SubjectRepositorySingleton.getInstance();
 
 export default async function Home() {
-  const subjects = await subjectsRepository.findAll()
+  const subjects = await subjectsRepository.findAll();
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
