@@ -29,10 +29,12 @@ export const parseSubjectFromPDFText = async (text: string) => {
 
     Apenas inclua os subtemas numerados, como 1.1 A Evolução Histórica dos Computadores, 1.2 Os Componentes de um Sistema Computacional, etc.
 
+    Não retorne o nome da matéria em CAPS LOCK, como CÁLCULO DE MÚLTIPLAS VARIÁVEIS, mas sim Cálculo de Múltiplas Variáveis.
+
     Exemplo de entrada:
 
     ---
-    Nome da Disciplina: Arquitetura de Computadores
+    Nome da Disciplina: ARQUITETURA DE COMPUTADORES
     Código da Disciplina: ARQ101
     Carga Horária: 60 horas
     Perfil Docente: Para ministrar a disciplina o docente precisa possuir graduação em...
