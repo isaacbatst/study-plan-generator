@@ -40,7 +40,7 @@ const Week = ({ week, index, planningId }: Props) => {
         Semana {index + 1}
       </h2>
       <hr className="mb-5" />
-      <div className="container grid gap-2 px-2 lg:grid-cols-4 2xl:grid-cols-7">
+      <div className="container grid items-start gap-2 px-2 lg:grid-cols-4 2xl:grid-cols-7">
         {Object.values(WeekDay).map((day, dayIndex) => {
           const date = new Date(week.startDate);
           date.setDate(date.getDate() + dayIndex);
@@ -67,7 +67,8 @@ const Week = ({ week, index, planningId }: Props) => {
           const studyDayBody = studyDay ? (
             <div className="space-y-2">
               {studyDay.plannedStudyObjects.map(
-                ({ hours, studyObject, done }) => (
+                ({ hours, studyObject, done }, index) => (
+                  <>
                   <PlanningStudyObjectView
                     key={studyObject.id}
                     studyObject={studyObject}
@@ -77,6 +78,11 @@ const Week = ({ week, index, planningId }: Props) => {
                     studyDayId={studyDay.id}
                     studyDayDate={studyDay.date}
                   />
+                  {index ===
+                    studyDay.plannedStudyObjects.length - 1 && (
+                    <hr />
+                  )}
+                  </>
                 ),
               )}
             </div>
